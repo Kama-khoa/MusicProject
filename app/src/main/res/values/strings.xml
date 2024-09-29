@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">music-project</string>
+    <string name="recent_songs">Recent Songs</string>
+    <string name="popular_songs">Popular Songs</string>
 </resources>
