@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import androidx.room.Delete;
+import androidx.room.OnConflictStrategy;
 
 import com.example.music_project.models.Song;
 
@@ -35,4 +36,10 @@ public interface SongDao {
 
     @Delete
     void delete(Song song);
+
+    @Query("SELECT * FROM songs WHERE SongID = :id")
+    Song getItem(String id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<Song> songs);
 }

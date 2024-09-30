@@ -1,8 +1,9 @@
 package com.example.music_project.models;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.ColumnInfo;
+
 import java.util.Date;
 
 @Entity(tableName = "Songs")
@@ -27,16 +28,20 @@ public class Song {
     @ColumnInfo(name = "FilePath")
     private String filePath;
 
+    @ColumnInfo(name = "CoverUrl")  // Thêm trường lưu trữ URL ảnh bìa
+    private String coverUrl;
+
     @ColumnInfo(name = "CreatedAt")
     private Date createdAt;
 
     // Constructor
-    public Song(String title, String artist, String album, int duration, String filePath) {
+    public Song(String title, String artist, String album, int duration, String filePath, String coverUrl) {
         this.title = title;
         this.artist = artist;
         this.album = album;
         this.duration = duration;
         this.filePath = filePath;
+        this.coverUrl = coverUrl;  // Khởi tạo giá trị ảnh bìa
         this.createdAt = new Date();
     }
 
@@ -92,6 +97,15 @@ public class Song {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    // Getter and setter for coverUrl
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     // Getter and setter for createdAt

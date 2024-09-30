@@ -26,8 +26,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".views.activities.MainActivity"
-            android:exported="false" />
+        <activity android:name=".views.activities.MainActivity" android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="myapp" android:host="callback" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".views.activities.LoginActivity"
             android:exported="false" />
@@ -42,6 +48,9 @@
         <activity
             android:name=".views.activities.ProfileActivity"
             android:label="@string/profile_activity_title" />
+
+        <!-- Intent filter moved into an activity -->
+
 
         <!-- Services -->
         <service android:name=".services.MusicPlaybackService" />
@@ -62,8 +71,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="androidx.core.content.FileProvider"
-                    android:resource="@xml/file_paths" />
-
+                android:resource="@xml/file_paths" />
         </provider>
 
     </application>

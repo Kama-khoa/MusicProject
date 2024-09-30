@@ -23,6 +23,9 @@ public class User {
     @ColumnInfo(name = "CreatedAt")
     private Date createdAt;
 
+    @ColumnInfo(name = "ProfileImagePath")
+    private String profileImagePath;
+
     // Constructors, getters, and setters
     public User(String username, String email, String password) {
         this.username = username;
@@ -32,6 +35,13 @@ public class User {
     }
 
     // Getters and setters
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
     public long getUserId() {
         return userId;
     }

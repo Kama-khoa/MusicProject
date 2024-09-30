@@ -1,0 +1,6 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is D466-D3A5
+C:\USERS\MANH HUNG\DESKTOP\MUSICPROJECT\APP\SRC\MAIN\-F
+Invalid path - \USERS\MANH HUNG\DESKTOP\MUSICPROJECT\APP\SRC\MAIN\-F
+No subfolders exist 
+

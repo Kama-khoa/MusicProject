@@ -1,93 +1,138 @@
 package com.example.music_project.controllers;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.util.Log;
 
-import com.example.music_project.database.AppDatabase;
-import com.example.music_project.models.PlayHistory;
-import com.example.music_project.models.Song;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.types.Track;
 
 public class PlayerController {
-    private AppDatabase database;
-    private ExecutorService executorService;
-    private MediaPlayer mediaPlayer;
-    private boolean isPlaying = false;
+    private static final String CLIENT_ID = "your_client_id_here";
+    private static final String REDIRECT_URI = "your_redirect_uri_here";
+    private SpotifyAppRemote mSpotifyAppRemote;
 
-    public PlayerController(Context context) {
-        database = AppDatabase.getInstance(context);
-        executorService = Executors.newSingleThreadExecutor();
-        mediaPlayer = new MediaPlayer();
+    public void connect(Context context, final Runnable onConnected) {
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+
+        SpotifyAppRemote.connect(context, connectionParams,
+                new Connector.ConnectionListener() {
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        onConnected.run();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        // Handle connection failure
+                    }
+                });
     }
 
-    public void playSong(Song song, int userId) {
-        logPlayHistory(userId, song.getSongId());
-        try {
-            mediaPlayer.reset();
-            mediaPlayer.setDataSource(song.getSongUrl());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            isPlaying = true;
-        } catch (IOException e) {
-            Log.e("PlayerController", "Error playing song: " + e.getMessage());
+    public void play(String spotifyUri) {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi().play(spotifyUri);
         }
-    }
-
-    private void logPlayHistory(int userId, int songId) {
-        executorService.execute(() -> {
-            PlayHistory playHistory = new PlayHistory(userId, songId);
-            database.playHistoryDao().insert(playHistory);
-        });
-    }
-
-    public void getRecentlyPlayedSongs(int userId, int limit, final OnRecentSongsLoadedListener listener) {
-        executorService.execute(() -> {
-            List<Song> recentSongs = database.playHistoryDao().getRecentlyPlayedSongs(userId, limit);
-            listener.onRecentSongsLoaded(recentSongs);
-        });
-    }
-
-    public void togglePlayPause() {
-        if (isPlaying) {
-            mediaPlayer.pause();
-        } else {
-            mediaPlayer.start();
-        }
-        isPlaying = !isPlaying;
-    }
-
-    public void playNext(List<Song> songs, int currentSongIndex) {
-        if (currentSongIndex < songs.size() - 1) {
-            playSong(songs.get(currentSongIndex + 1), 0);
-        }
-    }
-
-    public void playPrevious(List<Song> songs, int currentSongIndex) {
-        if (currentSongIndex > 0) {
-            playSong(songs.get(currentSongIndex - 1), 0);
-        }
-    }
-
-    public void seekTo(int progress) {
-        mediaPlayer.seekTo(progress);
-    }
-
-    public boolean isPlaying() {
-        return true;
     }
 
     public void pause() {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi().pause();
+        }
     }
 
-    public void play() {
+    public void resume() {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi().resume();
+        }
     }
 
-    public interface OnRecentSongsLoadedListener {
-        void onRecentSongsLoaded(List<Song> songs);
+    public void skipNext() {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi().skipNext();
+        }
+    }
+
+    public void skipPrevious() {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi().skipPrevious();
+        }
+    }
+
+    public void getCurrentTrack(final TrackCallback callback) {
+        if (mSpotifyAppRemote != null) {
+            mSpotifyAppRemote.getPlayerApi()
+                    .subscribeToPlayerState()
+                    .setEventCallback(playerState -> {
+                        final Track track = playerState.track;
+                        if (track != null) {
+                            callback.onTrackReceived(track);
+                        }
+                    });
+        }
+    }
+
+    public void disconnect() {
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+    }
+
+    public interface TrackCallback {
+        void onTrackReceived(Track track);
+    }
+    public interface PlayerStateCallback {
+        void onPlayerStateReceived(boolean isPlaying, Track currentTrack);
+    }
+
+    public void getPlayerState(PlayerStateCallback callback) {
+        mSpotifyAppRemote.getPlayerApi().getPlayerState()
+                .setResultCallback(playerState -> {
+                    boolean isPlaying = !playerState.isPaused;
+                    Track currentTrack = playerState.track;
+                    callback.onPlayerStateReceived(isPlaying, currentTrack);
+                })
+                .setErrorCallback(throwable -> {
+                    // Xử lý lỗi ở đây
+                    Log.e("PlayerController", "Error getting player state", throwable);
+                    callback.onPlayerStateReceived(false, null);
+                });
+    }
+
+    public void seekTo(long positionMs) {
+        if (mSpotifyAppRemote != null && mSpotifyAppRemote.isConnected()) {
+            mSpotifyAppRemote.getPlayerApi().seekTo(positionMs);
+        } else {
+            Log.w("PlayerController", "SpotifyAppRemote not connected");
+        }
+    }
+
+    // Thêm phương thức để lấy thời lượng của bài hát hiện tại
+    public void getTrackDuration(TrackDurationCallback callback) {
+        if (mSpotifyAppRemote != null && mSpotifyAppRemote.isConnected()) {
+            mSpotifyAppRemote.getPlayerApi().getPlayerState()
+                    .setResultCallback(playerState -> {
+                        if (playerState.track != null) {
+                            callback.onTrackDurationReceived(playerState.track.duration);
+                        } else {
+                            callback.onTrackDurationReceived(0);
+                        }
+                    })
+                    .setErrorCallback(throwable -> {
+                        Log.e("PlayerController", "Error getting track duration", throwable);
+                        callback.onTrackDurationReceived(0);
+                    });
+        } else {
+            Log.w("PlayerController", "SpotifyAppRemote not connected");
+            callback.onTrackDurationReceived(0);
+        }
+    }
+
+    public interface TrackDurationCallback {
+        void onTrackDurationReceived(long durationMs);
     }
 }

@@ -1,0 +1,1714 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is D466-D3A5
+C:.
+¦   .gitattributes
+¦   .gitignore
+¦   build.gradle.kts
+¦   gradle.properties
+¦   gradlew
+¦   gradlew.bat
+¦   list.txt
+¦   local.properties
+¦   settings.gradle.kts
+¦   spotify-app-remote-release-0.8.0.aar
+¦   structure.txt
+¦   
++---.gradle
+¦   ¦   config.properties
+¦   ¦   file-system.probe
+¦   ¦   
+¦   +---8.7
+¦   ¦   ¦   gc.properties
+¦   ¦   ¦   
+¦   ¦   +---checksums
+¦   ¦   ¦       checksums.lock
+¦   ¦   ¦       md5-checksums.bin
+¦   ¦   ¦       sha1-checksums.bin
+¦   ¦   ¦       
+¦   ¦   +---dependencies-accessors
+¦   ¦   ¦   ¦   gc.properties
+¦   ¦   ¦   ¦   
+¦   ¦   ¦   +---0dd9ecf2daf10796b50ac0b146d4004ade4b74ed
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyAppLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyAppVersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyVersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyAppLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyAppVersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyVersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---19666b7ee7477488faba75fa6199859f9eeb0a35
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---2ebc4a8735044f778341aa577ce7fb7cf54555aa
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---53c1746acb15feb4a1136e340d7ad1df79ab7397
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---5407faa2e9782b05c47e1456f9827c79a18bd156
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---57682f5f3456f8872a00b3927a041b5ab2f1f673
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---7b1786b408cae8a16771690ec026dced9027682c
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---7e1ed0c1add0529b59ceb983fc164080fed87960
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---8b2484d5959ffd04fc4318e3da1eac95563bd1d9
+¦   ¦   ¦   ¦   ¦   metadata.bin
+¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   +---classes
+¦   ¦   ¦   ¦   ¦   +---org
+¦   ¦   ¦   ¦   ¦       +---gradle
+¦   ¦   ¦   ¦   ¦           +---accessors
+¦   ¦   ¦   ¦   ¦               +---dm
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RetrofitLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibs.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RetrofitLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$SpotifyLibraryAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦   ¦   ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦   ¦   ¦                       
+¦   ¦   ¦   ¦   +---sources
+¦   ¦   ¦   ¦       +---org
+¦   ¦   ¦   ¦           +---gradle
+¦   ¦   ¦   ¦               +---accessors
+¦   ¦   ¦   ¦                   +---dm
+¦   ¦   ¦   ¦                           LibrariesForLibs.java
+¦   ¦   ¦   ¦                           LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦   ¦                           
+¦   ¦   ¦   +---f7389d4e7c258c5da22ce56ebe33ec12f46def4c
+¦   ¦   ¦       ¦   metadata.bin
+¦   ¦   ¦       ¦   
+¦   ¦   ¦       +---classes
+¦   ¦   ¦       ¦   +---org
+¦   ¦   ¦       ¦       +---gradle
+¦   ¦   ¦       ¦           +---accessors
+¦   ¦   ¦       ¦               +---dm
+¦   ¦   ¦       ¦                       LibrariesForLibs$AndroidPluginAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$BundleAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$CoroutinesLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$EspressoLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$ExtLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$GlideLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$PluginAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$RetrofitConverterLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$RetrofitLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$RoomLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$SpotifyLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$SpotifyVersionAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs$VersionAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibs.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$AndroidPluginAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$BundleAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$CoroutinesLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$EspressoLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$ExtLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$GlideLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$PluginAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$RetrofitConverterLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$RetrofitLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$RoomLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$SpotifyLibraryAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$SpotifyVersionAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock$VersionAccessors.class
+¦   ¦   ¦       ¦                       LibrariesForLibsInPluginsBlock.class
+¦   ¦   ¦       ¦                       
+¦   ¦   ¦       +---sources
+¦   ¦   ¦           +---org
+¦   ¦   ¦               +---gradle
+¦   ¦   ¦                   +---accessors
+¦   ¦   ¦                       +---dm
+¦   ¦   ¦                               LibrariesForLibs.java
+¦   ¦   ¦                               LibrariesForLibsInPluginsBlock.java
+¦   ¦   ¦                               
+¦   ¦   +---executionHistory
+¦   ¦   ¦       executionHistory.bin
+¦   ¦   ¦       executionHistory.lock
+¦   ¦   ¦       
+¦   ¦   +---expanded
+¦   ¦   +---fileChanges
+¦   ¦   ¦       last-build.bin
+¦   ¦   ¦       
+¦   ¦   +---fileHashes
+¦   ¦   ¦       fileHashes.bin
+¦   ¦   ¦       fileHashes.lock
+¦   ¦   ¦       resourceHashesCache.bin
+¦   ¦   ¦       
+¦   ¦   +---vcsMetadata
+¦   +---buildOutputCleanup
+¦   ¦       buildOutputCleanup.lock
+¦   ¦       cache.properties
+¦   ¦       outputFiles.bin
+¦   ¦       
+¦   +---vcs-1
+¦           gc.properties
+¦           
++---.idea
+¦       .gitignore
+¦       .name
+¦       assetWizardSettings.xml
+¦       compiler.xml
+¦       deploymentTargetSelector.xml
+¦       gradle.xml
+¦       migrations.xml
+¦       misc.xml
+¦       MusicProject.iml
+¦       other.xml
+¦       vcs.xml
+¦       workspace.xml
+¦       
++---app
+¦   ¦   .gitignore
+¦   ¦   build.gradle.kts
+¦   ¦   proguard-rules.pro
+¦   ¦   
+¦   +---build
+¦   ¦   +---generated
+¦   ¦   ¦   +---ap_generated_sources
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---out
+¦   ¦   ¦   ¦           +---com
+¦   ¦   ¦   ¦               +---example
+¦   ¦   ¦   ¦                   +---music_project
+¦   ¦   ¦   ¦                       +---database
+¦   ¦   ¦   ¦                               AppDatabase_Impl.java
+¦   ¦   ¦   ¦                               FavoriteDao_Impl.java
+¦   ¦   ¦   ¦                               PlayHistoryDao_Impl.java
+¦   ¦   ¦   ¦                               PlaylistDao_Impl.java
+¦   ¦   ¦   ¦                               PlaylistSongDao_Impl.java
+¦   ¦   ¦   ¦                               SongDao_Impl.java
+¦   ¦   ¦   ¦                               UserDao_Impl.java
+¦   ¦   ¦   ¦                               
+¦   ¦   ¦   +---res
+¦   ¦   ¦       +---pngs
+¦   ¦   ¦       ¦   +---debug
+¦   ¦   ¦       +---resValues
+¦   ¦   ¦           +---debug
+¦   ¦   +---intermediates
+¦   ¦   ¦   +---aar_metadata_check
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---checkDebugAarMetadata
+¦   ¦   ¦   +---annotation_processor_list
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---javaPreCompileDebug
+¦   ¦   ¦   ¦               annotationProcessors.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---apk
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦           app-debug.apk
+¦   ¦   ¦   ¦           output-metadata.json
+¦   ¦   ¦   ¦           
+¦   ¦   ¦   +---apk_ide_redirect_file
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---createDebugApkListingFileRedirect
+¦   ¦   ¦   ¦               redirect.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---app_metadata
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---writeDebugAppMetadata
+¦   ¦   ¦   ¦               app-metadata.properties
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---assets
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugAssets
+¦   ¦   ¦   +---compatible_screen_manifest
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---createDebugCompatibleScreenManifests
+¦   ¦   ¦   ¦               output-metadata.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---compile_and_runtime_not_namespaced_r_class_jar
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦   ¦               R.jar
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---compressed_assets
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---compressDebugAssets
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---data_binding_layout_info_type_merge
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---data_binding_layout_info_type_package
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---packageDebugResources
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---desugar_graph
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   ¦               +---currentProject
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_0
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_1
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_2
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_3
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_4
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---dirs_bucket_5
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_0
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_1
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_2
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_3
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_4
+¦   ¦   ¦   ¦               ¦   ¦       graph.bin
+¦   ¦   ¦   ¦               ¦   ¦       
+¦   ¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_5
+¦   ¦   ¦   ¦               ¦           graph.bin
+¦   ¦   ¦   ¦               ¦           
+¦   ¦   ¦   ¦               +---externalLibs
+¦   ¦   ¦   ¦               +---mixedScopes
+¦   ¦   ¦   ¦               +---otherProjects
+¦   ¦   ¦   +---dex
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeExtDexDebug
+¦   ¦   ¦   ¦       ¦       classes.dex
+¦   ¦   ¦   ¦       ¦       classes2.dex
+¦   ¦   ¦   ¦       ¦       
+¦   ¦   ¦   ¦       +---mergeLibDexDebug
+¦   ¦   ¦   ¦       ¦   +---0
+¦   ¦   ¦   ¦       ¦   +---1
+¦   ¦   ¦   ¦       ¦   +---10
+¦   ¦   ¦   ¦       ¦   +---11
+¦   ¦   ¦   ¦       ¦   +---12
+¦   ¦   ¦   ¦       ¦   +---13
+¦   ¦   ¦   ¦       ¦   +---14
+¦   ¦   ¦   ¦       ¦   +---15
+¦   ¦   ¦   ¦       ¦   +---2
+¦   ¦   ¦   ¦       ¦   +---3
+¦   ¦   ¦   ¦       ¦   +---4
+¦   ¦   ¦   ¦       ¦   +---5
+¦   ¦   ¦   ¦       ¦   +---6
+¦   ¦   ¦   ¦       ¦   +---7
+¦   ¦   ¦   ¦       ¦   +---8
+¦   ¦   ¦   ¦       ¦   +---9
+¦   ¦   ¦   ¦       +---mergeProjectDexDebug
+¦   ¦   ¦   ¦           +---0
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---1
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---10
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---11
+¦   ¦   ¦   ¦           +---12
+¦   ¦   ¦   ¦           +---13
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---14
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---15
+¦   ¦   ¦   ¦           +---2
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---3
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---4
+¦   ¦   ¦   ¦           +---5
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---6
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---7
+¦   ¦   ¦   ¦           ¦       classes.dex
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---8
+¦   ¦   ¦   ¦           +---9
+¦   ¦   ¦   +---dex_archive_input_jar_hashes
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦               out
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---dex_number_of_buckets_file
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦               out
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---duplicate_classes_check
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---checkDebugDuplicateClasses
+¦   ¦   ¦   +---external_file_lib_dex_archives
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---desugarDebugFileDependencies
+¦   ¦   ¦   ¦               0_spotify-app-remote-release-0.8.0-runtime.jar
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---external_libs_dex_archive
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---external_libs_dex_archive_with_artifact_transforms
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---incremental
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦   ¦   +---mergeDebugResources
+¦   ¦   ¦   ¦   ¦   ¦   ¦   compile-file-map.properties
+¦   ¦   ¦   ¦   ¦   ¦   ¦   merger.xml
+¦   ¦   ¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   ¦   ¦   +---merged.dir
+¦   ¦   ¦   ¦   ¦   ¦   +---stripped.dir
+¦   ¦   ¦   ¦   ¦   +---packageDebugResources
+¦   ¦   ¦   ¦   ¦       ¦   compile-file-map.properties
+¦   ¦   ¦   ¦   ¦       ¦   merger.xml
+¦   ¦   ¦   ¦   ¦       ¦   
+¦   ¦   ¦   ¦   ¦       +---merged.dir
+¦   ¦   ¦   ¦   ¦       +---stripped.dir
+¦   ¦   ¦   ¦   +---debug-mergeJavaRes
+¦   ¦   ¦   ¦   ¦   ¦   merge-state
+¦   ¦   ¦   ¦   ¦   ¦   
+¦   ¦   ¦   ¦   ¦   +---zip-cache
+¦   ¦   ¦   ¦   ¦           +z8o1F9IM44L023SR4cC6ui_Cg8=
+¦   ¦   ¦   ¦   ¦           291zx_58qMr2iXlNewj_2oLTTKo=
+¦   ¦   ¦   ¦   ¦           2T9b3E9md8iKTI2v3GcOx3DPDTM=
+¦   ¦   ¦   ¦   ¦           3p0pWEOnqvJ_KsZHrM+X3LegIoI=
+¦   ¦   ¦   ¦   ¦           3rHPB5lVS+_6sCWlDMr29yPTSps=
+¦   ¦   ¦   ¦   ¦           4a2RI_9sxgWyRFF+Nsznm6gLRcg=
+¦   ¦   ¦   ¦   ¦           6Yfjh9uAn8sr2Y_pUewz_3iPlvo=
+¦   ¦   ¦   ¦   ¦           7C+_rFvgi55kPDNR3LJ6WYL1R70=
+¦   ¦   ¦   ¦   ¦           847gUugmhY9RRYuu31KcM8yTXq4=
+¦   ¦   ¦   ¦   ¦           8V9JJ7SVwF6HMldWIBVWc_xJUbQ=
+¦   ¦   ¦   ¦   ¦           9Eu5sC62MFYArX5o3iURnBJC0UM=
+¦   ¦   ¦   ¦   ¦           aMpgaClMiriBoiVt4CaxdSuv_gU=
+¦   ¦   ¦   ¦   ¦           bI2cplyDascgR97UAWjDZBaJrU8=
+¦   ¦   ¦   ¦   ¦           BshQM9cHKYgyBImf7jVoTMQB67o=
+¦   ¦   ¦   ¦   ¦           C0E12MDyLvt9BedvnHh4kIHCvyo=
+¦   ¦   ¦   ¦   ¦           cEnL3CQYQ7KacvcUiAqxbZsYaQk=
+¦   ¦   ¦   ¦   ¦           COIwTSg_aRgyapUnir5xCv2rkvM=
+¦   ¦   ¦   ¦   ¦           dGiXoJxcEAaTT6kAuqKUdzWdiN8=
+¦   ¦   ¦   ¦   ¦           Dj1XvqVJNXX5OxxPkZo1hJTcQmk=
+¦   ¦   ¦   ¦   ¦           dpt8FQv4tCfGp_pc53b18WlGv_0=
+¦   ¦   ¦   ¦   ¦           Et7_c_BSQSqfMJ+eDnOG_3BOY5U=
+¦   ¦   ¦   ¦   ¦           FLfC37DsZYZSca6XOV9xV12Ewpg=
+¦   ¦   ¦   ¦   ¦           FoyZhYK6GR1UWxiQyZN2BJ5hOKk=
+¦   ¦   ¦   ¦   ¦           g9DEXtoDhLd0cMPR+KHmxd6hMWM=
+¦   ¦   ¦   ¦   ¦           gAN0LUyq+YcYefxPN8vWG2qvC54=
+¦   ¦   ¦   ¦   ¦           GF+gQp90_ya9R0eRVNFdViFP5yM=
+¦   ¦   ¦   ¦   ¦           GNJlBKA6r6X6hINsqTuPy6_Lg44=
+¦   ¦   ¦   ¦   ¦           GS0IEEx5gtrfa3P1I2TWobu8uMA=
+¦   ¦   ¦   ¦   ¦           hf7a8FFf9gE9Tdd7IAo5hAPwAnA=
+¦   ¦   ¦   ¦   ¦           HPD+LoiKEvF0CV8K1J8US1NNhak=
+¦   ¦   ¦   ¦   ¦           HUB5jifpjrVnwK6OEqtACxkJJRk=
+¦   ¦   ¦   ¦   ¦           iMPKFZnX2ABIejct276sPV_HCvM=
+¦   ¦   ¦   ¦   ¦           iWqCFdnBxhGp71JenoG0VmjnXek=
+¦   ¦   ¦   ¦   ¦           iyAyu9HwmnLh296Cr2h2Kjm96hk=
+¦   ¦   ¦   ¦   ¦           JfhYxnpusRhRukNcoVjNFy4eToM=
+¦   ¦   ¦   ¦   ¦           jXnZ6BcByMK1+xtIWZDCOJGRACU=
+¦   ¦   ¦   ¦   ¦           kGpni+WwNAVMT8wraGf+DMFgkGM=
+¦   ¦   ¦   ¦   ¦           lIcDVTJEaCx2RsJMLEF8as5N3dU=
+¦   ¦   ¦   ¦   ¦           MGF4wE3xkdEpijAKg5RA8Vl9Gr0=
+¦   ¦   ¦   ¦   ¦           MHxDSyyPrlGGBIZdINpwXdpPDdY=
+¦   ¦   ¦   ¦   ¦           MsU9L9Zun7lxNZr1iuuLN1mVzQo=
+¦   ¦   ¦   ¦   ¦           nHV5DsNEMZPOzdgIBzMp6R8brdU=
+¦   ¦   ¦   ¦   ¦           nkFRP72h68ZSEQPb2KHZ7pf5AbI=
+¦   ¦   ¦   ¦   ¦           nVpwG+I6akvQTjce3PUiDbK1Xes=
+¦   ¦   ¦   ¦   ¦           O214fW8AVZORD5y7S9VDicmWU88=
+¦   ¦   ¦   ¦   ¦           oA3cwHeVO0JWWiBmRVhg52Z+xVg=
+¦   ¦   ¦   ¦   ¦           OchDACGpHAcP3KXP5cKt84PaEcw=
+¦   ¦   ¦   ¦   ¦           p2MytFETE9OeMFmsSr+OgmbA4z4=
+¦   ¦   ¦   ¦   ¦           peLQp2lx+1mIs3DEAygGAAWI6Vk=
+¦   ¦   ¦   ¦   ¦           piTaNwYazokuuDZOUwOGk4X9JjU=
+¦   ¦   ¦   ¦   ¦           PsjYCdNWgXngTczq+FU77V9LuAg=
+¦   ¦   ¦   ¦   ¦           q9MSxdjP5gbKOGkcyLrjMU_pddA=
+¦   ¦   ¦   ¦   ¦           qH6BmhGolh3Kxk54mpOISyGp7IU=
+¦   ¦   ¦   ¦   ¦           QND91K+4PGbkb1Bn3_3IatCzgGo=
+¦   ¦   ¦   ¦   ¦           RFTMWt1_9+HeB3X0NA9muA0IlNc=
+¦   ¦   ¦   ¦   ¦           rMUuMSO4JbPA30WyfIN3+hwUkPk=
+¦   ¦   ¦   ¦   ¦           RQF57mcJIBtHdxVjuKuY0yzTuF0=
+¦   ¦   ¦   ¦   ¦           s6hTHSxW8Zl6pi5ww08qPVTyzzg=
+¦   ¦   ¦   ¦   ¦           sc1eo4mXWT9xRVBfXSK9SI+h9lc=
+¦   ¦   ¦   ¦   ¦           U9L5naY7QN1ZF9qVSfoMp4d68dc=
+¦   ¦   ¦   ¦   ¦           UeQ5S8RrOpIH3oClxmsNikpWaR8=
+¦   ¦   ¦   ¦   ¦           ULk0N+xoBKyQPup36wBeC5G1nDs=
+¦   ¦   ¦   ¦   ¦           uQDKrQ33EwJsBrpbFCCBEqhFY9c=
+¦   ¦   ¦   ¦   ¦           VmwLDgIvC1sKnDamXZm48btGnUg=
+¦   ¦   ¦   ¦   ¦           vn2cvmIv00s0iR89cDRBEtJOZ34=
+¦   ¦   ¦   ¦   ¦           WfoNF7UdYkixBNK089jQDVzqvu8=
+¦   ¦   ¦   ¦   ¦           WNjRIeJJ1Mb9BrMvahUf95NhPik=
+¦   ¦   ¦   ¦   ¦           wWGAa5DmXJPPDQMmyPQmm8rYvO8=
+¦   ¦   ¦   ¦   ¦           xvqRhqHzFkWO4+Lsl6cQexuTArE=
+¦   ¦   ¦   ¦   ¦           YJnqWq2IlP2NHfkfdcgNSYtEq94=
+¦   ¦   ¦   ¦   ¦           YVlT+ywY0eKU1h_th866hmcxJbA=
+¦   ¦   ¦   ¦   ¦           YWKRAutl0f3_Lym3_cPjIN7G+5k=
+¦   ¦   ¦   ¦   ¦           Z9CSVI+CIumVckLMogZq7OKX6K4=
+¦   ¦   ¦   ¦   ¦           Z9rf+c7uMnK7VnA7ISCnpsgzBNE=
+¦   ¦   ¦   ¦   ¦           zCQe6VeLI7IYXZEqE7wo14XBjx0=
+¦   ¦   ¦   ¦   ¦           Zw3Ni6lCPs8s7RMSam75qq59nlM=
+¦   ¦   ¦   ¦   ¦           _FP6_QsbjOM4hSz_G8NAYcHq1jc=
+¦   ¦   ¦   ¦   ¦           
+¦   ¦   ¦   ¦   +---mergeDebugAssets
+¦   ¦   ¦   ¦   ¦       merger.xml
+¦   ¦   ¦   ¦   ¦       
+¦   ¦   ¦   ¦   +---mergeDebugJniLibFolders
+¦   ¦   ¦   ¦   ¦       merger.xml
+¦   ¦   ¦   ¦   ¦       
+¦   ¦   ¦   ¦   +---mergeDebugShaders
+¦   ¦   ¦   ¦   ¦       merger.xml
+¦   ¦   ¦   ¦   ¦       
+¦   ¦   ¦   ¦   +---packageDebug
+¦   ¦   ¦   ¦       +---tmp
+¦   ¦   ¦   ¦           +---debug
+¦   ¦   ¦   ¦               ¦   dex-renamer-state.txt
+¦   ¦   ¦   ¦               ¦   
+¦   ¦   ¦   ¦               +---zip-cache
+¦   ¦   ¦   ¦                       androidResources
+¦   ¦   ¦   ¦                       javaResources0
+¦   ¦   ¦   ¦                       
+¦   ¦   ¦   +---javac
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---compileDebugJavaWithJavac
+¦   ¦   ¦   ¦           +---classes
+¦   ¦   ¦   ¦               +---com
+¦   ¦   ¦   ¦                   +---example
+¦   ¦   ¦   ¦                       +---music_project
+¦   ¦   ¦   ¦                           +---api
+¦   ¦   ¦   ¦                           ¦   ¦   ApiClient.class
+¦   ¦   ¦   ¦                           ¦   ¦   ApiService.class
+¦   ¦   ¦   ¦                           ¦   ¦   SpotifyApiClient.class
+¦   ¦   ¦   ¦                           ¦   ¦   
+¦   ¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦   ¦                           ¦           LoginResponse.class
+¦   ¦   ¦   ¦                           ¦           Playback.class
+¦   ¦   ¦   ¦                           ¦           SongListResponse$TrackItem.class
+¦   ¦   ¦   ¦                           ¦           SongListResponse.class
+¦   ¦   ¦   ¦                           ¦           
+¦   ¦   ¦   ¦                           +---controllers
+¦   ¦   ¦   ¦                           ¦       AlbumController.class
+¦   ¦   ¦   ¦                           ¦       ArtistController.class
+¦   ¦   ¦   ¦                           ¦       PlayerController$1.class
+¦   ¦   ¦   ¦                           ¦       PlayerController$PlayerStateCallback.class
+¦   ¦   ¦   ¦                           ¦       PlayerController$TrackCallback.class
+¦   ¦   ¦   ¦                           ¦       PlayerController$TrackDurationCallback.class
+¦   ¦   ¦   ¦                           ¦       PlayerController.class
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnPlaylistCreatedListener.class
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnPlaylistsLoadedListener.class
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnSongAddedToPlaylistListener.class
+¦   ¦   ¦   ¦                           ¦       PlaylistController.class
+¦   ¦   ¦   ¦                           ¦       SongController$1.class
+¦   ¦   ¦   ¦                           ¦       SongController.class
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserFetchedListener.class
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserLoggedInListener.class
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserLoggedOutListener.class
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserRegisteredListener.class
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserUpdatedListener.class
+¦   ¦   ¦   ¦                           ¦       UserController.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---database
+¦   ¦   ¦   ¦                           ¦       AppDatabase$1.class
+¦   ¦   ¦   ¦                           ¦       AppDatabase.class
+¦   ¦   ¦   ¦                           ¦       AppDatabase_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       AppDatabase_Impl.class
+¦   ¦   ¦   ¦                           ¦       Converters.class
+¦   ¦   ¦   ¦                           ¦       FavoriteDao.class
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl$2.class
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao.class
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       PlaylistDao.class
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$2.class
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$3.class
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao.class
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl$2.class
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       SongDao.class
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$2.class
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$3.class
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$4.class
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       UserDao.class
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$1.class
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$2.class
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$3.class
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---models
+¦   ¦   ¦   ¦                           ¦       Album.class
+¦   ¦   ¦   ¦                           ¦       Artist.class
+¦   ¦   ¦   ¦                           ¦       Favorite.class
+¦   ¦   ¦   ¦                           ¦       PlayHistory.class
+¦   ¦   ¦   ¦                           ¦       Playlist.class
+¦   ¦   ¦   ¦                           ¦       PlaylistSong.class
+¦   ¦   ¦   ¦                           ¦       Song.class
+¦   ¦   ¦   ¦                           ¦       User.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---receivers
+¦   ¦   ¦   ¦                           ¦       MusicControlReceiver.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---services
+¦   ¦   ¦   ¦                           ¦       MusicPlaybackService.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---ultils
+¦   ¦   ¦   ¦                           ¦       Constants.class
+¦   ¦   ¦   ¦                           ¦       NetworkUtils.class
+¦   ¦   ¦   ¦                           ¦       PermissionUtils.class
+¦   ¦   ¦   ¦                           ¦       TimeUtils.class
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---views
+¦   ¦   ¦   ¦                               +---activities
+¦   ¦   ¦   ¦                               ¦       LoginActivity$1.class
+¦   ¦   ¦   ¦                               ¦       LoginActivity.class
+¦   ¦   ¦   ¦                               ¦       MainActivity.class
+¦   ¦   ¦   ¦                               ¦       PlayerActivity$1.class
+¦   ¦   ¦   ¦                               ¦       PlayerActivity$2.class
+¦   ¦   ¦   ¦                               ¦       PlayerActivity.class
+¦   ¦   ¦   ¦                               ¦       ProfileActivity$1.class
+¦   ¦   ¦   ¦                               ¦       ProfileActivity$2.class
+¦   ¦   ¦   ¦                               ¦       ProfileActivity.class
+¦   ¦   ¦   ¦                               ¦       RegisterActivity$1.class
+¦   ¦   ¦   ¦                               ¦       RegisterActivity.class
+¦   ¦   ¦   ¦                               ¦       SettingsActivity.class
+¦   ¦   ¦   ¦                               ¦       SplashActivity$1.class
+¦   ¦   ¦   ¦                               ¦       SplashActivity.class
+¦   ¦   ¦   ¦                               ¦       
+¦   ¦   ¦   ¦                               +---adapters
+¦   ¦   ¦   ¦                               ¦       AlbumAdapter.class
+¦   ¦   ¦   ¦                               ¦       PlaylistAdapter.class
+¦   ¦   ¦   ¦                               ¦       SongAdapter$SongViewHolder.class
+¦   ¦   ¦   ¦                               ¦       SongAdapter.class
+¦   ¦   ¦   ¦                               ¦       
+¦   ¦   ¦   ¦                               +---fragments
+¦   ¦   ¦   ¦                                       HomeFragment$1.class
+¦   ¦   ¦   ¦                                       HomeFragment$2.class
+¦   ¦   ¦   ¦                                       HomeFragment$3.class
+¦   ¦   ¦   ¦                                       HomeFragment$4.class
+¦   ¦   ¦   ¦                                       HomeFragment.class
+¦   ¦   ¦   ¦                                       LibraryFragment.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$1.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$2.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$3.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$4$1.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$4.class
+¦   ¦   ¦   ¦                                       PlayerControlsFragment.class
+¦   ¦   ¦   ¦                                       SearchFragment.class
+¦   ¦   ¦   ¦                                       
+¦   ¦   ¦   +---java_res
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugJavaRes
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   ¦               +---com
+¦   ¦   ¦   ¦                   +---example
+¦   ¦   ¦   ¦                       +---music_project
+¦   ¦   ¦   ¦                           +---api
+¦   ¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦   ¦                           +---controllers
+¦   ¦   ¦   ¦                           +---database
+¦   ¦   ¦   ¦                           +---models
+¦   ¦   ¦   ¦                           +---receivers
+¦   ¦   ¦   ¦                           +---services
+¦   ¦   ¦   ¦                           +---ultils
+¦   ¦   ¦   ¦                           +---views
+¦   ¦   ¦   ¦                               +---activities
+¦   ¦   ¦   ¦                               +---adapters
+¦   ¦   ¦   ¦                               +---fragments
+¦   ¦   ¦   +---local_only_symbol_list
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---parseDebugLocalResources
+¦   ¦   ¦   ¦               R-def.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---manifest_merge_blame_file
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugMainManifest
+¦   ¦   ¦   ¦               manifest-merger-blame-debug-report.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---merged_java_res
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugJavaResource
+¦   ¦   ¦   ¦               base.jar
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---merged_jni_libs
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugJniLibFolders
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---merged_manifest
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugMainManifest
+¦   ¦   ¦   ¦               AndroidManifest.xml
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---merged_manifests
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugManifest
+¦   ¦   ¦   ¦               AndroidManifest.xml
+¦   ¦   ¦   ¦               output-metadata.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---merged_res
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   ¦   ¦               drawable_album_placeholder.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_back.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_home.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_launcher_background.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_launcher_foreground.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_library.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_pause.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_play.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_search.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_skip_next.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_skip_previous.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_splash.xml.flat
+¦   ¦   ¦   ¦               drawable_ic_user.xml.flat
+¦   ¦   ¦   ¦               drawable_splash_screen.xml.flat
+¦   ¦   ¦   ¦               layout_activity_login.xml.flat
+¦   ¦   ¦   ¦               layout_activity_main.xml.flat
+¦   ¦   ¦   ¦               layout_activity_player.xml.flat
+¦   ¦   ¦   ¦               layout_activity_profile.xml.flat
+¦   ¦   ¦   ¦               layout_activity_register.xml.flat
+¦   ¦   ¦   ¦               layout_activity_splash.xml.flat
+¦   ¦   ¦   ¦               layout_fragment_home.xml.flat
+¦   ¦   ¦   ¦               layout_fragment_library.xml.flat
+¦   ¦   ¦   ¦               layout_fragment_player_controls.xml.flat
+¦   ¦   ¦   ¦               layout_fragment_search.xml.flat
+¦   ¦   ¦   ¦               layout_item_album.xml.flat
+¦   ¦   ¦   ¦               layout_item_playlist.xml.flat
+¦   ¦   ¦   ¦               layout_item_song.xml.flat
+¦   ¦   ¦   ¦               layout_rv_library_songs.xml.flat
+¦   ¦   ¦   ¦               menu_bottom_navigation_menu.xml.flat
+¦   ¦   ¦   ¦               menu_user_menu.xml.flat
+¦   ¦   ¦   ¦               mipmap-anydpi-v26_ic_launcher.xml.flat
+¦   ¦   ¦   ¦               mipmap-anydpi-v26_ic_launcher_round.xml.flat
+¦   ¦   ¦   ¦               mipmap-hdpi_ic_launcher.webp.flat
+¦   ¦   ¦   ¦               mipmap-hdpi_ic_launcher_round.webp.flat
+¦   ¦   ¦   ¦               mipmap-mdpi_ic_launcher.webp.flat
+¦   ¦   ¦   ¦               mipmap-mdpi_ic_launcher_round.webp.flat
+¦   ¦   ¦   ¦               mipmap-xhdpi_ic_launcher.webp.flat
+¦   ¦   ¦   ¦               mipmap-xhdpi_ic_launcher_round.webp.flat
+¦   ¦   ¦   ¦               mipmap-xxhdpi_ic_launcher.webp.flat
+¦   ¦   ¦   ¦               mipmap-xxhdpi_ic_launcher_round.webp.flat
+¦   ¦   ¦   ¦               mipmap-xxxhdpi_ic_launcher.webp.flat
+¦   ¦   ¦   ¦               mipmap-xxxhdpi_ic_launcher_round.webp.flat
+¦   ¦   ¦   ¦               values-af_values-af.arsc.flat
+¦   ¦   ¦   ¦               values-am_values-am.arsc.flat
+¦   ¦   ¦   ¦               values-ar_values-ar.arsc.flat
+¦   ¦   ¦   ¦               values-as_values-as.arsc.flat
+¦   ¦   ¦   ¦               values-az_values-az.arsc.flat
+¦   ¦   ¦   ¦               values-b+es+419_values-b+es+419.arsc.flat
+¦   ¦   ¦   ¦               values-b+sr+Latn_values-b+sr+Latn.arsc.flat
+¦   ¦   ¦   ¦               values-be_values-be.arsc.flat
+¦   ¦   ¦   ¦               values-bg_values-bg.arsc.flat
+¦   ¦   ¦   ¦               values-bn_values-bn.arsc.flat
+¦   ¦   ¦   ¦               values-bs_values-bs.arsc.flat
+¦   ¦   ¦   ¦               values-ca_values-ca.arsc.flat
+¦   ¦   ¦   ¦               values-cs_values-cs.arsc.flat
+¦   ¦   ¦   ¦               values-da_values-da.arsc.flat
+¦   ¦   ¦   ¦               values-de_values-de.arsc.flat
+¦   ¦   ¦   ¦               values-el_values-el.arsc.flat
+¦   ¦   ¦   ¦               values-en-rAU_values-en-rAU.arsc.flat
+¦   ¦   ¦   ¦               values-en-rCA_values-en-rCA.arsc.flat
+¦   ¦   ¦   ¦               values-en-rGB_values-en-rGB.arsc.flat
+¦   ¦   ¦   ¦               values-en-rIN_values-en-rIN.arsc.flat
+¦   ¦   ¦   ¦               values-en-rXC_values-en-rXC.arsc.flat
+¦   ¦   ¦   ¦               values-es-rUS_values-es-rUS.arsc.flat
+¦   ¦   ¦   ¦               values-es_values-es.arsc.flat
+¦   ¦   ¦   ¦               values-et_values-et.arsc.flat
+¦   ¦   ¦   ¦               values-eu_values-eu.arsc.flat
+¦   ¦   ¦   ¦               values-fa_values-fa.arsc.flat
+¦   ¦   ¦   ¦               values-fi_values-fi.arsc.flat
+¦   ¦   ¦   ¦               values-fr-rCA_values-fr-rCA.arsc.flat
+¦   ¦   ¦   ¦               values-fr_values-fr.arsc.flat
+¦   ¦   ¦   ¦               values-gl_values-gl.arsc.flat
+¦   ¦   ¦   ¦               values-gu_values-gu.arsc.flat
+¦   ¦   ¦   ¦               values-h320dp-port-v13_values-h320dp-port-v13.arsc.flat
+¦   ¦   ¦   ¦               values-h360dp-land-v13_values-h360dp-land-v13.arsc.flat
+¦   ¦   ¦   ¦               values-h480dp-land-v13_values-h480dp-land-v13.arsc.flat
+¦   ¦   ¦   ¦               values-h550dp-port-v13_values-h550dp-port-v13.arsc.flat
+¦   ¦   ¦   ¦               values-h720dp-v13_values-h720dp-v13.arsc.flat
+¦   ¦   ¦   ¦               values-hdpi-v4_values-hdpi-v4.arsc.flat
+¦   ¦   ¦   ¦               values-hi_values-hi.arsc.flat
+¦   ¦   ¦   ¦               values-hr_values-hr.arsc.flat
+¦   ¦   ¦   ¦               values-hu_values-hu.arsc.flat
+¦   ¦   ¦   ¦               values-hy_values-hy.arsc.flat
+¦   ¦   ¦   ¦               values-in_values-in.arsc.flat
+¦   ¦   ¦   ¦               values-is_values-is.arsc.flat
+¦   ¦   ¦   ¦               values-it_values-it.arsc.flat
+¦   ¦   ¦   ¦               values-iw_values-iw.arsc.flat
+¦   ¦   ¦   ¦               values-ja_values-ja.arsc.flat
+¦   ¦   ¦   ¦               values-ka_values-ka.arsc.flat
+¦   ¦   ¦   ¦               values-kk_values-kk.arsc.flat
+¦   ¦   ¦   ¦               values-km_values-km.arsc.flat
+¦   ¦   ¦   ¦               values-kn_values-kn.arsc.flat
+¦   ¦   ¦   ¦               values-ko_values-ko.arsc.flat
+¦   ¦   ¦   ¦               values-ky_values-ky.arsc.flat
+¦   ¦   ¦   ¦               values-land_values-land.arsc.flat
+¦   ¦   ¦   ¦               values-large-v4_values-large-v4.arsc.flat
+¦   ¦   ¦   ¦               values-ldltr-v21_values-ldltr-v21.arsc.flat
+¦   ¦   ¦   ¦               values-ldrtl-v17_values-ldrtl-v17.arsc.flat
+¦   ¦   ¦   ¦               values-lo_values-lo.arsc.flat
+¦   ¦   ¦   ¦               values-lt_values-lt.arsc.flat
+¦   ¦   ¦   ¦               values-lv_values-lv.arsc.flat
+¦   ¦   ¦   ¦               values-mk_values-mk.arsc.flat
+¦   ¦   ¦   ¦               values-ml_values-ml.arsc.flat
+¦   ¦   ¦   ¦               values-mn_values-mn.arsc.flat
+¦   ¦   ¦   ¦               values-mr_values-mr.arsc.flat
+¦   ¦   ¦   ¦               values-ms_values-ms.arsc.flat
+¦   ¦   ¦   ¦               values-my_values-my.arsc.flat
+¦   ¦   ¦   ¦               values-nb_values-nb.arsc.flat
+¦   ¦   ¦   ¦               values-ne_values-ne.arsc.flat
+¦   ¦   ¦   ¦               values-night-v8_values-night-v8.arsc.flat
+¦   ¦   ¦   ¦               values-nl_values-nl.arsc.flat
+¦   ¦   ¦   ¦               values-or_values-or.arsc.flat
+¦   ¦   ¦   ¦               values-pa_values-pa.arsc.flat
+¦   ¦   ¦   ¦               values-pl_values-pl.arsc.flat
+¦   ¦   ¦   ¦               values-port_values-port.arsc.flat
+¦   ¦   ¦   ¦               values-pt-rBR_values-pt-rBR.arsc.flat
+¦   ¦   ¦   ¦               values-pt-rPT_values-pt-rPT.arsc.flat
+¦   ¦   ¦   ¦               values-pt_values-pt.arsc.flat
+¦   ¦   ¦   ¦               values-ro_values-ro.arsc.flat
+¦   ¦   ¦   ¦               values-ru_values-ru.arsc.flat
+¦   ¦   ¦   ¦               values-si_values-si.arsc.flat
+¦   ¦   ¦   ¦               values-sk_values-sk.arsc.flat
+¦   ¦   ¦   ¦               values-sl_values-sl.arsc.flat
+¦   ¦   ¦   ¦               values-small-v4_values-small-v4.arsc.flat
+¦   ¦   ¦   ¦               values-sq_values-sq.arsc.flat
+¦   ¦   ¦   ¦               values-sr_values-sr.arsc.flat
+¦   ¦   ¦   ¦               values-sv_values-sv.arsc.flat
+¦   ¦   ¦   ¦               values-sw600dp-v13_values-sw600dp-v13.arsc.flat
+¦   ¦   ¦   ¦               values-sw_values-sw.arsc.flat
+¦   ¦   ¦   ¦               values-ta_values-ta.arsc.flat
+¦   ¦   ¦   ¦               values-te_values-te.arsc.flat
+¦   ¦   ¦   ¦               values-th_values-th.arsc.flat
+¦   ¦   ¦   ¦               values-tl_values-tl.arsc.flat
+¦   ¦   ¦   ¦               values-tr_values-tr.arsc.flat
+¦   ¦   ¦   ¦               values-uk_values-uk.arsc.flat
+¦   ¦   ¦   ¦               values-ur_values-ur.arsc.flat
+¦   ¦   ¦   ¦               values-uz_values-uz.arsc.flat
+¦   ¦   ¦   ¦               values-v16_values-v16.arsc.flat
+¦   ¦   ¦   ¦               values-v17_values-v17.arsc.flat
+¦   ¦   ¦   ¦               values-v18_values-v18.arsc.flat
+¦   ¦   ¦   ¦               values-v21_values-v21.arsc.flat
+¦   ¦   ¦   ¦               values-v22_values-v22.arsc.flat
+¦   ¦   ¦   ¦               values-v23_values-v23.arsc.flat
+¦   ¦   ¦   ¦               values-v24_values-v24.arsc.flat
+¦   ¦   ¦   ¦               values-v25_values-v25.arsc.flat
+¦   ¦   ¦   ¦               values-v26_values-v26.arsc.flat
+¦   ¦   ¦   ¦               values-v28_values-v28.arsc.flat
+¦   ¦   ¦   ¦               values-v31_values-v31.arsc.flat
+¦   ¦   ¦   ¦               values-v34_values-v34.arsc.flat
+¦   ¦   ¦   ¦               values-vi_values-vi.arsc.flat
+¦   ¦   ¦   ¦               values-w320dp-land-v13_values-w320dp-land-v13.arsc.flat
+¦   ¦   ¦   ¦               values-w360dp-port-v13_values-w360dp-port-v13.arsc.flat
+¦   ¦   ¦   ¦               values-w400dp-port-v13_values-w400dp-port-v13.arsc.flat
+¦   ¦   ¦   ¦               values-w600dp-land-v13_values-w600dp-land-v13.arsc.flat
+¦   ¦   ¦   ¦               values-watch-v20_values-watch-v20.arsc.flat
+¦   ¦   ¦   ¦               values-watch-v21_values-watch-v21.arsc.flat
+¦   ¦   ¦   ¦               values-xlarge-v4_values-xlarge-v4.arsc.flat
+¦   ¦   ¦   ¦               values-zh-rCN_values-zh-rCN.arsc.flat
+¦   ¦   ¦   ¦               values-zh-rHK_values-zh-rHK.arsc.flat
+¦   ¦   ¦   ¦               values-zh-rTW_values-zh-rTW.arsc.flat
+¦   ¦   ¦   ¦               values-zu_values-zu.arsc.flat
+¦   ¦   ¦   ¦               values_values.arsc.flat
+¦   ¦   ¦   ¦               xml_backup_rules.xml.flat
+¦   ¦   ¦   ¦               xml_data_extraction_rules.xml.flat
+¦   ¦   ¦   ¦               xml_file_paths.xml.flat
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---merged_res_blame_folder
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   ¦               +---multi-v2
+¦   ¦   ¦   ¦               ¦       mergeDebugResources.json
+¦   ¦   ¦   ¦               ¦       values-af.json
+¦   ¦   ¦   ¦               ¦       values-am.json
+¦   ¦   ¦   ¦               ¦       values-ar.json
+¦   ¦   ¦   ¦               ¦       values-as.json
+¦   ¦   ¦   ¦               ¦       values-az.json
+¦   ¦   ¦   ¦               ¦       values-b+es+419.json
+¦   ¦   ¦   ¦               ¦       values-b+sr+Latn.json
+¦   ¦   ¦   ¦               ¦       values-be.json
+¦   ¦   ¦   ¦               ¦       values-bg.json
+¦   ¦   ¦   ¦               ¦       values-bn.json
+¦   ¦   ¦   ¦               ¦       values-bs.json
+¦   ¦   ¦   ¦               ¦       values-ca.json
+¦   ¦   ¦   ¦               ¦       values-cs.json
+¦   ¦   ¦   ¦               ¦       values-da.json
+¦   ¦   ¦   ¦               ¦       values-de.json
+¦   ¦   ¦   ¦               ¦       values-el.json
+¦   ¦   ¦   ¦               ¦       values-en-rAU.json
+¦   ¦   ¦   ¦               ¦       values-en-rCA.json
+¦   ¦   ¦   ¦               ¦       values-en-rGB.json
+¦   ¦   ¦   ¦               ¦       values-en-rIN.json
+¦   ¦   ¦   ¦               ¦       values-en-rXC.json
+¦   ¦   ¦   ¦               ¦       values-es-rUS.json
+¦   ¦   ¦   ¦               ¦       values-es.json
+¦   ¦   ¦   ¦               ¦       values-et.json
+¦   ¦   ¦   ¦               ¦       values-eu.json
+¦   ¦   ¦   ¦               ¦       values-fa.json
+¦   ¦   ¦   ¦               ¦       values-fi.json
+¦   ¦   ¦   ¦               ¦       values-fr-rCA.json
+¦   ¦   ¦   ¦               ¦       values-fr.json
+¦   ¦   ¦   ¦               ¦       values-gl.json
+¦   ¦   ¦   ¦               ¦       values-gu.json
+¦   ¦   ¦   ¦               ¦       values-h320dp-port-v13.json
+¦   ¦   ¦   ¦               ¦       values-h360dp-land-v13.json
+¦   ¦   ¦   ¦               ¦       values-h480dp-land-v13.json
+¦   ¦   ¦   ¦               ¦       values-h550dp-port-v13.json
+¦   ¦   ¦   ¦               ¦       values-h720dp-v13.json
+¦   ¦   ¦   ¦               ¦       values-hdpi-v4.json
+¦   ¦   ¦   ¦               ¦       values-hi.json
+¦   ¦   ¦   ¦               ¦       values-hr.json
+¦   ¦   ¦   ¦               ¦       values-hu.json
+¦   ¦   ¦   ¦               ¦       values-hy.json
+¦   ¦   ¦   ¦               ¦       values-in.json
+¦   ¦   ¦   ¦               ¦       values-is.json
+¦   ¦   ¦   ¦               ¦       values-it.json
+¦   ¦   ¦   ¦               ¦       values-iw.json
+¦   ¦   ¦   ¦               ¦       values-ja.json
+¦   ¦   ¦   ¦               ¦       values-ka.json
+¦   ¦   ¦   ¦               ¦       values-kk.json
+¦   ¦   ¦   ¦               ¦       values-km.json
+¦   ¦   ¦   ¦               ¦       values-kn.json
+¦   ¦   ¦   ¦               ¦       values-ko.json
+¦   ¦   ¦   ¦               ¦       values-ky.json
+¦   ¦   ¦   ¦               ¦       values-land.json
+¦   ¦   ¦   ¦               ¦       values-large-v4.json
+¦   ¦   ¦   ¦               ¦       values-ldltr-v21.json
+¦   ¦   ¦   ¦               ¦       values-ldrtl-v17.json
+¦   ¦   ¦   ¦               ¦       values-lo.json
+¦   ¦   ¦   ¦               ¦       values-lt.json
+¦   ¦   ¦   ¦               ¦       values-lv.json
+¦   ¦   ¦   ¦               ¦       values-mk.json
+¦   ¦   ¦   ¦               ¦       values-ml.json
+¦   ¦   ¦   ¦               ¦       values-mn.json
+¦   ¦   ¦   ¦               ¦       values-mr.json
+¦   ¦   ¦   ¦               ¦       values-ms.json
+¦   ¦   ¦   ¦               ¦       values-my.json
+¦   ¦   ¦   ¦               ¦       values-nb.json
+¦   ¦   ¦   ¦               ¦       values-ne.json
+¦   ¦   ¦   ¦               ¦       values-night-v8.json
+¦   ¦   ¦   ¦               ¦       values-nl.json
+¦   ¦   ¦   ¦               ¦       values-or.json
+¦   ¦   ¦   ¦               ¦       values-pa.json
+¦   ¦   ¦   ¦               ¦       values-pl.json
+¦   ¦   ¦   ¦               ¦       values-port.json
+¦   ¦   ¦   ¦               ¦       values-pt-rBR.json
+¦   ¦   ¦   ¦               ¦       values-pt-rPT.json
+¦   ¦   ¦   ¦               ¦       values-pt.json
+¦   ¦   ¦   ¦               ¦       values-ro.json
+¦   ¦   ¦   ¦               ¦       values-ru.json
+¦   ¦   ¦   ¦               ¦       values-si.json
+¦   ¦   ¦   ¦               ¦       values-sk.json
+¦   ¦   ¦   ¦               ¦       values-sl.json
+¦   ¦   ¦   ¦               ¦       values-small-v4.json
+¦   ¦   ¦   ¦               ¦       values-sq.json
+¦   ¦   ¦   ¦               ¦       values-sr.json
+¦   ¦   ¦   ¦               ¦       values-sv.json
+¦   ¦   ¦   ¦               ¦       values-sw.json
+¦   ¦   ¦   ¦               ¦       values-sw600dp-v13.json
+¦   ¦   ¦   ¦               ¦       values-ta.json
+¦   ¦   ¦   ¦               ¦       values-te.json
+¦   ¦   ¦   ¦               ¦       values-th.json
+¦   ¦   ¦   ¦               ¦       values-tl.json
+¦   ¦   ¦   ¦               ¦       values-tr.json
+¦   ¦   ¦   ¦               ¦       values-uk.json
+¦   ¦   ¦   ¦               ¦       values-ur.json
+¦   ¦   ¦   ¦               ¦       values-uz.json
+¦   ¦   ¦   ¦               ¦       values-v16.json
+¦   ¦   ¦   ¦               ¦       values-v17.json
+¦   ¦   ¦   ¦               ¦       values-v18.json
+¦   ¦   ¦   ¦               ¦       values-v21.json
+¦   ¦   ¦   ¦               ¦       values-v22.json
+¦   ¦   ¦   ¦               ¦       values-v23.json
+¦   ¦   ¦   ¦               ¦       values-v24.json
+¦   ¦   ¦   ¦               ¦       values-v25.json
+¦   ¦   ¦   ¦               ¦       values-v26.json
+¦   ¦   ¦   ¦               ¦       values-v28.json
+¦   ¦   ¦   ¦               ¦       values-v31.json
+¦   ¦   ¦   ¦               ¦       values-v34.json
+¦   ¦   ¦   ¦               ¦       values-vi.json
+¦   ¦   ¦   ¦               ¦       values-w320dp-land-v13.json
+¦   ¦   ¦   ¦               ¦       values-w360dp-port-v13.json
+¦   ¦   ¦   ¦               ¦       values-w400dp-port-v13.json
+¦   ¦   ¦   ¦               ¦       values-w600dp-land-v13.json
+¦   ¦   ¦   ¦               ¦       values-watch-v20.json
+¦   ¦   ¦   ¦               ¦       values-watch-v21.json
+¦   ¦   ¦   ¦               ¦       values-xlarge-v4.json
+¦   ¦   ¦   ¦               ¦       values-zh-rCN.json
+¦   ¦   ¦   ¦               ¦       values-zh-rHK.json
+¦   ¦   ¦   ¦               ¦       values-zh-rTW.json
+¦   ¦   ¦   ¦               ¦       values-zu.json
+¦   ¦   ¦   ¦               ¦       values.json
+¦   ¦   ¦   ¦               ¦       
+¦   ¦   ¦   ¦               +---single
+¦   ¦   ¦   ¦                       mergeDebugResources.json
+¦   ¦   ¦   ¦                       
+¦   ¦   ¦   +---merged_shaders
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugShaders
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---merged_startup_profile
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mergeDebugStartupProfile
+¦   ¦   ¦   +---mixed_scope_dex_archive
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---navigation_json
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---extractDeepLinksDebug
+¦   ¦   ¦   ¦               navigation.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---nested_resources_validation_report
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---generateDebugResources
+¦   ¦   ¦   ¦               nestedResourcesValidationReport.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---packaged_manifests
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugManifestForPackage
+¦   ¦   ¦   ¦               AndroidManifest.xml
+¦   ¦   ¦   ¦               output-metadata.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---packaged_res
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---packageDebugResources
+¦   ¦   ¦   ¦           +---drawable
+¦   ¦   ¦   ¦           ¦       album_placeholder.xml
+¦   ¦   ¦   ¦           ¦       ic_back.xml
+¦   ¦   ¦   ¦           ¦       ic_home.xml
+¦   ¦   ¦   ¦           ¦       ic_launcher_background.xml
+¦   ¦   ¦   ¦           ¦       ic_launcher_foreground.xml
+¦   ¦   ¦   ¦           ¦       ic_library.xml
+¦   ¦   ¦   ¦           ¦       ic_pause.xml
+¦   ¦   ¦   ¦           ¦       ic_play.xml
+¦   ¦   ¦   ¦           ¦       ic_search.xml
+¦   ¦   ¦   ¦           ¦       ic_skip_next.xml
+¦   ¦   ¦   ¦           ¦       ic_skip_previous.xml
+¦   ¦   ¦   ¦           ¦       ic_splash.xml
+¦   ¦   ¦   ¦           ¦       ic_user.xml
+¦   ¦   ¦   ¦           ¦       splash_screen.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---layout
+¦   ¦   ¦   ¦           ¦       activity_login.xml
+¦   ¦   ¦   ¦           ¦       activity_main.xml
+¦   ¦   ¦   ¦           ¦       activity_player.xml
+¦   ¦   ¦   ¦           ¦       activity_profile.xml
+¦   ¦   ¦   ¦           ¦       activity_register.xml
+¦   ¦   ¦   ¦           ¦       activity_splash.xml
+¦   ¦   ¦   ¦           ¦       fragment_home.xml
+¦   ¦   ¦   ¦           ¦       fragment_library.xml
+¦   ¦   ¦   ¦           ¦       fragment_player_controls.xml
+¦   ¦   ¦   ¦           ¦       fragment_search.xml
+¦   ¦   ¦   ¦           ¦       item_album.xml
+¦   ¦   ¦   ¦           ¦       item_playlist.xml
+¦   ¦   ¦   ¦           ¦       item_song.xml
+¦   ¦   ¦   ¦           ¦       rv_library_songs.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---menu
+¦   ¦   ¦   ¦           ¦       bottom_navigation_menu.xml
+¦   ¦   ¦   ¦           ¦       user_menu.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-anydpi-v26
+¦   ¦   ¦   ¦           ¦       ic_launcher.xml
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-hdpi-v4
+¦   ¦   ¦   ¦           ¦       ic_launcher.webp
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.webp
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-mdpi-v4
+¦   ¦   ¦   ¦           ¦       ic_launcher.webp
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.webp
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-xhdpi-v4
+¦   ¦   ¦   ¦           ¦       ic_launcher.webp
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.webp
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-xxhdpi-v4
+¦   ¦   ¦   ¦           ¦       ic_launcher.webp
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.webp
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---mipmap-xxxhdpi-v4
+¦   ¦   ¦   ¦           ¦       ic_launcher.webp
+¦   ¦   ¦   ¦           ¦       ic_launcher_round.webp
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---values
+¦   ¦   ¦   ¦           ¦       values.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---values-night-v8
+¦   ¦   ¦   ¦           ¦       values-night-v8.xml
+¦   ¦   ¦   ¦           ¦       
+¦   ¦   ¦   ¦           +---xml
+¦   ¦   ¦   ¦                   backup_rules.xml
+¦   ¦   ¦   ¦                   data_extraction_rules.xml
+¦   ¦   ¦   ¦                   file_paths.xml
+¦   ¦   ¦   ¦                   
+¦   ¦   ¦   +---processed_res
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   ¦                   output-metadata.json
+¦   ¦   ¦   ¦                   resources-debug.ap_
+¦   ¦   ¦   ¦                   
+¦   ¦   ¦   +---project_dex_archive
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_0.jar
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_1.jar
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_2.jar
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_3.jar
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_4.jar
+¦   ¦   ¦   ¦               ¦   3e4a149c55ae4ae6bcbb4dbe7e745e0400fc70e7f96c29d79fd8fd852b4bbb7e_5.jar
+¦   ¦   ¦   ¦               ¦   
+¦   ¦   ¦   ¦               +---com
+¦   ¦   ¦   ¦                   +---example
+¦   ¦   ¦   ¦                       +---music_project
+¦   ¦   ¦   ¦                           +---api
+¦   ¦   ¦   ¦                           ¦   ¦   ApiClient.dex
+¦   ¦   ¦   ¦                           ¦   ¦   ApiService.dex
+¦   ¦   ¦   ¦                           ¦   ¦   SpotifyApiClient.dex
+¦   ¦   ¦   ¦                           ¦   ¦   
+¦   ¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦   ¦                           ¦           LoginResponse.dex
+¦   ¦   ¦   ¦                           ¦           Playback.dex
+¦   ¦   ¦   ¦                           ¦           SongListResponse$TrackItem.dex
+¦   ¦   ¦   ¦                           ¦           SongListResponse.dex
+¦   ¦   ¦   ¦                           ¦           
+¦   ¦   ¦   ¦                           +---controllers
+¦   ¦   ¦   ¦                           ¦       AlbumController.dex
+¦   ¦   ¦   ¦                           ¦       ArtistController.dex
+¦   ¦   ¦   ¦                           ¦       PlayerController$1.dex
+¦   ¦   ¦   ¦                           ¦       PlayerController$PlayerStateCallback.dex
+¦   ¦   ¦   ¦                           ¦       PlayerController$TrackCallback.dex
+¦   ¦   ¦   ¦                           ¦       PlayerController$TrackDurationCallback.dex
+¦   ¦   ¦   ¦                           ¦       PlayerController.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnPlaylistCreatedListener.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnPlaylistsLoadedListener.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistController$OnSongAddedToPlaylistListener.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistController.dex
+¦   ¦   ¦   ¦                           ¦       SongController$1.dex
+¦   ¦   ¦   ¦                           ¦       SongController.dex
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserFetchedListener.dex
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserLoggedInListener.dex
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserLoggedOutListener.dex
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserRegisteredListener.dex
+¦   ¦   ¦   ¦                           ¦       UserController$OnUserUpdatedListener.dex
+¦   ¦   ¦   ¦                           ¦       UserController.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---database
+¦   ¦   ¦   ¦                           ¦       AppDatabase$1.dex
+¦   ¦   ¦   ¦                           ¦       AppDatabase.dex
+¦   ¦   ¦   ¦                           ¦       AppDatabase_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       AppDatabase_Impl.dex
+¦   ¦   ¦   ¦                           ¦       Converters.dex
+¦   ¦   ¦   ¦                           ¦       FavoriteDao.dex
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl$2.dex
+¦   ¦   ¦   ¦                           ¦       FavoriteDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao.dex
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       PlayHistoryDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistDao.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$2.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl$3.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl$2.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistSongDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       SongDao.dex
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$2.dex
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$3.dex
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl$4.dex
+¦   ¦   ¦   ¦                           ¦       SongDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       UserDao.dex
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$1.dex
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$2.dex
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl$3.dex
+¦   ¦   ¦   ¦                           ¦       UserDao_Impl.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---models
+¦   ¦   ¦   ¦                           ¦       Album.dex
+¦   ¦   ¦   ¦                           ¦       Artist.dex
+¦   ¦   ¦   ¦                           ¦       Favorite.dex
+¦   ¦   ¦   ¦                           ¦       PlayHistory.dex
+¦   ¦   ¦   ¦                           ¦       Playlist.dex
+¦   ¦   ¦   ¦                           ¦       PlaylistSong.dex
+¦   ¦   ¦   ¦                           ¦       Song.dex
+¦   ¦   ¦   ¦                           ¦       User.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---receivers
+¦   ¦   ¦   ¦                           ¦       MusicControlReceiver.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---services
+¦   ¦   ¦   ¦                           ¦       MusicPlaybackService.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---ultils
+¦   ¦   ¦   ¦                           ¦       Constants.dex
+¦   ¦   ¦   ¦                           ¦       NetworkUtils.dex
+¦   ¦   ¦   ¦                           ¦       PermissionUtils.dex
+¦   ¦   ¦   ¦                           ¦       TimeUtils.dex
+¦   ¦   ¦   ¦                           ¦       
+¦   ¦   ¦   ¦                           +---views
+¦   ¦   ¦   ¦                               +---activities
+¦   ¦   ¦   ¦                               ¦       LoginActivity$1.dex
+¦   ¦   ¦   ¦                               ¦       LoginActivity.dex
+¦   ¦   ¦   ¦                               ¦       MainActivity.dex
+¦   ¦   ¦   ¦                               ¦       PlayerActivity$1.dex
+¦   ¦   ¦   ¦                               ¦       PlayerActivity$2.dex
+¦   ¦   ¦   ¦                               ¦       PlayerActivity.dex
+¦   ¦   ¦   ¦                               ¦       ProfileActivity$1.dex
+¦   ¦   ¦   ¦                               ¦       ProfileActivity$2.dex
+¦   ¦   ¦   ¦                               ¦       ProfileActivity.dex
+¦   ¦   ¦   ¦                               ¦       RegisterActivity$1.dex
+¦   ¦   ¦   ¦                               ¦       RegisterActivity.dex
+¦   ¦   ¦   ¦                               ¦       SettingsActivity.dex
+¦   ¦   ¦   ¦                               ¦       SplashActivity$1.dex
+¦   ¦   ¦   ¦                               ¦       SplashActivity.dex
+¦   ¦   ¦   ¦                               ¦       
+¦   ¦   ¦   ¦                               +---adapters
+¦   ¦   ¦   ¦                               ¦       AlbumAdapter.dex
+¦   ¦   ¦   ¦                               ¦       PlaylistAdapter.dex
+¦   ¦   ¦   ¦                               ¦       SongAdapter$SongViewHolder.dex
+¦   ¦   ¦   ¦                               ¦       SongAdapter.dex
+¦   ¦   ¦   ¦                               ¦       
+¦   ¦   ¦   ¦                               +---fragments
+¦   ¦   ¦   ¦                                       HomeFragment$1.dex
+¦   ¦   ¦   ¦                                       HomeFragment$2.dex
+¦   ¦   ¦   ¦                                       HomeFragment$3.dex
+¦   ¦   ¦   ¦                                       HomeFragment$4.dex
+¦   ¦   ¦   ¦                                       HomeFragment.dex
+¦   ¦   ¦   ¦                                       LibraryFragment.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$1.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$2.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$3.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$4$1.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment$4.dex
+¦   ¦   ¦   ¦                                       PlayerControlsFragment.dex
+¦   ¦   ¦   ¦                                       SearchFragment.dex
+¦   ¦   ¦   ¦                                       
+¦   ¦   ¦   +---runtime_symbol_list
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦   ¦               R.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---signing_config_versions
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---writeDebugSigningConfigVersions
+¦   ¦   ¦   ¦               signing-config-versions.json
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---source_set_path_map
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---mapDebugSourceSetPaths
+¦   ¦   ¦   ¦               file-map.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---stable_resource_ids_file
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦   ¦               stableIds.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---sub_project_dex_archive
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦   ¦           +---out
+¦   ¦   ¦   +---symbol_list_with_package_name
+¦   ¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦   ¦               package-aware-r.txt
+¦   ¦   ¦   ¦               
+¦   ¦   ¦   +---validate_signing_config
+¦   ¦   ¦       +---debug
+¦   ¦   ¦           +---validateSigningDebug
+¦   ¦   +---outputs
+¦   ¦   ¦   +---logs
+¦   ¦   ¦           manifest-merger-debug-report.txt
+¦   ¦   ¦           
+¦   ¦   +---tmp
+¦   ¦       +---compileDebugJavaWithJavac
+¦   ¦           ¦   previous-compilation-data.bin
+¦   ¦           ¦   
+¦   ¦           +---compileTransaction
+¦   ¦               +---backup-dir
+¦   ¦               +---stash-dir
+¦   ¦                       HomeFragment$1.class.uniqueId5
+¦   ¦                       HomeFragment$2.class.uniqueId8
+¦   ¦                       HomeFragment$3.class.uniqueId3
+¦   ¦                       HomeFragment$4.class.uniqueId7
+¦   ¦                       HomeFragment.class.uniqueId9
+¦   ¦                       LibraryFragment.class.uniqueId6
+¦   ¦                       MainActivity.class.uniqueId2
+¦   ¦                       SearchFragment.class.uniqueId4
+¦   ¦                       SongController$1.class.uniqueId1
+¦   ¦                       SongController.class.uniqueId0
+¦   ¦                       
+¦   +---sampledata
+¦   +---src
+¦       +---androidTest
+¦       ¦   +---java
+¦       ¦       +---com
+¦       ¦           +---example
+¦       ¦               +---music_project
+¦       ¦                       ExampleInstrumentedTest.java
+¦       ¦                       
+¦       +---main
+¦       ¦   ¦   AndroidManifest.xml
+¦       ¦   ¦   
+¦       ¦   +---java
+¦       ¦   ¦   +---com
+¦       ¦   ¦       +---example
+¦       ¦   ¦           +---music_project
+¦       ¦   ¦               +---api
+¦       ¦   ¦               ¦   ¦   ApiClient.java
+¦       ¦   ¦               ¦   ¦   ApiService.java
+¦       ¦   ¦               ¦   ¦   SpotifyApiClient.java
+¦       ¦   ¦               ¦   ¦   
+¦       ¦   ¦               ¦   +---responses
+¦       ¦   ¦               ¦           LoginResponse.java
+¦       ¦   ¦               ¦           Playback.java
+¦       ¦   ¦               ¦           SongListResponse.java
+¦       ¦   ¦               ¦           
+¦       ¦   ¦               +---controllers
+¦       ¦   ¦               ¦       AlbumController.java
+¦       ¦   ¦               ¦       ArtistController.java
+¦       ¦   ¦               ¦       PlayerController.java
+¦       ¦   ¦               ¦       PlaylistController.java
+¦       ¦   ¦               ¦       SongController.java
+¦       ¦   ¦               ¦       UserController.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---database
+¦       ¦   ¦               ¦       AppDatabase.java
+¦       ¦   ¦               ¦       Converters.java
+¦       ¦   ¦               ¦       FavoriteDao.java
+¦       ¦   ¦               ¦       PlayHistoryDao.java
+¦       ¦   ¦               ¦       PlaylistDao.java
+¦       ¦   ¦               ¦       PlaylistSongDao.java
+¦       ¦   ¦               ¦       SongDao.java
+¦       ¦   ¦               ¦       UserDao.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---models
+¦       ¦   ¦               ¦       Album.java
+¦       ¦   ¦               ¦       Artist.java
+¦       ¦   ¦               ¦       Favorite.java
+¦       ¦   ¦               ¦       PlayHistory.java
+¦       ¦   ¦               ¦       Playlist.java
+¦       ¦   ¦               ¦       PlaylistSong.java
+¦       ¦   ¦               ¦       Song.java
+¦       ¦   ¦               ¦       User.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---receivers
+¦       ¦   ¦               ¦       MusicControlReceiver.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---services
+¦       ¦   ¦               ¦       MusicPlaybackService.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---ultils
+¦       ¦   ¦               ¦       Constants.java
+¦       ¦   ¦               ¦       NetworkUtils.java
+¦       ¦   ¦               ¦       PermissionUtils.java
+¦       ¦   ¦               ¦       TimeUtils.java
+¦       ¦   ¦               ¦       
+¦       ¦   ¦               +---views
+¦       ¦   ¦                   +---activities
+¦       ¦   ¦                   ¦       LoginActivity.java
+¦       ¦   ¦                   ¦       MainActivity.java
+¦       ¦   ¦                   ¦       PlayerActivity.java
+¦       ¦   ¦                   ¦       ProfileActivity.java
+¦       ¦   ¦                   ¦       RegisterActivity.java
+¦       ¦   ¦                   ¦       SettingsActivity.java
+¦       ¦   ¦                   ¦       SplashActivity.java
+¦       ¦   ¦                   ¦       
+¦       ¦   ¦                   +---adapters
+¦       ¦   ¦                   ¦       AlbumAdapter.java
+¦       ¦   ¦                   ¦       PlaylistAdapter.java
+¦       ¦   ¦                   ¦       SongAdapter.java
+¦       ¦   ¦                   ¦       
+¦       ¦   ¦                   +---fragments
+¦       ¦   ¦                           HomeFragment.java
+¦       ¦   ¦                           LibraryFragment.java
+¦       ¦   ¦                           PlayerControlsFragment.java
+¦       ¦   ¦                           SearchFragment.java
+¦       ¦   ¦                           
+¦       ¦   +---res
+¦       ¦       +---drawable
+¦       ¦       ¦       album_placeholder.xml
+¦       ¦       ¦       ic_back.xml
+¦       ¦       ¦       ic_home.xml
+¦       ¦       ¦       ic_launcher_background.xml
+¦       ¦       ¦       ic_launcher_foreground.xml
+¦       ¦       ¦       ic_library.xml
+¦       ¦       ¦       ic_pause.xml
+¦       ¦       ¦       ic_play.xml
+¦       ¦       ¦       ic_search.xml
+¦       ¦       ¦       ic_skip_next.xml
+¦       ¦       ¦       ic_skip_previous.xml
+¦       ¦       ¦       ic_splash.xml
+¦       ¦       ¦       ic_user.xml
+¦       ¦       ¦       splash_screen.xml
+¦       ¦       ¦       
+¦       ¦       +---layout
+¦       ¦       ¦       activity_login.xml
+¦       ¦       ¦       activity_main.xml
+¦       ¦       ¦       activity_player.xml
+¦       ¦       ¦       activity_profile.xml
+¦       ¦       ¦       activity_register.xml
+¦       ¦       ¦       activity_splash.xml
+¦       ¦       ¦       fragment_home.xml
+¦       ¦       ¦       fragment_library.xml
+¦       ¦       ¦       fragment_player_controls.xml
+¦       ¦       ¦       fragment_search.xml
+¦       ¦       ¦       item_album.xml
+¦       ¦       ¦       item_playlist.xml
+¦       ¦       ¦       item_song.xml
+¦       ¦       ¦       rv_library_songs.xml
+¦       ¦       ¦       
+¦       ¦       +---menu
+¦       ¦       ¦       bottom_navigation_menu.xml
+¦       ¦       ¦       user_menu.xml
+¦       ¦       ¦       
+¦       ¦       +---mipmap-anydpi-v26
+¦       ¦       ¦       ic_launcher.xml
+¦       ¦       ¦       ic_launcher_round.xml
+¦       ¦       ¦       
+¦       ¦       +---mipmap-hdpi
+¦       ¦       ¦       ic_launcher.webp
+¦       ¦       ¦       ic_launcher_round.webp
+¦       ¦       ¦       
+¦       ¦       +---mipmap-mdpi
+¦       ¦       ¦       ic_launcher.webp
+¦       ¦       ¦       ic_launcher_round.webp
+¦       ¦       ¦       
+¦       ¦       +---mipmap-xhdpi
+¦       ¦       ¦       ic_launcher.webp
+¦       ¦       ¦       ic_launcher_round.webp
+¦       ¦       ¦       
+¦       ¦       +---mipmap-xxhdpi
+¦       ¦       ¦       ic_launcher.webp
+¦       ¦       ¦       ic_launcher_round.webp
+¦       ¦       ¦       
+¦       ¦       +---mipmap-xxxhdpi
+¦       ¦       ¦       ic_launcher.webp
+¦       ¦       ¦       ic_launcher_round.webp
+¦       ¦       ¦       
+¦       ¦       +---values
+¦       ¦       ¦       colors.xml
+¦       ¦       ¦       dimens.xml
+¦       ¦       ¦       strings.xml
+¦       ¦       ¦       styles.xml
+¦       ¦       ¦       themes.xml
+¦       ¦       ¦       
+¦       ¦       +---values-night
+¦       ¦       ¦       themes.xml
+¦       ¦       ¦       
+¦       ¦       +---xml
+¦       ¦               backup_rules.xml
+¦       ¦               data_extraction_rules.xml
+¦       ¦               file_paths.xml
+¦       ¦               
+¦       +---test
+¦           +---java
+¦               +---com
+¦                   +---example
+¦                       +---music_project
+¦                               ExampleUnitTest.java
+¦                               
++---gradle
+¦   ¦   libs.versions.toml
+¦   ¦   
+¦   +---wrapper
+¦           gradle-wrapper.jar
+¦           gradle-wrapper.properties
+¦           
++---MusicProject
+        .gitattributes
+        .gitignore
+        

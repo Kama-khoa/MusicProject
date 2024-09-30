@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -40,8 +39,15 @@ dependencies {
     implementation(libs.room.common)
     implementation(libs.room.runtime)
     implementation(libs.adapters)
+    implementation(files("../spotify-app-remote-release-0.8.0.aar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
+    implementation(libs.circleimageview)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.gson)
+
 }

@@ -3,7 +3,7 @@ package com.example.music_project.api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class SpotifyApiClient {
     private static final String BASE_URL = "https://api.spotify.com/";
     private static Retrofit retrofit = null;
 

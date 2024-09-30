@@ -1,0 +1,24 @@
+ Volume in drive C is Windows-SSD
+ Volume Serial Number is D466-D3A5
+
+ Directory of C:\Users\Manh Hung\Desktop\MusicProject
+
+09/30/2024  06:04 PM    <DIR>          .
+09/20/2024  09:27 AM    <DIR>          ..
+09/13/2024  09:14 AM                68 .gitattributes
+09/13/2024  08:04 AM               225 .gitignore
+09/30/2024  04:35 PM    <DIR>          .gradle
+09/30/2024  05:58 PM    <DIR>          .idea
+09/30/2024  05:59 PM    <DIR>          app
+09/30/2024  05:37 PM               169 build.gradle.kts
+09/30/2024  05:49 PM    <DIR>          gradle
+09/13/2024  08:04 AM             1,255 gradle.properties
+09/13/2024  08:04 AM             5,766 gradlew
+09/13/2024  08:04 AM             2,763 gradlew.bat
+09/30/2024  06:04 PM                 0 list.txt
+09/13/2024  08:04 AM               453 local.properties
+09/13/2024  09:14 AM    <DIR>          MusicProject
+09/30/2024  05:45 PM               382 settings.gradle.kts
+09/30/2024  05:52 PM           132,749 spotify-app-remote-release-0.8.0.aar
+              10 File(s)        143,830 bytes
+               7 Dir(s)  141,308,706,816 bytes free

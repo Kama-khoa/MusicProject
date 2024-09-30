@@ -1,0 +1,342 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is D466-D3A5
+C:.
++---build
+¦   +---generated
+¦   ¦   +---ap_generated_sources
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---out
+¦   ¦   ¦           +---com
+¦   ¦   ¦               +---example
+¦   ¦   ¦                   +---music_project
+¦   ¦   ¦                       +---database
+¦   ¦   +---res
+¦   ¦       +---pngs
+¦   ¦       ¦   +---debug
+¦   ¦       +---resValues
+¦   ¦           +---debug
+¦   +---intermediates
+¦   ¦   +---aar_metadata_check
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---checkDebugAarMetadata
+¦   ¦   +---annotation_processor_list
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---javaPreCompileDebug
+¦   ¦   +---apk
+¦   ¦   ¦   +---debug
+¦   ¦   +---apk_ide_redirect_file
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---createDebugApkListingFileRedirect
+¦   ¦   +---app_metadata
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---writeDebugAppMetadata
+¦   ¦   +---assets
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugAssets
+¦   ¦   +---compatible_screen_manifest
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---createDebugCompatibleScreenManifests
+¦   ¦   +---compile_and_runtime_not_namespaced_r_class_jar
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugResources
+¦   ¦   +---compressed_assets
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---compressDebugAssets
+¦   ¦   ¦           +---out
+¦   ¦   +---data_binding_layout_info_type_merge
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   ¦           +---out
+¦   ¦   +---data_binding_layout_info_type_package
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---packageDebugResources
+¦   ¦   ¦           +---out
+¦   ¦   +---desugar_graph
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   ¦               +---currentProject
+¦   ¦   ¦               ¦   +---dirs_bucket_0
+¦   ¦   ¦               ¦   +---dirs_bucket_1
+¦   ¦   ¦               ¦   +---dirs_bucket_2
+¦   ¦   ¦               ¦   +---dirs_bucket_3
+¦   ¦   ¦               ¦   +---dirs_bucket_4
+¦   ¦   ¦               ¦   +---dirs_bucket_5
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_0
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_1
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_2
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_3
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_4
+¦   ¦   ¦               ¦   +---jar_7792cb6ab80efb801e3877e425cecda27c6c1a4b164328bf9f75170429c4dc99_bucket_5
+¦   ¦   ¦               +---externalLibs
+¦   ¦   ¦               +---mixedScopes
+¦   ¦   ¦               +---otherProjects
+¦   ¦   +---dex
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeExtDexDebug
+¦   ¦   ¦       +---mergeLibDexDebug
+¦   ¦   ¦       ¦   +---0
+¦   ¦   ¦       ¦   +---1
+¦   ¦   ¦       ¦   +---10
+¦   ¦   ¦       ¦   +---11
+¦   ¦   ¦       ¦   +---12
+¦   ¦   ¦       ¦   +---13
+¦   ¦   ¦       ¦   +---14
+¦   ¦   ¦       ¦   +---15
+¦   ¦   ¦       ¦   +---2
+¦   ¦   ¦       ¦   +---3
+¦   ¦   ¦       ¦   +---4
+¦   ¦   ¦       ¦   +---5
+¦   ¦   ¦       ¦   +---6
+¦   ¦   ¦       ¦   +---7
+¦   ¦   ¦       ¦   +---8
+¦   ¦   ¦       ¦   +---9
+¦   ¦   ¦       +---mergeProjectDexDebug
+¦   ¦   ¦           +---0
+¦   ¦   ¦           +---1
+¦   ¦   ¦           +---10
+¦   ¦   ¦           +---11
+¦   ¦   ¦           +---12
+¦   ¦   ¦           +---13
+¦   ¦   ¦           +---14
+¦   ¦   ¦           +---15
+¦   ¦   ¦           +---2
+¦   ¦   ¦           +---3
+¦   ¦   ¦           +---4
+¦   ¦   ¦           +---5
+¦   ¦   ¦           +---6
+¦   ¦   ¦           +---7
+¦   ¦   ¦           +---8
+¦   ¦   ¦           +---9
+¦   ¦   +---dex_archive_input_jar_hashes
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   +---dex_number_of_buckets_file
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   +---duplicate_classes_check
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---checkDebugDuplicateClasses
+¦   ¦   +---external_file_lib_dex_archives
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---desugarDebugFileDependencies
+¦   ¦   +---external_libs_dex_archive
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   +---external_libs_dex_archive_with_artifact_transforms
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   +---incremental
+¦   ¦   ¦   +---debug
+¦   ¦   ¦   ¦   +---mergeDebugResources
+¦   ¦   ¦   ¦   ¦   +---merged.dir
+¦   ¦   ¦   ¦   ¦   +---stripped.dir
+¦   ¦   ¦   ¦   +---packageDebugResources
+¦   ¦   ¦   ¦       +---merged.dir
+¦   ¦   ¦   ¦       +---stripped.dir
+¦   ¦   ¦   +---debug-mergeJavaRes
+¦   ¦   ¦   ¦   +---zip-cache
+¦   ¦   ¦   +---mergeDebugAssets
+¦   ¦   ¦   +---mergeDebugJniLibFolders
+¦   ¦   ¦   +---mergeDebugShaders
+¦   ¦   ¦   +---packageDebug
+¦   ¦   ¦       +---tmp
+¦   ¦   ¦           +---debug
+¦   ¦   ¦               +---zip-cache
+¦   ¦   +---javac
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---compileDebugJavaWithJavac
+¦   ¦   ¦           +---classes
+¦   ¦   ¦               +---com
+¦   ¦   ¦                   +---example
+¦   ¦   ¦                       +---music_project
+¦   ¦   ¦                           +---api
+¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦                           +---controllers
+¦   ¦   ¦                           +---database
+¦   ¦   ¦                           +---models
+¦   ¦   ¦                           +---receivers
+¦   ¦   ¦                           +---services
+¦   ¦   ¦                           +---ultils
+¦   ¦   ¦                           +---views
+¦   ¦   ¦                               +---activities
+¦   ¦   ¦                               +---adapters
+¦   ¦   ¦                               +---fragments
+¦   ¦   +---java_res
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugJavaRes
+¦   ¦   ¦           +---out
+¦   ¦   ¦               +---com
+¦   ¦   ¦                   +---example
+¦   ¦   ¦                       +---music_project
+¦   ¦   ¦                           +---api
+¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦                           +---controllers
+¦   ¦   ¦                           +---database
+¦   ¦   ¦                           +---models
+¦   ¦   ¦                           +---receivers
+¦   ¦   ¦                           +---services
+¦   ¦   ¦                           +---ultils
+¦   ¦   ¦                           +---views
+¦   ¦   ¦                               +---activities
+¦   ¦   ¦                               +---adapters
+¦   ¦   ¦                               +---fragments
+¦   ¦   +---local_only_symbol_list
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---parseDebugLocalResources
+¦   ¦   +---manifest_merge_blame_file
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugMainManifest
+¦   ¦   +---merged_java_res
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugJavaResource
+¦   ¦   +---merged_jni_libs
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugJniLibFolders
+¦   ¦   ¦           +---out
+¦   ¦   +---merged_manifest
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugMainManifest
+¦   ¦   +---merged_manifests
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugManifest
+¦   ¦   +---merged_res
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   +---merged_res_blame_folder
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugResources
+¦   ¦   ¦           +---out
+¦   ¦   ¦               +---multi-v2
+¦   ¦   ¦               +---single
+¦   ¦   +---merged_shaders
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugShaders
+¦   ¦   ¦           +---out
+¦   ¦   +---merged_startup_profile
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mergeDebugStartupProfile
+¦   ¦   +---mixed_scope_dex_archive
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   +---navigation_json
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---extractDeepLinksDebug
+¦   ¦   +---nested_resources_validation_report
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---generateDebugResources
+¦   ¦   +---packaged_manifests
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugManifestForPackage
+¦   ¦   +---packaged_res
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---packageDebugResources
+¦   ¦   ¦           +---drawable
+¦   ¦   ¦           +---layout
+¦   ¦   ¦           +---menu
+¦   ¦   ¦           +---mipmap-anydpi-v26
+¦   ¦   ¦           +---mipmap-hdpi-v4
+¦   ¦   ¦           +---mipmap-mdpi-v4
+¦   ¦   ¦           +---mipmap-xhdpi-v4
+¦   ¦   ¦           +---mipmap-xxhdpi-v4
+¦   ¦   ¦           +---mipmap-xxxhdpi-v4
+¦   ¦   ¦           +---values
+¦   ¦   ¦           +---values-night-v8
+¦   ¦   ¦           +---xml
+¦   ¦   +---processed_res
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugResources
+¦   ¦   ¦           +---out
+¦   ¦   +---project_dex_archive
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   ¦               +---com
+¦   ¦   ¦                   +---example
+¦   ¦   ¦                       +---music_project
+¦   ¦   ¦                           +---api
+¦   ¦   ¦                           ¦   +---responses
+¦   ¦   ¦                           +---controllers
+¦   ¦   ¦                           +---database
+¦   ¦   ¦                           +---models
+¦   ¦   ¦                           +---receivers
+¦   ¦   ¦                           +---services
+¦   ¦   ¦                           +---ultils
+¦   ¦   ¦                           +---views
+¦   ¦   ¦                               +---activities
+¦   ¦   ¦                               +---adapters
+¦   ¦   ¦                               +---fragments
+¦   ¦   +---runtime_symbol_list
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugResources
+¦   ¦   +---signing_config_versions
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---writeDebugSigningConfigVersions
+¦   ¦   +---source_set_path_map
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---mapDebugSourceSetPaths
+¦   ¦   +---stable_resource_ids_file
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugResources
+¦   ¦   +---sub_project_dex_archive
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---dexBuilderDebug
+¦   ¦   ¦           +---out
+¦   ¦   +---symbol_list_with_package_name
+¦   ¦   ¦   +---debug
+¦   ¦   ¦       +---processDebugResources
+¦   ¦   +---validate_signing_config
+¦   ¦       +---debug
+¦   ¦           +---validateSigningDebug
+¦   +---outputs
+¦   ¦   +---logs
+¦   +---tmp
+¦       +---compileDebugJavaWithJavac
+¦           +---compileTransaction
+¦               +---backup-dir
+¦               +---stash-dir
++---sampledata
++---src
+    +---androidTest
+    ¦   +---java
+    ¦       +---com
+    ¦           +---example
+    ¦               +---music_project
+    +---main
+    ¦   +---java
+    ¦   ¦   +---com
+    ¦   ¦       +---example
+    ¦   ¦           +---music_project
+    ¦   ¦               +---api
+    ¦   ¦               ¦   +---responses
+    ¦   ¦               +---controllers
+    ¦   ¦               +---database
+    ¦   ¦               +---models
+    ¦   ¦               +---receivers
+    ¦   ¦               +---services
+    ¦   ¦               +---ultils
+    ¦   ¦               +---views
+    ¦   ¦                   +---activities
+    ¦   ¦                   +---adapters
+    ¦   ¦                   +---fragments
+    ¦   +---res
+    ¦       +---drawable
+    ¦       +---layout
+    ¦       +---menu
+    ¦       +---mipmap-anydpi-v26
+    ¦       +---mipmap-hdpi
+    ¦       +---mipmap-mdpi
+    ¦       +---mipmap-xhdpi
+    ¦       +---mipmap-xxhdpi
+    ¦       +---mipmap-xxxhdpi
+    ¦       +---values
+    ¦       +---values-night
+    ¦       +---xml
+    +---test
+        +---java
+            +---com
+                +---example
+                    +---music_project

@@ -1,0 +1,76 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is D466-D3A5
+C:.
+¦   structure.txt
+¦   
++---api
+¦   ¦   ApiClient.java
+¦   ¦   ApiService.java
+¦   ¦   SpotifyApiClient.java
+¦   ¦   
+¦   +---responses
+¦           LoginResponse.java
+¦           Playback.java
+¦           SongListResponse.java
+¦           
++---controllers
+¦       AlbumController.java
+¦       ArtistController.java
+¦       PlayerController.java
+¦       PlaylistController.java
+¦       SongController.java
+¦       UserController.java
+¦       
++---database
+¦       AppDatabase.java
+¦       Converters.java
+¦       FavoriteDao.java
+¦       PlayHistoryDao.java
+¦       PlaylistDao.java
+¦       PlaylistSongDao.java
+¦       SongDao.java
+¦       UserDao.java
+¦       
++---models
+¦       Album.java
+¦       Artist.java
+¦       Favorite.java
+¦       PlayHistory.java
+¦       Playlist.java
+¦       PlaylistSong.java
+¦       Song.java
+¦       User.java
+¦       
++---receivers
+¦       MusicControlReceiver.java
+¦       
++---services
+¦       MusicPlaybackService.java
+¦       
++---ultils
+¦       Constants.java
+¦       NetworkUtils.java
+¦       PermissionUtils.java
+¦       TimeUtils.java
+¦       
++---views
+    +---activities
+    ¦       LoginActivity.java
+    ¦       MainActivity.java
+    ¦       PlayerActivity.java
+    ¦       ProfileActivity.java
+    ¦       RegisterActivity.java
+    ¦       SettingsActivity.java
+    ¦       SplashActivity.java
+    ¦       
+    +---adapters
+    ¦       AlbumAdapter.java
+    ¦       PlaylistAdapter.java
+    ¦       SongAdapter.java
+    ¦       
+    +---fragments
+            HomeFragment.java
+            LibraryFragment.java
+            PlayerControlsFragment.java
+            SearchFragment.java
+            

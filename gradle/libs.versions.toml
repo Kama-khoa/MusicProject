@@ -11,7 +11,11 @@ roomCommon = "2.6.1"
 roomRuntime = "2.6.1"
 roomCompiler = "2.6.1"
 adapters = "3.2.0-alpha11"
-
+glide = "4.12.0"
+circleimageview = "3.1.0"
+spotify = "0.7.2"
+retrofit = "2.9.0"
+okhttp = "4.10.0"
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -24,7 +28,20 @@ room-common = { group = "androidx.room", name = "room-common", version.ref = "ro
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 adapters = { group = "androidx.databinding", name = "adapters", version.ref = "adapters" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+
+spotify-auth = { group = "com.spotify.android", name = "spotify-auth", version.ref = "spotify" }
+spotify-player = { group = "com.spotify.android", name = "spotify-player", version.ref = "spotify" }
+
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 
+[bundles]
+spotify = ["spotify-auth", "spotify-player"]
+retrofit = ["retrofit-core", "retrofit-gson"]

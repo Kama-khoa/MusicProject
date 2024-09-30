@@ -20,7 +20,7 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
 
-        songController = new SongController(getContext());
+//        songController = new SongController(getContext());
 //        rvLibrarySongs = view.findViewById(R.id.rv_library_songs);
 
         // Nếu bạn chưa set LayoutManager trong XML, bạn có thể set nó ở đây

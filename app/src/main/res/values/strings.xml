@@ -33,4 +33,11 @@
     <string name="no_popular_songs">Không có bài hát phổ biến</string>
     <string name="failed_load_recent_songs">Không thể tải bài hát gần đây: %1$s</string>
     <string name="failed_load_popular_songs">Không thể tải bài hát phổ biến: %1$s</string>
+
+    <string name="album_cover">Album Cover</string>
+    <string name="previous_track">Previous Track</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="next_track">Next Track</string>
+    <string name="no_top_spotify_songs">No top songs</string>
+    <string name="failed_load_spotify_songs">Failed load songs</string>
 </resources>

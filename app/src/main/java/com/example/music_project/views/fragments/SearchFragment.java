@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_project.R;
 import com.example.music_project.controllers.SongController;
+import com.example.music_project.database.SongDao;
 import com.example.music_project.views.adapters.SongAdapter;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        songController = new SongController(getContext());
+//        songController = new SongController((SongDao) getContext());
 //        etSearch = view.findViewById(R.id.et_search);
 //        btnSearch = view.findViewById(R.id.btn_search);
 //        rvSearchResults = view.findViewById(R.id.rv_search_results);

@@ -1,92 +1,77 @@
 package com.example.music_project.controllers;
 
-import android.content.Context;
-
-import com.example.music_project.database.AppDatabase;
+import com.example.music_project.api.ApiService;
+import com.example.music_project.api.SpotifyApiClient;
+import com.example.music_project.api.responses.SongListResponse;
+import com.example.music_project.database.SongDao;
 import com.example.music_project.models.Song;
 
+import java.util.ArrayList;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SongController {
-    private AppDatabase database;
+    private ApiService apiService;
+    private SongDao songDao;
     private ExecutorService executorService;
 
-    public SongController(Context context) {
-        database = AppDatabase.getInstance(context);
-        executorService = Executors.newSingleThreadExecutor();
+    public SongController(SongDao songDao) {
+        this.apiService = SpotifyApiClient.getClient().create(ApiService.class);
+        this.songDao = songDao;
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void getAllSongs(final OnSongOperationListener listener) {
-        executorService.execute(() -> {
-            try {
-                List<Song> songs = database.songDao().getAllSongs();
-                listener.onComplete(new Result.Success<>(songs));
-            } catch (Exception e) {
-                listener.onComplete(new Result.Error(e.getMessage()));
-            }
-        });
+//    public void fetchAndSaveTracks(String accessToken) {
+//        apiService.getSavedTracks("Bearer " + accessToken).enqueue(new Callback<SongListResponse>() {
+//            @Override
+//            public void onResponse(Call<SongListResponse> call, Response<SongListResponse> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    List<Song> songs = new ArrayList<>();
+//                    for (SongListResponse.TrackItem item : response.body().getItems()) {
+//                        songs.add(item.getTrack());
+//                    }
+//                    saveSongsToDatabase(songs);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<SongListResponse> call, Throwable t) {
+//                // Handle error
+//            }
+//        });
+//    }
+
+    private void saveSongsToDatabase(List<Song> songs) {
+        executorService.execute(() -> songDao.insertAll(songs));
     }
 
-    public void addSong(Song song, final OnSongOperationListener listener) {
-        executorService.execute(() -> {
-            try {
-                long songId = database.songDao().insert(song);
-                if (songId > 0) {
-                    listener.onComplete(new Result.Success<>(null));
-                } else {
-                    listener.onComplete(new Result.Error("Failed to add song"));
-                }
-            } catch (Exception e) {
-                listener.onComplete(new Result.Error(e.getMessage()));
-            }
-        });
+    public List<Song> getLocalSongs() {
+        return songDao.getAllSongs();
     }
 
-    public void getRecentSongs(final OnSongOperationListener listener) {
-        executorService.execute(() -> {
-            try {
-                List<Song> recentSongs = database.songDao().getRecentSongs();
-                listener.onComplete(new Result.Success<>(recentSongs));
-            } catch (Exception e) {
-                listener.onComplete(new Result.Error(e.getMessage()));
-            }
-        });
+    public Song getSong(String id) {
+        return songDao.getItem(id);
     }
 
-    public void getPopularSongs(final OnSongOperationListener listener) {
-        executorService.execute(() -> {
-            try {
-                List<Song> popularSongs = database.songDao().getPopularSongs();
-                listener.onComplete(new Result.Success<>(popularSongs));
-            } catch (Exception e) {
-                listener.onComplete(new Result.Error(e.getMessage()));
-            }
-        });
-    }
+//    public void getRecentSongs(final Callback<List<Song>> callback) {
+//        executorService.execute(() -> {
+//            try {
+//                // Assume we want to get the 10 most recent songs
+//                List<Song> recentSongs = songDao.getRecentSongs(10);
+//                callback.onSuccess(recentSongs);
+//            } catch (Exception e) {
+//                callback.onError(e.getMessage());
+//            }
+//        });
+//    }
 
-    public interface OnSongOperationListener {
-        void onComplete(Result result);
-    }
-
-    public static class Result {
-        private Result() {}
-
-        public static final class Success<T> extends Result {
-            public T data;
-
-            public Success(T data) {
-                this.data = data;
-            }
-        }
-
-        public static final class Error extends Result {
-            public String error;
-
-            public Error(String error) {
-                this.error = error;
-            }
-        }
+    public interface Callback<T> {
+        void onSuccess(T result);
+        void onError(String error);
     }
 }
