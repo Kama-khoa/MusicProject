@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Username input field -->
     <EditText
         android:id="@+id/et_username"
         android:layout_width="match_parent"

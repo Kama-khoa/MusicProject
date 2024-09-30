@@ -21,6 +21,12 @@ public interface SongDao {
     @Query("SELECT * FROM Songs WHERE Artist = :artist")
     List<Song> getSongsByArtist(String artist);
 
+    @Query("SELECT * FROM songs ") // Lấy 10 bài hát gần đây ORDER BY created_at DESC LIMIT 10
+    List<Song> getRecentSongs();
+
+    @Query("SELECT * FROM Songs") // Lấy 10 bài hát phổ biến  ORDER BY play_count DESC LIMIT 10
+    List<Song> getPopularSongs();
+
     @Insert
     long insert(Song song);
 

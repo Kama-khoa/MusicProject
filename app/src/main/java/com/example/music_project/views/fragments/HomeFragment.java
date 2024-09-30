@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_project.R;
 import com.example.music_project.controllers.SongController;
@@ -23,6 +24,10 @@ public class HomeFragment extends Fragment {
         rvRecentSongs = view.findViewById(R.id.rv_recent_songs);
         rvPopularSongs = view.findViewById(R.id.rv_popular_songs);
 
+        // Thiết lập LayoutManager cho RecyclerView
+        rvRecentSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvPopularSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
         loadRecentSongs();
         loadPopularSongs();
 
@@ -31,16 +36,23 @@ public class HomeFragment extends Fragment {
 
     private void loadRecentSongs() {
         songController.getRecentSongs(songs -> {
-            SongAdapter adapter = new SongAdapter(songs);
-            rvRecentSongs.setAdapter(adapter);
+            if (songs != null && !songs.isEmpty()) {
+                SongAdapter adapter = new SongAdapter(songs);
+                rvRecentSongs.setAdapter(adapter);
+            } else {
+
+            }
         });
     }
 
     private void loadPopularSongs() {
         songController.getPopularSongs(songs -> {
-            SongAdapter adapter = new SongAdapter(songs);
-            rvPopularSongs.setAdapter(adapter);
+            if (songs != null && !songs.isEmpty()) {
+                SongAdapter adapter = new SongAdapter(songs);
+                rvPopularSongs.setAdapter(adapter);
+            } else {
+
+            }
         });
     }
 }
-

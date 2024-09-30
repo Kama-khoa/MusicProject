@@ -102,4 +102,8 @@ public class Song {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getSongUrl() {
+        return filePath;
+    }
 }

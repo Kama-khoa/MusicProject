@@ -1,5 +1,17 @@
 <resources>
-    <string name="app_name">music-project</string>
+    <string name="song_cover">SongCover</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">User Name</string>
+    <string name="password">Password</string>
     <string name="recent_songs">Recent Songs</string>
     <string name="popular_songs">Popular Songs</string>
+    <string name="app_name">Music Project</string>
+    <string name="album_art">Album Art</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="song_title">Song Title</string>
+    <string name="artist_name">Artist Name</string>
 </resources>

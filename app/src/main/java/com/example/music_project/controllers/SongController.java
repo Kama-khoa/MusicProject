@@ -36,10 +36,17 @@ public class SongController {
         });
     }
 
-    public void getRecentSongs(Object o) {
+    public void getRecentSongs(final OnSongsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Song> recentSongs = database.songDao().getRecentSongs(); // Gọi phương thức trong DAO
+            listener.onSongsLoaded(recentSongs); // Trả về danh sách bài hát gần đây
+        });
     }
-
-    public void getPopularSongs(Object o) {
+    public void getPopularSongs(final OnSongsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Song> popularSongs = database.songDao().getPopularSongs(); // Gọi phương thức trong DAO
+            listener.onSongsLoaded(popularSongs); // Trả về danh sách bài hát phổ biến
+        });
     }
 
     public interface OnSongsLoadedListener {

@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        // Set HomeFragment as the default
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
     }
@@ -28,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;
+                int itemId = item.getItemId();
 
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        selectedFragment = new HomeFragment();
-                        break;
-                    case R.id.nav_library:
-                        selectedFragment = new LibraryFragment();
-                        break;
-                    case R.id.nav_search:
-                        selectedFragment = new SearchFragment();
-                        break;
+                if (itemId == R.id.nav_home) {
+                    selectedFragment = new HomeFragment();
+                } else if (itemId == R.id.nav_library) {
+                    selectedFragment = new LibraryFragment();
+                } else if (itemId == R.id.nav_search) {
+                    selectedFragment = new SearchFragment();
+                } else {
+                    return false;
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
