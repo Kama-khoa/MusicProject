@@ -18,43 +18,75 @@ public class SongController {
         executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void getAllSongs(final OnSongsLoadedListener listener) {
+    public void getAllSongs(final OnSongOperationListener listener) {
         executorService.execute(() -> {
-            List<Song> songs = database.songDao().getAllSongs();
-            listener.onSongsLoaded(songs);
-        });
-    }
-
-    public void addSong(Song song, final OnSongAddedListener listener) {
-        executorService.execute(() -> {
-            long songId = database.songDao().insert(song);
-            if (songId > 0) {
-                listener.onSuccess();
-            } else {
-                listener.onFailure("Failed to add song");
+            try {
+                List<Song> songs = database.songDao().getAllSongs();
+                listener.onComplete(new Result.Success<>(songs));
+            } catch (Exception e) {
+                listener.onComplete(new Result.Error(e.getMessage()));
             }
         });
     }
 
-    public void getRecentSongs(final OnSongsLoadedListener listener) {
+    public void addSong(Song song, final OnSongOperationListener listener) {
         executorService.execute(() -> {
-            List<Song> recentSongs = database.songDao().getRecentSongs(); // Gọi phương thức trong DAO
-            listener.onSongsLoaded(recentSongs); // Trả về danh sách bài hát gần đây
-        });
-    }
-    public void getPopularSongs(final OnSongsLoadedListener listener) {
-        executorService.execute(() -> {
-            List<Song> popularSongs = database.songDao().getPopularSongs(); // Gọi phương thức trong DAO
-            listener.onSongsLoaded(popularSongs); // Trả về danh sách bài hát phổ biến
+            try {
+                long songId = database.songDao().insert(song);
+                if (songId > 0) {
+                    listener.onComplete(new Result.Success<>(null));
+                } else {
+                    listener.onComplete(new Result.Error("Failed to add song"));
+                }
+            } catch (Exception e) {
+                listener.onComplete(new Result.Error(e.getMessage()));
+            }
         });
     }
 
-    public interface OnSongsLoadedListener {
-        void onSongsLoaded(List<Song> songs);
+    public void getRecentSongs(final OnSongOperationListener listener) {
+        executorService.execute(() -> {
+            try {
+                List<Song> recentSongs = database.songDao().getRecentSongs();
+                listener.onComplete(new Result.Success<>(recentSongs));
+            } catch (Exception e) {
+                listener.onComplete(new Result.Error(e.getMessage()));
+            }
+        });
     }
 
-    public interface OnSongAddedListener {
-        void onSuccess();
-        void onFailure(String error);
+    public void getPopularSongs(final OnSongOperationListener listener) {
+        executorService.execute(() -> {
+            try {
+                List<Song> popularSongs = database.songDao().getPopularSongs();
+                listener.onComplete(new Result.Success<>(popularSongs));
+            } catch (Exception e) {
+                listener.onComplete(new Result.Error(e.getMessage()));
+            }
+        });
+    }
+
+    public interface OnSongOperationListener {
+        void onComplete(Result result);
+    }
+
+    public static class Result {
+        private Result() {}
+
+        public static final class Success<T> extends Result {
+            public T data;
+
+            public Success(T data) {
+                this.data = data;
+            }
+        }
+
+        public static final class Error extends Result {
+            public String error;
+
+            public Error(String error) {
+                this.error = error;
+            }
+        }
     }
 }

@@ -39,6 +39,10 @@
         <activity android:name=".views.activities.SettingsActivity"
             android:exported="false" />
         <activity android:name=".views.activities.RegisterActivity" />
+        <activity
+            android:name=".views.activities.ProfileActivity"
+            android:label="@string/profile_activity_title" />
+
         <!-- Services -->
         <service android:name=".services.MusicPlaybackService" />
 

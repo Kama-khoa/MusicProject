@@ -3,8 +3,7 @@ package com.example.music_project.controllers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.example.music_project.database.AppDatabase;
-import com.example.music_project.models.*;
-import java.util.List;
+import com.example.music_project.models.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

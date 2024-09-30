@@ -26,15 +26,15 @@ public class LibraryFragment extends Fragment {
         // Nếu bạn chưa set LayoutManager trong XML, bạn có thể set nó ở đây
         // rvLibrarySongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        loadLibrarySongs();
+//        loadLibrarySongs();
 
         return view;
     }
 
-    private void loadLibrarySongs() {
-        songController.getAllSongs(songs -> {
-            SongAdapter adapter = new SongAdapter(songs);
-            rvLibrarySongs.setAdapter(adapter);
-        });
-    }
+//    private void loadLibrarySongs() {
+//        songController.getAllSongs(songs -> {
+//            SongAdapter adapter = new SongAdapter(songs);
+//            rvLibrarySongs.setAdapter(adapter);
+//        });
+//    }
 }

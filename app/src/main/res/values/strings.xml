@@ -16,6 +16,21 @@
     <string name="previous">Previous</string>
     <string name="song_title">Song Title</string>
     <string name="artist_name">Artist Name</string>
-    <string name="no_recent_songs">No recent songs available</string>
-    <string name="no_popular_songs">No popular songs available</string>
+
+    <string name="profile_username">Username:</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_activity_title">User Profile</string>
+    <!-- Login and User related strings -->
+    <string name="logout">Đăng xuất</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="settings">Cài đặt</string>
+    <string name="logout_successful">Đăng xuất thành công</string>
+    <string name="logout_failed">Đăng xuất thất bại: %1$s</string>
+    <string name="failed_load_profile">Không thể tải hồ sơ: %1$s</string>
+
+    <!-- Song related strings -->
+    <string name="no_recent_songs">Không có bài hát gần đây</string>
+    <string name="no_popular_songs">Không có bài hát phổ biến</string>
+    <string name="failed_load_recent_songs">Không thể tải bài hát gần đây: %1$s</string>
+    <string name="failed_load_popular_songs">Không thể tải bài hát phổ biến: %1$s</string>
 </resources>

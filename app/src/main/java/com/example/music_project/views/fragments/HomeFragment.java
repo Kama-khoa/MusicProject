@@ -16,11 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_project.R;
 import com.example.music_project.controllers.SongController;
 import com.example.music_project.controllers.UserController;
+import com.example.music_project.models.Song;
+import com.example.music_project.models.User;
 import com.example.music_project.views.activities.LoginActivity;
+import com.example.music_project.views.activities.ProfileActivity;
+import com.example.music_project.views.activities.SettingsActivity;
 import com.example.music_project.views.adapters.SongAdapter;
 
 import android.view.MenuItem;
 import androidx.appcompat.widget.PopupMenu;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     private RecyclerView rvRecentSongs, rvPopularSongs;
@@ -40,7 +46,7 @@ public class HomeFragment extends Fragment {
 
         rvRecentSongs = view.findViewById(R.id.rv_recent_songs);
         rvPopularSongs = view.findViewById(R.id.rv_popular_songs);
-        ivUserIcon = view.findViewById(R.id.user_icon);
+        ivUserIcon = view.findViewById(R.id.iv_user_icon);
         btnLogin = view.findViewById(R.id.btn_login);
 
         rvRecentSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -57,10 +63,7 @@ public class HomeFragment extends Fragment {
         if (userController.isUserLoggedIn()) {
             ivUserIcon.setVisibility(View.VISIBLE);
             btnLogin.setVisibility(View.GONE);
-
-            // Set onClickListener for ivUserIcon to show the PopupMenu
             ivUserIcon.setOnClickListener(v -> showUserMenu(v));
-
         } else {
             ivUserIcon.setVisibility(View.GONE);
             btnLogin.setVisibility(View.VISIBLE);
@@ -72,20 +75,19 @@ public class HomeFragment extends Fragment {
         PopupMenu popup = new PopupMenu(getContext(), v);
         popup.getMenuInflater().inflate(R.menu.user_menu, popup.getMenu());
 
-        // Handle menu item clicks
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
 
                 if (itemId == R.id.menu_profile) {
-                    Toast.makeText(getContext(), "Xem thông tin cá nhân", Toast.LENGTH_SHORT).show();
+                    openProfileScreen();
                     return true;
                 } else if (itemId == R.id.menu_settings) {
-                    Toast.makeText(getContext(), "Mở cài đặt", Toast.LENGTH_SHORT).show();
+                    openSettingsScreen();
                     return true;
                 } else if (itemId == R.id.menu_logout) {
-                    Toast.makeText(getContext(), "Đăng xuất", Toast.LENGTH_SHORT).show();
+                    performLogout();
                     return true;
                 } else {
                     return false;
@@ -101,27 +103,81 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
+    private void openProfileScreen() {
+        userController.getCurrentUser(new UserController.OnUserFetchedListener() {
+            @Override
+            public void onSuccess(User user) {
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra("USER_ID", user.getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                mainHandler.post(() -> {
+                    Toast.makeText(getContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void openSettingsScreen() {
+        Intent intent = new Intent(getActivity(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void performLogout() {
+        userController.logoutUser(new UserController.OnUserLoggedOutListener() {
+            @Override
+            public void onSuccess() {
+                mainHandler.post(() -> {
+                    updateUserInterface();
+                    Toast.makeText(getContext(), R.string.logout_successful, Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                mainHandler.post(() -> {
+                    Toast.makeText(getContext(), getString(R.string.logout_failed, error), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
     private void loadRecentSongs() {
-        songController.getRecentSongs(songs -> {
+        songController.getRecentSongs(result -> {
             mainHandler.post(() -> {
-                if (songs != null && !songs.isEmpty()) {
-                    SongAdapter adapter = new SongAdapter(songs);
-                    rvRecentSongs.setAdapter(adapter);
-                } else {
-                    handleEmptyState(rvRecentSongs, R.string.no_recent_songs);
+                if (result instanceof SongController.Result.Success) {
+                    List<Song> songs = ((SongController.Result.Success<List<Song>>) result).data;
+                    if (songs != null && !songs.isEmpty()) {
+                        SongAdapter adapter = new SongAdapter(songs);
+                        rvRecentSongs.setAdapter(adapter);
+                    } else {
+                        handleEmptyState(rvRecentSongs, R.string.no_recent_songs);
+                    }
+                } else if (result instanceof SongController.Result.Error) {
+                    String error = ((SongController.Result.Error) result).error;
+                    Toast.makeText(getContext(), getString(R.string.failed_load_recent_songs, error), Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
 
     private void loadPopularSongs() {
-        songController.getPopularSongs(songs -> {
+        songController.getPopularSongs(result -> {
             mainHandler.post(() -> {
-                if (songs != null && !songs.isEmpty()) {
-                    SongAdapter adapter = new SongAdapter(songs);
-                    rvPopularSongs.setAdapter(adapter);
-                } else {
-                    handleEmptyState(rvPopularSongs, R.string.no_popular_songs);
+                if (result instanceof SongController.Result.Success) {
+                    List<Song> songs = ((SongController.Result.Success<List<Song>>) result).data;
+                    if (songs != null && !songs.isEmpty()) {
+                        SongAdapter adapter = new SongAdapter(songs);
+                        rvPopularSongs.setAdapter(adapter);
+                    } else {
+                        handleEmptyState(rvPopularSongs, R.string.no_popular_songs);
+                    }
+                } else if (result instanceof SongController.Result.Error) {
+                    String error = ((SongController.Result.Error) result).error;
+                    Toast.makeText(getContext(), getString(R.string.failed_load_popular_songs, error), Toast.LENGTH_SHORT).show();
                 }
             });
         });

@@ -9,7 +9,7 @@ import java.util.Date;
 public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "UserID")
-    private int userId;
+    private long userId;
 
     @ColumnInfo(name = "Username")
     private String username;
@@ -32,11 +32,11 @@ public class User {
     }
 
     // Getters and setters
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -72,7 +72,7 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public int getId() {
+    public long getId() {
         return userId;
     }
 }
