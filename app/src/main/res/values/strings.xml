@@ -4,6 +4,8 @@
     <string name="register">Register</string>
     <string name="username">User Name</string>
     <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="recent_songs">Recent Songs</string>
     <string name="popular_songs">Popular Songs</string>
     <string name="app_name">Music Project</string>
@@ -14,4 +16,6 @@
     <string name="previous">Previous</string>
     <string name="song_title">Song Title</string>
     <string name="artist_name">Artist Name</string>
+    <string name="no_recent_songs">No recent songs available</string>
+    <string name="no_popular_songs">No popular songs available</string>
 </resources>

@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btn_register);
 
         btnLogin.setOnClickListener(v -> login());
-        btnRegister.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
+        btnRegister.setOnClickListener(v -> openRegisterActivity());
     }
 
     private void login() {
@@ -44,8 +44,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show());
             }
         });
+    }
+
+    private void openRegisterActivity() {
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

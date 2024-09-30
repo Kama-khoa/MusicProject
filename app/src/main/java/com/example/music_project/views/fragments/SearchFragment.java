@@ -25,9 +25,9 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         songController = new SongController(getContext());
-        etSearch = view.findViewById(R.id.et_search);
-        btnSearch = view.findViewById(R.id.btn_search);
-        rvSearchResults = view.findViewById(R.id.rv_search_results);
+//        etSearch = view.findViewById(R.id.et_search);
+//        btnSearch = view.findViewById(R.id.btn_search);
+//        rvSearchResults = view.findViewById(R.id.rv_search_results);
 
         btnSearch.setOnClickListener(v -> searchSongs());
 
@@ -36,9 +36,9 @@ public class SearchFragment extends Fragment {
 
     private void searchSongs() {
         String query = etSearch.getText().toString();
-        songController.searchSongs(query, songs -> {
-            SongAdapter adapter = new SongAdapter(songs);
-            rvSearchResults.setAdapter(adapter);
-        });
+////        songController.searchSongs(query, songs -> {
+//            SongAdapter adapter = new SongAdapter(songs);
+//            rvSearchResults.setAdapter(adapter);
+//        });
     }
 }

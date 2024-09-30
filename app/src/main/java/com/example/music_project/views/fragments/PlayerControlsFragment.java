@@ -25,15 +25,15 @@ public class PlayerControlsFragment extends Fragment {
 
     private void initializeViews(View view) {
         playerController = new PlayerController(requireContext());
-        btnPlayPause = view.findViewById(R.id.btn_play_pause);
+//        btnPlayPause = view.findViewById(R.id.btn_play_pause);
         btnNext = view.findViewById(R.id.btn_next);
         btnPrevious = view.findViewById(R.id.btn_previous);
     }
 
     private void setupListeners() {
         btnPlayPause.setOnClickListener(v -> togglePlayPause());
-        btnNext.setOnClickListener(v -> playerController.playNext());
-        btnPrevious.setOnClickListener(v -> playerController.playPrevious());
+//        btnNext.setOnClickListener(v -> playerController.playNext());
+//        btnPrevious.setOnClickListener(v -> playerController.playPrevious());
     }
 
     private void togglePlayPause() {

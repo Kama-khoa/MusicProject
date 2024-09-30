@@ -38,7 +38,7 @@
 
         <activity android:name=".views.activities.SettingsActivity"
             android:exported="false" />
-
+        <activity android:name=".views.activities.RegisterActivity" />
         <!-- Services -->
         <service android:name=".services.MusicPlaybackService" />
 
