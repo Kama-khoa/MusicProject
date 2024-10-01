@@ -6,6 +6,7 @@ import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Playlist;
 import com.example.music_project.models.PlaylistSong;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,7 +22,7 @@ public class PlaylistController {
 
     public void createPlaylist(int userId, String name, final OnPlaylistCreatedListener listener) {
         executorService.execute(() -> {
-            Playlist playlist = new Playlist(userId, name);
+            Playlist playlist = new Playlist(userId, name,new Date());
             long playlistId = database.playlistDao().insert(playlist);
             if (playlistId > 0) {
                 listener.onSuccess();

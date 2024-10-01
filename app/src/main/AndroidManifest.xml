@@ -37,7 +37,8 @@
 
         <activity android:name=".views.activities.LoginActivity"
             android:exported="false" />
-
+        <activity android:name=".views.activities.SongActivity"
+            android:exported="false" />
         <activity android:name=".views.activities.PlayerActivity"
             android:launchMode="singleTop"
             android:exported="false" />

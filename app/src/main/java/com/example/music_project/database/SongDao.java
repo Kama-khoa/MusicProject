@@ -13,19 +13,19 @@ import java.util.List;
 
 @Dao
 public interface SongDao {
-    @Query("SELECT * FROM Songs")
+    @Query("SELECT * FROM Song")
     List<Song> getAllSongs();
 
-    @Query("SELECT * FROM Songs WHERE SongID = :songId")
+    @Query("SELECT * FROM Song WHERE song_id = :songId")
     Song getSongById(int songId);
 
-    @Query("SELECT * FROM Songs WHERE Artist = :artist")
+    @Query("SELECT * FROM Song WHERE Artist_id = :artist")
     List<Song> getSongsByArtist(String artist);
 
-    @Query("SELECT * FROM songs ") // Lấy 10 bài hát gần đây ORDER BY created_at DESC LIMIT 10
+    @Query("SELECT * FROM song ") // Lấy 10 bài hát gần đây ORDER BY created_at DESC LIMIT 10
     List<Song> getRecentSongs();
 
-    @Query("SELECT * FROM Songs") // Lấy 10 bài hát phổ biến  ORDER BY play_count DESC LIMIT 10
+    @Query("SELECT * FROM Song") // Lấy 10 bài hát phổ biến  ORDER BY play_count DESC LIMIT 10
     List<Song> getPopularSongs();
 
     @Insert
@@ -37,7 +37,7 @@ public interface SongDao {
     @Delete
     void delete(Song song);
 
-    @Query("SELECT * FROM songs WHERE SongID = :id")
+    @Query("SELECT * FROM song WHERE Song_ID = :id")
     Song getItem(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

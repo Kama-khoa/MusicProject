@@ -10,5 +10,6 @@ import retrofit2.http.Query;
 
 public interface SpotifyApiService {
     @GET("v1/me/top/tracks")
-    Call<List<Song>> getTopTracks(@Query("limit") int limit);
+    Call<TopTracksResponse> getTopTracks(@Query("limit") int limit);
 }
+

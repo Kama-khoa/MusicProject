@@ -27,7 +27,7 @@ public class UserController {
             if (userId > 0) {
                 listener.onSuccess();
             } else {
-                listener.onFailure("Failed to register user");
+                listener.onFailure("Không thể đăng ký người dùng");
             }
         });
     }
@@ -36,10 +36,10 @@ public class UserController {
         executorService.execute(() -> {
             User user = database.userDao().getUserByUsername(username);
             if (user != null && user.getPassword().equals(password)) {
-                saveUserSession(user.getId());
+                saveUserSession(user.getUser_id());
                 listener.onSuccess(user);
             } else {
-                listener.onFailure("Invalid username or password");
+                listener.onFailure("Tên đăng nhập hoặc mật khẩu không hợp lệ");
             }
         });
     }
@@ -52,22 +52,22 @@ public class UserController {
     }
 
     public boolean isUserLoggedIn() {
-        return getUserId() != -1L;
+        return getUserId() != -1;
     }
 
     public void getCurrentUser(final OnUserFetchedListener listener) {
-        long userId = getUserId();
-        if (userId != -1L) {
+        int userId = getUserId();
+        if (userId != -1) {
             executorService.execute(() -> {
                 User user = database.userDao().getUserById(userId);
                 if (user != null) {
                     listener.onSuccess(user);
                 } else {
-                    listener.onFailure("User not found");
+                    listener.onFailure("Không tìm thấy người dùng");
                 }
             });
         } else {
-            listener.onFailure("No user logged in");
+            listener.onFailure("Chưa có người dùng đăng nhập");
         }
     }
 
@@ -77,14 +77,76 @@ public class UserController {
                 database.userDao().update(updatedUser);
                 listener.onSuccess();
             } catch (Exception e) {
-                listener.onFailure("Failed to update user profile: " + e.getMessage());
+                listener.onFailure("Không thể cập nhật hồ sơ người dùng: " + e.getMessage());
             }
         });
     }
 
-    private void saveUserSession(long userId) {
+    public void setUserRole(int userId, String role, final OnUserUpdatedListener listener) {
+        executorService.execute(() -> {
+            try {
+                User user = database.userDao().getUserById(userId);
+                if (user != null) {
+                    user.setRole(role);
+                    database.userDao().update(user);
+                    listener.onSuccess();
+                } else {
+                    listener.onFailure("Không tìm thấy người dùng");
+                }
+            } catch (Exception e) {
+                listener.onFailure("Không thể cập nhật vai trò người dùng: " + e.getMessage());
+            }
+        });
+    }
+
+    public void setUserUploadPermission(int userId, boolean canUpload, final OnUserUpdatedListener listener) {
+        executorService.execute(() -> {
+            try {
+                User user = database.userDao().getUserById(userId);
+                if (user != null) {
+                    user.setCanUploadContent(canUpload);
+                    database.userDao().update(user);
+                    listener.onSuccess();
+                } else {
+                    listener.onFailure("Không tìm thấy người dùng");
+                }
+            } catch (Exception e) {
+                listener.onFailure("Không thể cập nhật quyền đăng nội dung: " + e.getMessage());
+            }
+        });
+    }
+    public void getProfileImagePath(int userId, final OnProfileImageFetchedListener listener) {
+        executorService.execute(() -> {
+            User user = database.userDao().getUserById(userId);
+            if (user != null) {
+                listener.onSuccess(user.getProfileImagePath());
+            } else {
+                listener.onFailure("Không tìm thấy người dùng");
+            }
+        });
+    }
+
+    public void updateProfileImagePath(int userId, String imagePath, final OnUserUpdatedListener listener) {
+        executorService.execute(() -> {
+            try {
+                User user = database.userDao().getUserById(userId);
+                if (user != null) {
+                    user.setProfileImagePath(imagePath);
+                    database.userDao().update(user);
+                    listener.onSuccess();
+                } else {
+                    listener.onFailure("Không tìm thấy người dùng");
+                }
+            } catch (Exception e) {
+                listener.onFailure("Không thể cập nhật đường dẫn ảnh hồ sơ: " + e.getMessage());
+            }
+        });
+    }
+
+
+    private void saveUserSession(int userId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(PREF_USER_ID, userId);
+        editor.putInt(PREF_USER_ID, userId);
         editor.apply();
     }
 
@@ -94,8 +156,8 @@ public class UserController {
         editor.apply();
     }
 
-    private long getUserId() {
-        return sharedPreferences.getLong(PREF_USER_ID, -1L);
+    private int getUserId() {
+        return sharedPreferences.getInt(PREF_USER_ID, -1);
     }
 
     public interface OnUserRegisteredListener {
@@ -120,6 +182,10 @@ public class UserController {
 
     public interface OnUserUpdatedListener {
         void onSuccess();
+        void onFailure(String error);
+    }
+    public interface OnProfileImageFetchedListener {
+        void onSuccess(String imagePath);
         void onFailure(String error);
     }
 }

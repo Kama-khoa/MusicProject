@@ -1,60 +1,73 @@
 package com.example.music_project.models;
 
-import androidx.room.ColumnInfo;
+// Song.java
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
 import java.util.Date;
 
-@Entity(tableName = "Songs")
+@Entity(foreignKeys = {
+        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id"),
+        @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id"),
+        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id")
+})
 public class Song {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "SongID")
-    private int songId;
-
-    @ColumnInfo(name = "Title")
-    private String title;
-
-    @ColumnInfo(name = "Artist")
-    private String artist;
-
-    @ColumnInfo(name = "Album")
-    private String album;
-
-    @ColumnInfo(name = "Duration")
-    private int duration;
-
-    @ColumnInfo(name = "FilePath")
-    private String filePath;
-
-    @ColumnInfo(name = "CoverUrl")  // Thêm trường lưu trữ URL ảnh bìa
-    private String coverUrl;
-
-    @ColumnInfo(name = "CreatedAt")
-    private Date createdAt;
-
-    // Constructor
-    public Song(String title, String artist, String album, int duration, String filePath, String coverUrl) {
+    public int song_id;
+    public boolean is_sample;
+    public int artist_id;
+    public int album_id;
+    public int genre_id;
+    public String title;
+    public int duration;
+    public Date release_date;
+    public String file_path;
+    public Song(){}
+    public Song(String title, int artist_id, int album_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
-        this.artist = artist;
-        this.album = album;
+        this.artist_id = artist_id;
+        this.album_id = album_id;
+        this.genre_id = genre_id;
         this.duration = duration;
-        this.filePath = filePath;
-        this.coverUrl = coverUrl;  // Khởi tạo giá trị ảnh bìa
-        this.createdAt = new Date();
+        this.release_date = release_date;
+        this.file_path = file_path;
     }
 
-    // Getter and setter for songId
-    public int getSongId() {
-        return songId;
+
+    // Getters and Setters
+    public int getSong_id() {
+        return song_id;
     }
 
-    public void setSongId(int songId) {
-        this.songId = songId;
+    public void setSong_id(int song_id) {
+        this.song_id = song_id;
     }
 
-    // Getter and setter for title
+    public int getArtist_id() {
+        return artist_id;
+    }
+
+    public void setArtist_id(int artist_id) {
+        this.artist_id = artist_id;
+    }
+
+    public int getAlbum_id() {
+        return album_id;
+    }
+
+    public void setAlbum_id(int album_id) {
+        this.album_id = album_id;
+    }
+
+    public int getGenre_id() {
+        return genre_id;
+    }
+
+    public void setGenre_id(int genre_id) {
+        this.genre_id = genre_id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -63,25 +76,6 @@ public class Song {
         this.title = title;
     }
 
-    // Getter and setter for artist
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    // Getter and setter for album
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    // Getter and setter for duration
     public int getDuration() {
         return duration;
     }
@@ -90,34 +84,27 @@ public class Song {
         this.duration = duration;
     }
 
-    // Getter and setter for filePath
-    public String getFilePath() {
-        return filePath;
+    public Date getRelease_date() {
+        return release_date;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setRelease_date(Date release_date) {
+        this.release_date = release_date;
     }
 
-    // Getter and setter for coverUrl
-    public String getCoverUrl() {
-        return coverUrl;
+    public String getFile_path() {
+        return file_path;
     }
 
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
+    public void setFile_path(String file_path) {
+        this.file_path = file_path;
     }
 
-    // Getter and setter for createdAt
-    public Date getCreatedAt() {
-        return createdAt;
+    public boolean getIs_sample() {
+        return is_sample;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getSongUrl() {
-        return filePath;
+    public void setIs_sample(boolean is_sample) {
+        this.is_sample = is_sample;
     }
 }

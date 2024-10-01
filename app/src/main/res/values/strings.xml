@@ -40,4 +40,5 @@
     <string name="next_track">Next Track</string>
     <string name="no_top_spotify_songs">No top songs</string>
     <string name="failed_load_spotify_songs">Failed load songs</string>
+    <string name="network_error">Network err</string>
 </resources>

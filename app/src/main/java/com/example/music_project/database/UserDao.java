@@ -12,13 +12,13 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM Users")
+    @Query("SELECT * FROM User")
     List<User> getAllUsers();
 
-    @Query("SELECT * FROM Users WHERE UserID = :userId")
+    @Query("SELECT * FROM User WHERE User_id = :userId")
     User getUserById(long userId);
 
-    @Query("SELECT * FROM Users WHERE Username = :username")
+    @Query("SELECT * FROM User WHERE UserName = :username")
     User getUserByUsername(String username);
 
     @Insert
@@ -29,4 +29,7 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Query("SELECT COUNT(*) FROM User")
+    int getUserCount();
 }

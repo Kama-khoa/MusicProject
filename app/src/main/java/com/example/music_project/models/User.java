@@ -2,52 +2,36 @@ package com.example.music_project.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.ColumnInfo;
 import java.util.Date;
 
-@Entity(tableName = "Users")
+@Entity
 public class User {
+
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "UserID")
-    private long userId;
+    public int user_id;
 
-    @ColumnInfo(name = "Username")
-    private String username;
-
-    @ColumnInfo(name = "Email")
-    private String email;
-
-    @ColumnInfo(name = "Password")
-    private String password;
-
-    @ColumnInfo(name = "CreatedAt")
-    private Date createdAt;
-
-    @ColumnInfo(name = "ProfileImagePath")
-    private String profileImagePath;
-
-    // Constructors, getters, and setters
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.createdAt = new Date();
+    public String username;
+    public String email;
+    public String password;
+    public String role;
+    public Date date_joined;
+    public boolean canUploadContent;
+    public String profileImagePath;
+    public User(String username,String email,String password){
+        this.username=username;
+        this.email=email;
+        this.password=password;
+        this.role = "USER";
+        this.date_joined = new Date();
+        this.canUploadContent = true;
+        this.profileImagePath=null;
+    }
+    public int getUser_id() {
+        return user_id;
     }
 
-    // Getters and setters
-    public String getProfileImagePath() {
-        return profileImagePath;
-    }
-
-    public void setProfileImagePath(String profileImagePath) {
-        this.profileImagePath = profileImagePath;
-    }
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -74,15 +58,37 @@ public class User {
         this.password = password;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getRole() {
+        return role;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public long getId() {
-        return userId;
+    public Date getDate_joined() {
+        return date_joined;
+    }
+
+    public void setDate_joined(Date date_joined) {
+        this.date_joined = date_joined;
+    }
+    public boolean isAdmin() {
+        return "ADMIN".equals(this.role);
+    }
+
+    public boolean canUploadContent() {
+        return this.canUploadContent;
+    }
+
+    public void setCanUploadContent(boolean canUploadContent) {
+        this.canUploadContent = canUploadContent;
+    }
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
     }
 }

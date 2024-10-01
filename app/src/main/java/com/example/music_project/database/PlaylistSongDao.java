@@ -13,10 +13,10 @@ import java.util.List;
 
 @Dao
 public interface PlaylistSongDao {
-    @Query("SELECT * FROM PlaylistSongs WHERE PlaylistID = :playlistId")
+    @Query("SELECT * FROM PlaylistSong WHERE Playlist_ID = :playlistId")
     List<PlaylistSong> getPlaylistSongs(int playlistId);
 
-    @Query("SELECT s.* FROM Songs s INNER JOIN PlaylistSongs ps ON s.SongID = ps.SongID WHERE ps.PlaylistID = :playlistId")
+    @Query("SELECT s.* FROM Song s INNER JOIN PlaylistSong ps ON s.Song_ID = ps.Song_ID WHERE ps.Playlist_ID = :playlistId")
     List<Song> getSongsInPlaylist(int playlistId);
 
     @Insert

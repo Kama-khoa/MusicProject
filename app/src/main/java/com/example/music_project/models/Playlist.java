@@ -1,61 +1,55 @@
 package com.example.music_project.models;
 
+// Playlist.java
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-import androidx.room.ColumnInfo;
 import java.util.Date;
 
-@Entity(tableName = "Playlists")
+@Entity(foreignKeys = @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id"))
 public class Playlist {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "PlaylistID")
-    private int playlistId;
+    public int playlist_id;
 
-    @ColumnInfo(name = "UserID")
-    private int userId;
-
-    @ColumnInfo(name = "Name")
-    private String name;
-
-    @ColumnInfo(name = "CreatedAt")
-    private Date createdAt;
-
-    public Playlist(int userId, String name) {
-        this.userId = userId;
-        this.name = name;
-        this.createdAt = new Date();
+    public int user_id;
+    public String title;
+    public Date date_created;
+    public Playlist(int user_id, String title, Date date_created) {
+        this.user_id = user_id;
+        this.title = title;
+        this.date_created = date_created;
     }
 
-    public int getPlaylistId() {
-        return playlistId;
+    public int getPlaylist_id() {
+        return playlist_id;
     }
 
-    public void setPlaylistId(int playlistId) {
-        this.playlistId = playlistId;
+    public void setPlaylist_id(int playlist_id) {
+        this.playlist_id = playlist_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getDate_created() {
+        return date_created;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setDate_created(Date date_created) {
+        this.date_created = date_created;
     }
 }

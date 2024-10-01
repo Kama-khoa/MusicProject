@@ -6,7 +6,10 @@ C:.
 +---api
 ¦   ¦   ApiClient.java
 ¦   ¦   ApiService.java
+¦   ¦   AuthInterceptor.java
 ¦   ¦   SpotifyApiClient.java
+¦   ¦   SpotifyApiService.java
+¦   ¦   TopTracksResponse.java
 ¦   ¦   
 ¦   +---responses
 ¦           LoginResponse.java
@@ -22,19 +25,26 @@ C:.
 ¦       UserController.java
 ¦       
 +---database
+¦       AlbumDao.java
 ¦       AppDatabase.java
+¦       ArtistDao.java
 ¦       Converters.java
-¦       FavoriteDao.java
+¦       FavouriteDao.java
+¦       GenreDao.java
+¦       HistoryDao.java
 ¦       PlayHistoryDao.java
 ¦       PlaylistDao.java
 ¦       PlaylistSongDao.java
+¦       Seeder.java
 ¦       SongDao.java
 ¦       UserDao.java
 ¦       
 +---models
 ¦       Album.java
 ¦       Artist.java
-¦       Favorite.java
+¦       Favourite.java
+¦       Genre.java
+¦       History.java
 ¦       PlayHistory.java
 ¦       Playlist.java
 ¦       PlaylistSong.java
@@ -61,6 +71,7 @@ C:.
     ¦       ProfileActivity.java
     ¦       RegisterActivity.java
     ¦       SettingsActivity.java
+    ¦       SongActivity.java
     ¦       SplashActivity.java
     ¦       
     +---adapters

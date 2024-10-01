@@ -1,48 +1,46 @@
 package com.example.music_project.models;
 
+// PlaylistSong.java
 import androidx.room.Entity;
-import androidx.room.ColumnInfo;
-import java.util.Date;
+import androidx.room.ForeignKey;
 
-@Entity(tableName = "PlaylistSongs", primaryKeys = {"PlaylistID", "SongID"})
+@Entity(primaryKeys = {"playlist_id", "song_id"},
+        foreignKeys = {
+                @ForeignKey(entity = Playlist.class, parentColumns = "playlist_id", childColumns = "playlist_id"),
+                @ForeignKey(entity = Song.class, parentColumns = "song_id", childColumns = "song_id")
+        })
 public class PlaylistSong {
 
-    @ColumnInfo(name = "PlaylistID")
-    private int playlistId;
+    public int playlist_id;
+    public int song_id;
+    public int duration;
+    public  PlaylistSong(int playlist_id,int song_id){
+        this.playlist_id=playlist_id;
+        this.song_id=song_id;
 
-    @ColumnInfo(name = "SongID")
-    private int songId;
-
-    @ColumnInfo(name = "AddedAt")
-    private Date addedAt;
-
-    public PlaylistSong(int playlistId, int songId) {
-        this.playlistId = playlistId;
-        this.songId = songId;
-        this.addedAt = new Date();
+    }
+    // Getters and Setters
+    public int getPlaylist_id() {
+        return playlist_id;
     }
 
-    public int getPlaylistId() {
-        return playlistId;
+    public void setPlaylist_id(int playlist_id) {
+        this.playlist_id = playlist_id;
     }
 
-    public void setPlaylistId(int playlistId) {
-        this.playlistId = playlistId;
+    public int getSong_id() {
+        return song_id;
     }
 
-    public int getSongId() {
-        return songId;
+    public void setSong_id(int song_id) {
+        this.song_id = song_id;
     }
 
-    public void setSongId(int songId) {
-        this.songId = songId;
+    public int getDuration() {
+        return duration;
     }
 
-    public Date getAddedAt() {
-        return addedAt;
-    }
-
-    public void setAddedAt(Date addedAt) {
-        this.addedAt = addedAt;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

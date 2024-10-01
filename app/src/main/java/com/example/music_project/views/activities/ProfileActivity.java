@@ -25,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private UserController userController;
-    private TextView tvUsername, tvEmail;
+    private TextView tvUsername, tvEmail,tvRole;
     private EditText etNewUsername, etNewPassword, etConfirmPassword;
     private ImageView ivProfilePicture,btnBack;
     private Button btnChangeUsername, btnChangePassword, btnChangeProfilePicture;
@@ -46,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initializeViews() {
         tvUsername = findViewById(R.id.tv_username);
+        tvRole = findViewById(R.id.tv_role);
         tvEmail = findViewById(R.id.tv_email);
         etNewUsername = findViewById(R.id.et_new_username);
         etNewPassword = findViewById(R.id.et_new_password);
@@ -73,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     tvUsername.setText(user.getUsername());
                     tvEmail.setText(user.getEmail());
+                    tvRole.setText(user.getRole());
                     if (user.getProfileImagePath() != null) {
                         ivProfilePicture.setImageURI(Uri.parse(user.getProfileImagePath()));
                     } else {
