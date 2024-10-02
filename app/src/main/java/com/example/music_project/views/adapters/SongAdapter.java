@@ -28,14 +28,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     @NonNull
     @Override
     public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_song, parent, false);
+        return new SongViewHolder(view);
     }
-
-    @NonNull
     @Override
     public void onBindViewHolder(@NonNull SongViewHolder holder, int position) {
         Song song = songs.get(position);
-//        holder.bind(song);
+        holder.bind(song);
     }
 
     class SongViewHolder extends RecyclerView.ViewHolder {
@@ -56,21 +55,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             });
         }
 
-//        void bind(Song song) {
-//            tvTitle.setText(song.getTitle());
-//            tvArtist.setText(song.getArtist());
-//            if (song.getCoverUrl() != null && !song.getCoverUrl().isEmpty()) {
-//                Glide.with(itemView.getContext())
-//                        .load(song.getCoverUrl())
-//                        .placeholder(R.drawable.default_song_cover)
-//                        .error(R.drawable.default_song_cover)
-//                        .into(ivCover);
-//            } else {
-//                ivCover.setImageResource(R.drawable.default_song_cover);
-//            }
-//        }
+        void bind(Song song) {
+            tvTitle.setText(song.getTitle());
+            tvArtist.setText(song.getArtistName());
+            // Tạm thời bỏ qua phần load ảnh cover
+            ivCover.setImageResource(R.drawable.default_song_cover);
+        }
     }
-
 
     @Override
     public int getItemCount() {

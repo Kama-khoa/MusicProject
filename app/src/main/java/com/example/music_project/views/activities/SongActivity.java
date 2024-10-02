@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,24 +14,26 @@ import com.example.music_project.R;
 import com.example.music_project.controllers.SongController;
 import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Song;
+import com.example.music_project.models.Artist;
+import com.example.music_project.models.Album;
+import com.example.music_project.models.Genre;
 import com.example.music_project.views.adapters.SongAdapter;
 import com.example.music_project.utils.FileUtils;
+import com.example.music_project.views.fragments.SongDialogFragment;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SongActivity extends AppCompatActivity {
+public class SongActivity extends AppCompatActivity implements SongDialogFragment.SongDialogListener {
     private static final int PICK_AUDIO_REQUEST = 1;
 
     private SongController songController;
-    private EditText etTitle, etArtistId, etAlbumId, etGenreId, etDuration;
-    private Button btnAdd, btnUpdate, btnDelete, btnUpload;
+    private Button btnAdd;
     private RecyclerView rvSongs;
     private SongAdapter songAdapter;
     private List<Song> songs = new ArrayList<>();
-    private int selectedSongId = -1;
     private Uri selectedAudioUri;
 
     @Override
@@ -45,22 +46,11 @@ public class SongActivity extends AppCompatActivity {
         setupRecyclerView();
         loadSongs();
 
-        btnAdd.setOnClickListener(v -> addSong());
-        btnUpdate.setOnClickListener(v -> updateSong());
-        btnDelete.setOnClickListener(v -> deleteSong());
-        btnUpload.setOnClickListener(v -> selectAudioFile());
+        btnAdd.setOnClickListener(v -> showAddSongDialog());
     }
 
     private void initViews() {
-        etTitle = findViewById(R.id.et_title);
-        etArtistId = findViewById(R.id.et_artist_id);
-        etAlbumId = findViewById(R.id.et_album_id);
-        etGenreId = findViewById(R.id.et_genre_id);
-        etDuration = findViewById(R.id.et_duration);
         btnAdd = findViewById(R.id.btn_add);
-        btnUpdate = findViewById(R.id.btn_update);
-        btnDelete = findViewById(R.id.btn_delete);
-        btnUpload = findViewById(R.id.btn_upload);
         rvSongs = findViewById(R.id.rv_songs);
     }
 
@@ -86,124 +76,34 @@ public class SongActivity extends AppCompatActivity {
         });
     }
 
-    private void selectAudioFile() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("audio/*");
-        startActivityForResult(intent, PICK_AUDIO_REQUEST);
+    private void showAddSongDialog() {
+        SongDialogFragment dialog = new SongDialogFragment();
+        dialog.setListener(this);
+        dialog.show(getSupportFragmentManager(), "SongDialog");
+    }
+
+    private void onSongSelected(Song song) {
+        SongDialogFragment dialog = SongDialogFragment.newInstance(song);
+        dialog.setListener(this);
+        dialog.show(getSupportFragmentManager(), "SongDialog");
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedAudioUri = data.getData();
-            Toast.makeText(this, "Đã chọn file âm thanh", Toast.LENGTH_SHORT).show();
+    public void onSongSaved(Song song) {
+        if (song.getSong_id() == 0) {
+            addSong(song);
+        } else {
+            updateSong(song);
         }
     }
 
-    private void addSong() {
-        Song song = createSongFromInput();
-        if (song != null) {
-            if (selectedAudioUri != null) {
-                String filePath = saveAudioFile(selectedAudioUri);
-                if (filePath != null) {
-                    song.setFile_path(filePath);
-                } else {
-                    Toast.makeText(this, "Lỗi khi lưu file âm thanh", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-            songController.addSong(song, new SongController.Callback<Void>() {
-                @Override
-                public void onSuccess(Void result) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(SongActivity.this, "Bài hát đã được thêm", Toast.LENGTH_SHORT).show();
-                        clearInputFields();
-                        loadSongs();
-                        selectedAudioUri = null;
-                    });
-                }
-
-                @Override
-                public void onError(String error) {
-                    runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                }
-            });
-        }
-    }
-
-    private void updateSong() {
-        if (selectedSongId == -1) {
-            Toast.makeText(this, "Vui lòng chọn một bài hát để cập nhật", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Song song = createSongFromInput();
-        if (song != null) {
-            song.setSong_id(selectedSongId);
-
-            if (selectedAudioUri != null) {
-                String filePath = saveAudioFile(selectedAudioUri);
-                if (filePath != null) {
-                    song.setFile_path(filePath);
-                } else {
-                    Toast.makeText(this, "Lỗi khi lưu file âm thanh", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-            songController.updateSong(song, new SongController.Callback<Void>() {
-                @Override
-                public void onSuccess(Void result) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(SongActivity.this, "Bài hát đã được cập nhật", Toast.LENGTH_SHORT).show();
-                        clearInputFields();
-                        loadSongs();
-                        selectedSongId = -1;
-                        selectedAudioUri = null;
-                    });
-                }
-
-                @Override
-                public void onError(String error) {
-                    runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                }
-            });
-        }
-    }
-
-    private void deleteSong() {
-        if (selectedSongId == -1) {
-            Toast.makeText(this, "Vui lòng chọn một bài hát để xóa", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        songController.getSongById(selectedSongId, new SongController.Callback<Song>() {
+    private void addSong(Song song) {
+        songController.addSong(song, new SongController.Callback<Void>() {
             @Override
-            public void onSuccess(Song song) {
-                songController.deleteSong(song, new SongController.Callback<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(SongActivity.this, "Bài hát đã được xóa", Toast.LENGTH_SHORT).show();
-                            clearInputFields();
-                            loadSongs();
-                            selectedSongId = -1;
-                            // Xóa file âm thanh nếu cần
-                            if (song.getFile_path() != null && !song.getFile_path().isEmpty()) {
-                                File audioFile = new File(song.getFile_path());
-                                if (audioFile.exists()) {
-                                    audioFile.delete();
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                    }
+            public void onSuccess(Void result) {
+                runOnUiThread(() -> {
+                    Toast.makeText(SongActivity.this, "Bài hát đã được thêm", Toast.LENGTH_SHORT).show();
+                    loadSongs();
                 });
             }
 
@@ -214,26 +114,62 @@ public class SongActivity extends AppCompatActivity {
         });
     }
 
-    private Song createSongFromInput() {
-        try {
-            String title = etTitle.getText().toString();
-            int artistId = Integer.parseInt(etArtistId.getText().toString());
-            int albumId = Integer.parseInt(etAlbumId.getText().toString());
-            int genreId = Integer.parseInt(etGenreId.getText().toString());
-            int duration = Integer.parseInt(etDuration.getText().toString());
+    private void updateSong(Song song) {
+        songController.updateSong(song, new SongController.Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                runOnUiThread(() -> {
+                    Toast.makeText(SongActivity.this, "Bài hát đã được cập nhật", Toast.LENGTH_SHORT).show();
+                    loadSongs();
+                });
+            }
 
-            Song song = new Song();
-            song.setTitle(title);
-            song.setArtist_id(artistId);
-            song.setAlbum_id(albumId);
-            song.setGenre_id(genreId);
-            song.setDuration(duration);
-            song.setRelease_date(new Date());
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
 
-            return song;
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Vui lòng nhập đúng định dạng cho các trường số", Toast.LENGTH_SHORT).show();
-            return null;
+    @Override
+    public void onSongDeleted(Song song) {
+        songController.deleteSong(song, new SongController.Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                runOnUiThread(() -> {
+                    Toast.makeText(SongActivity.this, "Bài hát đã được xóa", Toast.LENGTH_SHORT).show();
+                    loadSongs();
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    @Override
+    public void onAudioFileRequested() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("audio/*");
+        startActivityForResult(intent, PICK_AUDIO_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_AUDIO_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedAudioUri = data.getData();
+            String filePath = saveAudioFile(selectedAudioUri);
+            if (filePath != null) {
+                SongDialogFragment dialog = (SongDialogFragment) getSupportFragmentManager().findFragmentByTag("SongDialog");
+                if (dialog != null) {
+                    dialog.setAudioFilePath(filePath);
+                }
+            } else {
+                Toast.makeText(this, "Lỗi khi lưu file âm thanh", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -248,22 +184,19 @@ public class SongActivity extends AppCompatActivity {
         }
     }
 
-    private void clearInputFields() {
-        etTitle.setText("");
-        etArtistId.setText("");
-        etAlbumId.setText("");
-        etGenreId.setText("");
-        etDuration.setText("");
-        selectedAudioUri = null;
+    // Các phương thức này cần được triển khai để cung cấp dữ liệu cho SongDialogFragment
+    public List<Artist> getArtists() {
+        // TODO: Implement this method to fetch artists from your database
+        return new ArrayList<>();
     }
 
-    private void onSongSelected(Song song) {
-        selectedSongId = song.getSong_id();
-        etTitle.setText(song.getTitle());
-        etArtistId.setText(String.valueOf(song.getArtist_id()));
-        etAlbumId.setText(String.valueOf(song.getAlbum_id()));
-        etGenreId.setText(String.valueOf(song.getGenre_id()));
-        etDuration.setText(String.valueOf(song.getDuration()));
-        selectedAudioUri = null; // Reset selected audio when a song is selected
+    public List<Album> getAlbums() {
+        // TODO: Implement this method to fetch albums from your database
+        return new ArrayList<>();
+    }
+
+    public List<Genre> getGenres() {
+        // TODO: Implement this method to fetch genres from your database
+        return new ArrayList<>();
     }
 }

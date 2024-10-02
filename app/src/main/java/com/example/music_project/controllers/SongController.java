@@ -50,24 +50,33 @@ public class SongController {
 
     public void getAllSongs(Callback<List<Song>> callback) {
         executorService.execute(() -> {
-            List<Song> songs = songDao.getAllSongs();
-            callback.onSuccess(songs);
+            try {
+                List<Song> songs = songDao.getAllSongsWithArtists();
+                callback.onSuccess(songs);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách bài hát: " + e.getMessage());
+            }
         });
     }
 
     public void getSongById(int songId, Callback<Song> callback) {
         executorService.execute(() -> {
-            Song song = songDao.getItem(String.valueOf(songId));
-            if (song != null) {
-                callback.onSuccess(song);
-            } else {
-                callback.onError("Không tìm thấy bài hát");
+            try {
+                Song song = songDao.getSongWithArtist(songId);
+                if (song != null) {
+                    callback.onSuccess(song);
+                } else {
+                    callback.onError("Không tìm thấy bài hát");
+                }
+            } catch (Exception e) {
+                callback.onError("Không thể lấy thông tin bài hát: " + e.getMessage());
             }
         });
     }
 
     public interface Callback<T> {
         void onSuccess(T result);
+
         void onError(String error);
     }
 }

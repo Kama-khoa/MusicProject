@@ -42,4 +42,13 @@ public interface SongDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Song> songs);
+
+    @Query("SELECT s.*, a.artist_name as artistName FROM Song s " +
+            "JOIN Artist a ON s.artist_id = a.artist_id")
+    List<Song> getAllSongsWithArtists();
+
+    @Query("SELECT s.*, a.artist_name as artistName FROM Song s " +
+            "JOIN Artist a ON s.artist_id = a.artist_id " +
+            "WHERE s.song_id = :songId")
+    Song getSongWithArtist(int songId);
 }

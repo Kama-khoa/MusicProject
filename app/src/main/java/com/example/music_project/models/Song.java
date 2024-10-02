@@ -3,6 +3,7 @@ package com.example.music_project.models;
 // Song.java
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 
@@ -23,6 +24,8 @@ public class Song {
     public int duration;
     public Date release_date;
     public String file_path;
+    @Ignore
+    private String artistName;
     public Song(){}
     public Song(String title, int artist_id, int album_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
@@ -107,4 +110,13 @@ public class Song {
     public void setIs_sample(boolean is_sample) {
         this.is_sample = is_sample;
     }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
 }
