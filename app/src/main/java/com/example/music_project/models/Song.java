@@ -23,7 +23,10 @@ public class Song {
     public int duration;
     public Date release_date;
     public String file_path;
-    public Song(){}
+
+    public Song() {
+    }
+
     public Song(String title, int artist_id, int album_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
         this.artist_id = artist_id;

@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.models.Song;
 import java.util.List;
