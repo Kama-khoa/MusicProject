@@ -15,7 +15,7 @@ public class PlaylistSong {
     public int song_id;
     public int duration;
     public  PlaylistSong(int playlist_id,int song_id){
-        this.playlist_id=playlist_id;
+        this.playlist_id= playlist_id;
         this.song_id=song_id;
 
     }

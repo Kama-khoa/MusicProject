@@ -11,14 +11,18 @@ public class Playlist {
 
     @PrimaryKey(autoGenerate = true)
     public int playlist_id;
-
     public int user_id;
     public String title;
     public Date date_created;
+    private String details;
+    private int imageResource;
+
     public Playlist(int user_id, String title, Date date_created) {
         this.user_id = user_id;
         this.title = title;
         this.date_created = date_created;
+        this.details = null;
+        this.imageResource = -1;
     }
 
     public int getPlaylist_id() {
@@ -51,5 +55,21 @@ public class Playlist {
 
     public void setDate_created(Date date_created) {
         this.date_created = date_created;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public int getImageResource() {
+        return imageResource;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 }

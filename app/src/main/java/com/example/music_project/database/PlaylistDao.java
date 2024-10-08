@@ -1,4 +1,5 @@
 package com.example.music_project.database;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;

@@ -7,13 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
+//import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.models.Song;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
     private List<Song> songs;
+    private List<Song> songsFull;
     private OnSongClickListener listener;
 
     public interface OnSongClickListener {
@@ -22,6 +25,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     public SongAdapter(List<Song> songs, OnSongClickListener listener) {
         this.songs = songs;
+        this.songsFull = new ArrayList<>(songs);
         this.listener = listener;
     }
 
@@ -71,6 +75,22 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     public void updateSongs(List<Song> newSongs) {
         this.songs = newSongs;
         notifyDataSetChanged();
+    }
+
+    // Phương thức tìm kiếm
+    public void filter(String query) {
+        if (query.isEmpty()) {
+            songs = new ArrayList<>(songsFull); // Nếu không có gì được nhập, hiển thị tất cả
+        } else {
+            List<Song> filteredList = new ArrayList<>();
+            for (Song song : songsFull) {
+                if (song.getTitle().toLowerCase().startsWith(query.toLowerCase())) { // Tìm kiếm theo chữ cái đầu
+                    filteredList.add(song);
+                }
+            }
+            songs = filteredList; // Cập nhật danh sách với các bài hát đã lọc
+        }
+        notifyDataSetChanged(); // Cập nhật RecyclerView
     }
 
 

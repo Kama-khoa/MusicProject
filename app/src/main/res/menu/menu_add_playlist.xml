@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_playlist"
+        android:title="Thêm Danh Sách Phát"
+        android:icon="@drawable/ic_add" />
+</menu>
