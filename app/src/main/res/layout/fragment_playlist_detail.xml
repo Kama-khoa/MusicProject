@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <SearchView
+            android:id="@+id/sv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Tìm kiếm trong danh sách phát"/>
+
+        <ImageView
+            android:id="@+id/img_playlist_edit_or_del"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_more_vert"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/img_playlist_cover"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:contentDescription="Playlist Cover Image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_perm_identity"/>
+
+    <TextView
+        android:id="@+id/tv_playlist_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+
+
+    <TextView
+        android:id="@+id/tv_playlist_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text=""/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center"
+
+          >
+          <Button
+              android:id="@+id/btn_add_song"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Thêm bài hát mới"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="30dp"
+              />
+      </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_songs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="Các bài hát được đề xuất "
+        ></TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_suggested_songs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

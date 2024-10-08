@@ -24,4 +24,7 @@ public interface PlaylistSongDao {
 
     @Delete
     void delete(PlaylistSong playlistSong);
+
+    @Query("SELECT * FROM Song INNER JOIN PlaylistSong ON Song.song_id = PlaylistSong.song_id WHERE PlaylistSong.playlist_id = :playlistId")
+    List<Song> getSongsByPlaylistId(int playlistId);
 }

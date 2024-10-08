@@ -22,7 +22,7 @@ public class Playlist {
         this.title = title;
         this.date_created = date_created;
         this.details = null;
-        this.imageResource = Integer.parseInt(null);
+        this.imageResource = -1;
     }
 
     public int getPlaylist_id() {

@@ -56,7 +56,7 @@ public class UserController {
     }
 
     public void getCurrentUser(final OnUserFetchedListener listener) {
-        int userId = getUserId();
+        long userId = getUserId();
         if (userId != -1) {
             executorService.execute(() -> {
                 User user = database.userDao().getUserById(userId);
@@ -144,9 +144,9 @@ public class UserController {
     }
 
 
-    private void saveUserSession(int userId) {
+    private void saveUserSession(long userId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(PREF_USER_ID, userId);
+        editor.putLong(PREF_USER_ID, userId);
         editor.apply();
     }
 
@@ -156,8 +156,8 @@ public class UserController {
         editor.apply();
     }
 
-    private int getUserId() {
-        return sharedPreferences.getInt(PREF_USER_ID, -1);
+    private long getUserId() {
+        return sharedPreferences.getLong(PREF_USER_ID, -1); // Thay đổi từ getInt sang getLong
     }
 
     public interface OnUserRegisteredListener {

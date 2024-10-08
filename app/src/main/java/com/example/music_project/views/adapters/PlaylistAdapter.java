@@ -1,12 +1,13 @@
 package com.example.music_project.views.adapters;
-import android.content.Context;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_project.R;
@@ -14,48 +15,70 @@ import com.example.music_project.models.Playlist;
 
 import java.util.List;
 
-public class PlaylistAdapter extends BaseAdapter {
-
-    private Context context;
+public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
     private List<Playlist> playlists;
+    private OnPlaylistClickListener listener;
 
-    public PlaylistAdapter(Context context, List<Playlist> playlists) {
-        this.context = context;
+    public PlaylistAdapter(List<Playlist> playlists, OnPlaylistClickListener listener) {
         this.playlists = playlists;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playlist, parent, false);
+        return new PlaylistViewHolder(view);
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
+        Playlist playlist = playlists.get(position);
+        Log.d("PlaylistAdapter", "Playlist Name: " + playlist.getTitle());
+        holder.tvPlaylistName.setText(playlist.getTitle());
+        holder.itemView.setOnClickListener(v -> listener.onPlaylistClick(playlist));
+    }
+
+    @Override
+    public int getItemCount() {
         return playlists.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return playlists.get(position);
+    public void setPlaylists(List<Playlist> playlists) {
+        this.playlists = playlists;
+        notifyDataSetChanged();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public void addPlaylist(Playlist playlist) {
+        playlists.add(playlist);
+        notifyItemInserted(playlists.size() - 1);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_playlist, parent, false);
+    public void updatePlaylists(List<Playlist> newPlaylists) {
+        this.playlists.clear(); // Xóa danh sách hiện tại
+        this.playlists.addAll(newPlaylists); // Thêm danh sách mới
+        notifyDataSetChanged(); // Cập nhật RecyclerView
+    }
+
+    public void removePlaylist(int position) {
+        if (position >= 0 && position < playlists.size()) {
+            playlists.remove(position);
+            notifyItemRemoved(position);
         }
+    }
 
-        Playlist playlist = playlists.get(position);
+    public interface OnPlaylistClickListener {
+        void onPlaylistClick(Playlist playlist);
+    }
 
-        ImageView imgPlaylist = convertView.findViewById(R.id.img_playlist);
-        TextView tvPlaylistName = convertView.findViewById(R.id.tv_playlist_name);
-        TextView tvPlaylistDetails = convertView.findViewById(R.id.tv_playlist_details);
+    static class PlaylistViewHolder extends RecyclerView.ViewHolder {
+        TextView tvPlaylistName;
+        ImageView imgPlaylist;
 
-        // Gán dữ liệu cho các view
-        imgPlaylist.setImageResource(playlist.getImageResource());
-        tvPlaylistName.setText(playlist.getTitle());
-        tvPlaylistDetails.setText(playlist.getDetails());
-
-        return convertView;
+        public PlaylistViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvPlaylistName = itemView.findViewById(R.id.tv_playlist_name);
+            imgPlaylist = itemView.findViewById(R.id.img_playlist);
+        }
     }
 }
