@@ -4,13 +4,18 @@ import androidx.room.*;
 
 import com.example.music_project.models.Artist;
 
+import java.util.List;
+
 @Dao
 public interface ArtistDao {
     @Insert
-    void insert(Artist artist);
+    long insert(Artist artist);
 
     @Query("SELECT * FROM Artist WHERE artist_id = :artistId")
     Artist getArtistById(int artistId);
+
+    @Query("SELECT * FROM Artist")
+    List<Artist> getArtists();
 
     @Update
     void update(Artist artist);

@@ -1,13 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Tên nghệ sĩ -->
     <EditText
         android:id="@+id/edt_artist_name"
         android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Tên nghệ sĩ"
+        android:inputType="text"
+        android:fontFamily="sans-serif"/>
+
+    <!-- Ngày sinh (EditText) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edt_artist_dob"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="Chọn ngày sinh(dd-mm-yyyy)" />
+
+        <ImageButton
+            android:id="@+id/btn_select_date"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Chọn ngày"
+            android:src="@android:drawable/ic_menu_today" />
+    </LinearLayout>
+
+    <!-- Nút lịch -->
+
+    <!-- Mô tả (bio) -->
+    <EditText
+        android:id="@+id/edt_artist_bio"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên nghệ sĩ mới" />
+        android:gravity="top"
+        android:hint="Mô tả nghệ sĩ"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:paddingLeft="5dp"
+        android:fontFamily="sans-serif"/>
 
 </LinearLayout>
