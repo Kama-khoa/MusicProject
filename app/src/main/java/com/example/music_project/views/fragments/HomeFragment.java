@@ -102,6 +102,8 @@ public class HomeFragment extends Fragment {
             ivUserIcon.setVisibility(View.GONE);
             btnLogin.setVisibility(View.VISIBLE);
             btnLogin.setOnClickListener(v -> openLoginScreen());
+
+            Toast.makeText(getContext(),"Login button is visible and clickable",Toast.LENGTH_LONG).show();
         }
     }
 

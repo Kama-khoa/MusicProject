@@ -30,5 +30,9 @@ public class Genre {
     public void setGenre_name(String genre_name) {
         this.genre_name = genre_name;
     }
+
+    public String toString() {
+        return genre_name; // Trả về tên thể loại
+    }
 }
 
