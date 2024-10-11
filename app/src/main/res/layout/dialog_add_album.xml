@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Tên album -->
+    <EditText
+        android:id="@+id/edt_album_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên album mới"
+        android:inputType="text" />
+
+    <!-- Thể loại (Spinner) -->
+    <Spinner
+        android:id="@+id/spinner_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
+
+    <!-- Ngày phát hành (hiện tại sẽ được tự động thêm trong code) -->
+    <TextView
+        android:id="@+id/tv_release_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:textColor="#757575" />
+
+</LinearLayout>

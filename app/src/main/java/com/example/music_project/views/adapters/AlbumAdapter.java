@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.music_project.R;
 import com.example.music_project.models.Album;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
     private List<Album> albums;
@@ -34,12 +36,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     @Override
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         Album album = albums.get(position);
-        Log.d("AlbumAdapter", "Album Title: " + album.getTitle());
-        holder.tvAlbumTitle.setText(album.getTitle());
-        holder.tvAlbumReleaseDate.setText(album.getRelease_date().toString());
-
-        // Xử lý sự kiện nhấn vào một album
-        holder.itemView.setOnClickListener(v -> listener.onAlbumClick(album));
+        holder.bind(album, listener);
     }
 
     @Override
@@ -76,14 +73,27 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
     static class AlbumViewHolder extends RecyclerView.ViewHolder {
         TextView tvAlbumTitle;
+        TextView tvAlbumArtist;
         TextView tvAlbumReleaseDate;
         ImageView imgAlbumCover;
 
         public AlbumViewHolder(@NonNull View itemView) {
             super(itemView);
             tvAlbumTitle = itemView.findViewById(R.id.tv_album_title);
+            tvAlbumArtist = itemView.findViewById(R.id.tv_album_artist);
             tvAlbumReleaseDate = itemView.findViewById(R.id.tv_album_release_date);
             imgAlbumCover = itemView.findViewById(R.id.img_album_cover);
+        }
+        public void bind(Album album, OnAlbumClickListener listener){
+            Log.d("AlbumAdapter", "Album Title: " + album.getTitle());
+            tvAlbumTitle.setText(album.getTitle());
+            tvAlbumArtist.setText(String.valueOf(album.getArtist_id()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String formattedDate = dateFormat.format(album.getRelease_date());
+            tvAlbumReleaseDate.setText(formattedDate);
+
+            // Xử lý sự kiện nhấn vào một album
+            itemView.setOnClickListener(v -> listener.onAlbumClick(album));
         }
     }
 }
