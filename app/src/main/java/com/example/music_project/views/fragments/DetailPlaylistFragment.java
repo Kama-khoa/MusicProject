@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.example.music_project.R;
 import com.example.music_project.controllers.PlaylistController;
 import com.example.music_project.models.Song;
 import com.example.music_project.views.adapters.SongAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,8 @@ public class DetailPlaylistFragment extends Fragment {
         rvSongs.setLayoutManager(new LinearLayoutManager(getContext()));
         songAdapter = new SongAdapter(songList, song -> Toast.makeText(getContext(), "Đã chọn: " + song.getTitle(), Toast.LENGTH_SHORT).show());
         rvSongs.setAdapter(songAdapter);
+        Button btn_add_song = view.findViewById(R.id.btn_add_song);
+        FloatingActionButton btn_play = view.findViewById(R.id.btn_album_play);
 
         // Lấy playlistId, playlistName và userName từ arguments và hiển thị
         if (getArguments() != null) {
@@ -71,7 +75,7 @@ public class DetailPlaylistFragment extends Fragment {
         }
 
         // Khởi tạo SearchView
-        SearchView searchView = view.findViewById(R.id.sv_search); // Thay đổi ID nếu cần
+        SearchView searchView = view.findViewById(R.id.sv_album_search); // Thay đổi ID nếu cần
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -83,6 +87,8 @@ public class DetailPlaylistFragment extends Fragment {
                 return true;
             }
         });
+
+        btn_add_song.setOnClickListener(v->showDialogAddSong());
 
         return view;
     }
@@ -106,5 +112,9 @@ public class DetailPlaylistFragment extends Fragment {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showDialogAddSong(){
+
     }
 }

@@ -16,8 +16,8 @@ import com.example.music_project.views.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
-    private static final String PREF_NAME = "MyAppPreferences5";
-    private static final String KEY_IS_FIRST_RUN = "isFirstRun5";
+    private static final String PREF_NAME = "MyAppPreferences7";
+    private static final String KEY_IS_FIRST_RUN = "isFirstRun7";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

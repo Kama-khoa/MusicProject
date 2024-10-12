@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         >
         <SearchView
-            android:id="@+id/sv_search"
+            android:id="@+id/sv_album_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Tìm kiếm trong danh sách phát"/>
