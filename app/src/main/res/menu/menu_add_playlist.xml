@@ -11,4 +11,8 @@
         android:id="@+id/add_artist"
         android:title="Thêm Nghệ Sĩ"
         android:icon="@drawable/ic_add" />
+    <item
+        android:id="@+id/add_song"
+        android:title="Thêm bài hát"
+        android:icon="@drawable/ic_add" />
 </menu>

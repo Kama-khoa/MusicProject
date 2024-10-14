@@ -3,6 +3,7 @@ package com.example.music_project.views.fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ import com.example.music_project.models.Genre;
 import com.example.music_project.models.Playlist;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
+import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
@@ -72,7 +74,7 @@ public class LibraryFragment extends Fragment {
     private List<Playlist> playlistList = new ArrayList<>();
     private List<Album> albumList = new ArrayList<>();
     private List<Artist> artistList = new ArrayList<>();
-
+    private Handler mainHandler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
@@ -141,10 +143,33 @@ public class LibraryFragment extends Fragment {
                 showAddArtistDialog();
                 return true;
             }
+            if (item.getItemId() == R.id.add_song) {
+                openSongScreen();
+                return true;
+            }
             return false;
         });
 
         popupMenu.show();
+    }
+    private void openSongScreen() {
+        userController.getCurrentUser(new UserController.OnUserFetchedListener() {
+            @Override
+            public void onSuccess(User user) {
+                Intent intent = new Intent(getActivity(), SongActivity.class);
+                intent.putExtra("USER_ID", user.getUser_id());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                mainHandler.post(() -> {
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     // Lấy ID người dùng hiện tại và lưu vào SharedPreferences

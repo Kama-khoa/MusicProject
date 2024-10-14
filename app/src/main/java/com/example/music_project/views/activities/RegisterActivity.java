@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import com.example.music_project.R;
 import com.example.music_project.controllers.UserController;
@@ -34,13 +36,22 @@ public class RegisterActivity extends AppCompatActivity {
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
-
+        RadioGroup rgRole = findViewById(R.id.rg_role);
+        int selectedRoleId = rgRole.getCheckedRadioButtonId();
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        userController.registerUser(username, email, password, new UserController.OnUserRegisteredListener() {
+        String role = null;
+        if (selectedRoleId == R.id.rb_artist) {
+            role = "ARTIST";
+        } else if (selectedRoleId == R.id.rb_user) {
+            role = "USER";
+        } else {
+            Toast.makeText(this, "Please select a role", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        userController.registerUser(username, email, password, role, new UserController.OnUserRegisteredListener() {
             @Override
             public void onSuccess() {
                 runOnUiThread(() -> {
@@ -55,4 +66,5 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
 }
