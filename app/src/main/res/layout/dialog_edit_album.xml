@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Album Cover -->
+
+    <ImageView
+        android:id="@+id/img_album_cover"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/album_cover" />
+
+    <!-- Album Title -->
+    <EditText
+        android:id="@+id/et_album_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:hint="Tên album"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <!-- RecyclerView for Playlist Songs -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_album_songs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_album_delete"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#E91A0B"
+            android:fontFamily="sans-serif"
+            android:text="Xóa"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_album_update"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#1DB954"
+            android:text="Lưu" />
+
+        <Button
+            android:id="@+id/btn_album_cancle"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#7A7A7A"
+            android:text="Hủy" />
+    </LinearLayout>
+
+</LinearLayout>

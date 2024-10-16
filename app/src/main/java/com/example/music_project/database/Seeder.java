@@ -51,11 +51,11 @@ public class Seeder {
             db.genreDao().insert(genre5);
 
             // Dữ liệu mẫu cho bảng Album
-            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"));
-            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"));
-            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"));
-            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"));
-            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"));
+            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
 
             db.albumDao().insert(album1);
             db.albumDao().insert(album2);

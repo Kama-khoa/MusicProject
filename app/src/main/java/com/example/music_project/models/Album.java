@@ -1,6 +1,5 @@
 package com.example.music_project.models;
 
-// Album.java
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -19,12 +18,18 @@ public class Album {
     public int genre_id;
     public String title;
     public Date release_date;
-    public Album(String title, int artist_id, int genre_id, Date release_date) {
+
+    // New field to store album cover image path or URI
+    public String cover_image_path;
+
+    public Album(String title, int artist_id, int genre_id, Date release_date, String cover_image_path) {
         this.title = title;
         this.artist_id = artist_id;
         this.genre_id = genre_id;
         this.release_date = release_date;
+        this.cover_image_path = cover_image_path;
     }
+
     // Getters and Setters
     public int getAlbum_id() {
         return album_id;
@@ -65,5 +70,13 @@ public class Album {
     public void setRelease_date(Date release_date) {
         this.release_date = release_date;
     }
-}
 
+    // New getter and setter for cover_image_path
+    public String getCover_image_path() {
+        return cover_image_path;
+    }
+
+    public void setCover_image_path(String cover_image_path) {
+        this.cover_image_path = cover_image_path;
+    }
+}

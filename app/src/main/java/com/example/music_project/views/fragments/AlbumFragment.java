@@ -1,9 +1,14 @@
 package com.example.music_project.views.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +37,7 @@ public class AlbumFragment extends Fragment {
     private RecyclerView rvSongs;
     private SongAdapter songAdapter;
     private List<Song> songList = new ArrayList<>();
+    private DialogEditAlbumFragment dialogEditAlbumFragment;
 
     // Hàm newInstance để tạo Fragment và truyền tham số (albumId, albumName, artistName, genreName)
     public static AlbumFragment newInstance(int albumId, String albumName, String artistName, String genreName) {
@@ -73,6 +79,9 @@ public class AlbumFragment extends Fragment {
 
             // Tải danh sách bài hát
             loadSongsInAlbum(albumId);
+
+            ImageButton btn_setting = view.findViewById(R.id.btn_setting);
+            btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
         }
 
         // Khởi tạo SearchView
@@ -109,8 +118,23 @@ public class AlbumFragment extends Fragment {
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                // Switch to the main thread to show the Toast
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Failed to load album: " + error, Toast.LENGTH_SHORT).show();
+                    });
+                }
             }
         });
+    }
+    // Method to show the Edit Album dialog
+    private void showEditAlbumDialog(int albumId) {
+        dialogEditAlbumFragment = DialogEditAlbumFragment.newInstance(albumId);
+        dialogEditAlbumFragment.setOnAlbumEditedListener(() -> {
+            // Tải lại danh sách bài hát sau khi chỉnh sửa album
+            loadSongsInAlbum(albumId);
+            Toast.makeText(getContext(), "Album đã được chỉnh sửa", Toast.LENGTH_SHORT).show();
+        });
+        dialogEditAlbumFragment.show(getFragmentManager(), "edit_album");
     }
 }

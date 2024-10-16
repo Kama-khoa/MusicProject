@@ -3,10 +3,13 @@ package com.example.music_project.views.fragments;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -72,6 +75,7 @@ public class LibraryFragment extends Fragment {
     private List<Playlist> playlistList = new ArrayList<>();
     private List<Album> albumList = new ArrayList<>();
     private List<Artist> artistList = new ArrayList<>();
+    private static final int PICK_IMAGE_REQUEST = 1; // Define the request code
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +86,7 @@ public class LibraryFragment extends Fragment {
         albumController = new AlbumController(getContext());
         userController = new UserController(getContext());
         artistController = new ArtistController(getContext());
+        genreController = new GenreController(getContext());
 
         rvLibraryItems = view.findViewById(R.id.rv_library_items);
         rvLibraryItems.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -357,26 +362,28 @@ public class LibraryFragment extends Fragment {
 
         EditText edtAlbumName = dialogView.findViewById(R.id.edt_album_name);
         Spinner spinnerGenre = dialogView.findViewById(R.id.spinner_genre);
-        TextView tvReleaseDate = dialogView.findViewById(R.id.tv_release_date);
+        EditText edtReleaseDate = dialogView.findViewById(R.id.edt_release_date);
+        ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_cover);
+        Uri selectedImageUri = null;
+        // Pre-fill the release date EditText with the current date in dd-MM-yyyy format
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        edtReleaseDate.setText(currentDate);
 
-        // Lấy ngày hiện tại và hiển thị trong TextView
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        tvReleaseDate.setText(currentDate);
+        // Set onClickListener for the album cover ImageView to select an image
+        imgAlbumCover.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        });
 
-        // Lấy danh sách genre từ database và hiển thị trong Spinner
+        // Load genre data from the database
         genreController.getAllGenres(new GenreController.OnGenresLoadedListener() {
             @Override
             public void onGenresLoaded(List<Genre> genres) {
-                // Điền dữ liệu vào spinner trên UI thread
                 getActivity().runOnUiThread(() -> {
-                    if (spinnerGenre != null) {
-                        ArrayAdapter<Genre> adapter = new ArrayAdapter<>(getContext(),
-                                android.R.layout.simple_spinner_item, genres);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerGenre.setAdapter(adapter);
-                    } else {
-                        Log.e("LibraryFragment", "Spinner is null");
-                    }
+                    ArrayAdapter<Genre> adapter = new ArrayAdapter<>(getContext(),
+                            android.R.layout.simple_spinner_item, genres);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerGenre.setAdapter(adapter);
                 });
             }
 
@@ -390,46 +397,56 @@ public class LibraryFragment extends Fragment {
                 .setPositiveButton("Tạo", (dialog, id) -> {
                     String albumName = edtAlbumName.getText().toString().trim();
                     Genre selectedGenre = (Genre) spinnerGenre.getSelectedItem();
+                    String releaseDateStr = edtReleaseDate.getText().toString().trim(); // Get the user-entered or pre-filled date
 
-                    if (!albumName.isEmpty() && selectedGenre != null) { // Kiểm tra selectedGenre không null
+                    if (!albumName.isEmpty() && selectedGenre != null && !releaseDateStr.isEmpty()) {
+                        int genreId = selectedGenre.getGenre_id();
 
-                        int genreId = selectedGenre.getGenre_id(); // Lấy genreId từ đối tượng Genre
-
-                        // Lấy userId từ SharedPreferences làm artistId
                         SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                         long userIdLong = preferences.getLong("userId", -1);
                         int userId = (int) userIdLong;
 
-                        // Tạo album với ngày phát hành hiện tại
-                        Date releaseDate = new Date();
-                        Album album = new Album(albumName, userId, genreId, releaseDate);
+                        Date releaseDate;
+                        try {
+                            releaseDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(releaseDateStr);
+                        } catch (ParseException e) {
+                            releaseDate = new Date();
+                        }
 
-                        // Gọi hàm tạo album từ AlbumController
+                        Album album = new Album(albumName, userId, genreId, releaseDate, null);
+
+                        // Nếu selectedImageUri không phải là null, thì lưu ảnh
+                        if (selectedImageUri != null) {
+                            String albumCoverPath = saveImageToStorage(selectedImageUri);
+                            album.setCover_image_path(albumCoverPath);
+                        }
+
+                        // Call AlbumController to create the album
                         albumController.createAlbum(userId, album, new AlbumController.OnAlbumCreatedListener() {
                             @Override
                             public void onSuccess() {
-                                new Handler(Looper.getMainLooper()).post(() -> {
-                                    Toast.makeText(getContext(), "Album " + albumName + " được tạo", Toast.LENGTH_SHORT).show();
-                                });
+                                Toast.makeText(getContext(), "Album " + albumName + " được tạo", Toast.LENGTH_SHORT).show();
                                 loadAlbums();
                             }
 
                             @Override
                             public void onFailure(String error) {
-                                new Handler(Looper.getMainLooper()).post(() -> {
-                                    Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
-                                });
+                                Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        new Handler(Looper.getMainLooper()).post(() -> {
-                            Toast.makeText(getContext(), "Tên album và thể loại không được để trống", Toast.LENGTH_SHORT).show();
-                        });
+                        Toast.makeText(getContext(), "Tên album, thể loại, và ngày phát hành không được để trống", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Hủy", (dialog, id) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    // Method to save image to storage (simplified)
+    private String saveImageToStorage(Uri imageUri) {
+        // Implement logic to save the image and return the file path
+        return imageUri.getPath(); // Just a placeholder, handle saving the image properly
     }
 
     private void loadAlbumsByUserID(int userId) {
