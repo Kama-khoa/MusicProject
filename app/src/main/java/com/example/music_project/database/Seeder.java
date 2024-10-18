@@ -12,11 +12,11 @@ public class Seeder {
 
         try {
             // Dữ liệu mẫu cho bảng User
-            User user1 = new User("johndoe", "john@example.com", "password123");
-            User user2 = new User("janedoe", "jane@example.com", "password456");
-            User user3 = new User("alexsmith", "alex@example.com", "password789");
-            User user4 = new User("emilyjohnson", "emily@example.com", "password012");
-            User user5 = new User("michaelbrown", "michael@example.com", "password345");
+            User user1 = new User("johndoe", "john@example.com", "password123","USER");
+            User user2 = new User("janedoe", "jane@example.com", "password456","USER");
+            User user3 = new User("alexsmith", "alex@example.com", "password789","USER");
+            User user4 = new User("emilyjohnson", "emily@example.com", "password012","USER");
+            User user5 = new User("michaelbrown", "michael@example.com", "password345","USER");
 
             db.userDao().insert(user1);
             db.userDao().insert(user2);

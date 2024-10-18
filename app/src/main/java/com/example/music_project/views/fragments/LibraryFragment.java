@@ -44,6 +44,7 @@ import com.example.music_project.models.Genre;
 import com.example.music_project.models.Playlist;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
+import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
@@ -75,6 +76,7 @@ public class LibraryFragment extends Fragment {
     private List<Playlist> playlistList = new ArrayList<>();
     private List<Album> albumList = new ArrayList<>();
     private List<Artist> artistList = new ArrayList<>();
+    private Handler mainHandler;
     private static final int PICK_IMAGE_REQUEST = 1; // Define the request code
 
     @Override
@@ -146,10 +148,33 @@ public class LibraryFragment extends Fragment {
                 showAddArtistDialog();
                 return true;
             }
+            if (item.getItemId() == R.id.add_song) {
+                openSongScreen();
+                return true;
+            }
             return false;
         });
 
         popupMenu.show();
+    }
+    private void openSongScreen() {
+        userController.getCurrentUser(new UserController.OnUserFetchedListener() {
+            @Override
+            public void onSuccess(User user) {
+                Intent intent = new Intent(getActivity(), SongActivity.class);
+                intent.putExtra("USER_ID", user.getUser_id());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                mainHandler.post(() -> {
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     // Lấy ID người dùng hiện tại và lưu vào SharedPreferences
@@ -375,15 +400,20 @@ public class LibraryFragment extends Fragment {
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
         });
 
-        // Load genre data from the database
+        // Lấy danh sách genre từ database và hiển thị trong Spinner
         genreController.getAllGenres(new GenreController.OnGenresLoadedListener() {
             @Override
             public void onGenresLoaded(List<Genre> genres) {
+                // Điền dữ liệu vào spinner trên UI thread
                 getActivity().runOnUiThread(() -> {
-                    ArrayAdapter<Genre> adapter = new ArrayAdapter<>(getContext(),
-                            android.R.layout.simple_spinner_item, genres);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnerGenre.setAdapter(adapter);
+                    if (spinnerGenre != null) {
+                        ArrayAdapter<Genre> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_spinner_item, genres);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerGenre.setAdapter(adapter);
+                    } else {
+                        Log.e("LibraryFragment", "Spinner is null");
+                    }
                 });
             }
 
@@ -399,9 +429,11 @@ public class LibraryFragment extends Fragment {
                     Genre selectedGenre = (Genre) spinnerGenre.getSelectedItem();
                     String releaseDateStr = edtReleaseDate.getText().toString().trim(); // Get the user-entered or pre-filled date
 
-                    if (!albumName.isEmpty() && selectedGenre != null && !releaseDateStr.isEmpty()) {
-                        int genreId = selectedGenre.getGenre_id();
+                    if (!albumName.isEmpty() && selectedGenre != null) { // Kiểm tra selectedGenre không null
 
+                        int genreId = selectedGenre.getGenre_id(); // Lấy genreId từ đối tượng Genre
+
+                        // Lấy userId từ SharedPreferences làm artistId
                         SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                         long userIdLong = preferences.getLong("userId", -1);
                         int userId = (int) userIdLong;
@@ -425,17 +457,23 @@ public class LibraryFragment extends Fragment {
                         albumController.createAlbum(userId, album, new AlbumController.OnAlbumCreatedListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(getContext(), "Album " + albumName + " được tạo", Toast.LENGTH_SHORT).show();
+                                new Handler(Looper.getMainLooper()).post(() -> {
+                                    Toast.makeText(getContext(), "Album " + albumName + " được tạo", Toast.LENGTH_SHORT).show();
+                                });
                                 loadAlbums();
                             }
 
                             @Override
                             public void onFailure(String error) {
-                                Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+                                new Handler(Looper.getMainLooper()).post(() -> {
+                                    Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+                                });
                             }
                         });
                     } else {
-                        Toast.makeText(getContext(), "Tên album, thể loại, và ngày phát hành không được để trống", Toast.LENGTH_SHORT).show();
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            Toast.makeText(getContext(), "Tên album và thể loại không được để trống", Toast.LENGTH_SHORT).show();
+                        });
                     }
                 })
                 .setNegativeButton("Hủy", (dialog, id) -> dialog.dismiss())

@@ -41,4 +41,11 @@
     <string name="no_top_spotify_songs">No top songs</string>
     <string name="failed_load_spotify_songs">Failed load songs</string>
     <string name="network_error">Network err</string>
+    <string name="previous_button">ss</string>
+    <string name="play_pause_button">ss</string>
+    <string name="next_button">ss</string>
+    <string-array name="role_options">
+        <item>ARTIST</item>
+        <item>USER</item>
+    </string-array>
 </resources>

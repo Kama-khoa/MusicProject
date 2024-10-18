@@ -54,26 +54,24 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "database-name").build();
+        AppDatabase db = Room.databaseBuilder(requireContext(), AppDatabase.class, "database-name").build();
         SongDao songDao = db.songDao();
 
-        userController = new UserController(getContext());
+        userController = new UserController(requireContext());
         mainHandler = new Handler(Looper.getMainLooper());
 
         String authToken = "YOUR_SPOTIFY_ACCESS_TOKEN";
         spotifyApiService = SpotifyApiClient.getClient(authToken).create(SpotifyApiService.class);
-
 
         rvRecentSongs = view.findViewById(R.id.rv_recent_songs);
         rvPopularSongs = view.findViewById(R.id.rv_popular_songs);
         ivUserIcon = view.findViewById(R.id.iv_user_icon);
         btnLogin = view.findViewById(R.id.btn_login);
 
-        rvRecentSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvPopularSongs.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvRecentSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
 
         updateUserInterface();
-        loadData();
 
         return view;
     }
@@ -94,7 +92,9 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(String error) {
                     mainHandler.post(() -> {
-                        Toast.makeText(getContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
+                        if (isAdded()) { // Kiểm tra nếu Fragment đã được thêm vào Activity
+                            Toast.makeText(requireContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
+                        }
                     });
                 }
             });
@@ -103,7 +103,9 @@ public class HomeFragment extends Fragment {
             btnLogin.setVisibility(View.VISIBLE);
             btnLogin.setOnClickListener(v -> openLoginScreen());
 
-            Toast.makeText(getContext(),"Login button is visible and clickable",Toast.LENGTH_LONG).show();
+            if (isAdded()) {
+                Toast.makeText(requireContext(),"Login button is visible and clickable",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -120,7 +122,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showUserMenu(View v) {
-        PopupMenu popup = new PopupMenu(getContext(), v);
+        PopupMenu popup = new PopupMenu(requireContext(), v);
         popup.getMenuInflater().inflate(R.menu.user_menu, popup.getMenu());
 
         popup.setOnMenuItemClickListener(item -> {
@@ -163,11 +165,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    Toast.makeText(getContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
         });
     }
+
     private void openSongScreen() {
         userController.getCurrentUser(new UserController.OnUserFetchedListener() {
             @Override
@@ -180,11 +185,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    Toast.makeText(getContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
         });
     }
+
     private void openSettingsScreen() {
         Intent intent = new Intent(getActivity(), SettingsActivity.class);
         startActivity(intent);
@@ -195,64 +203,41 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess() {
                 mainHandler.post(() -> {
-                    updateUserInterface();
-                    Toast.makeText(getContext(), R.string.logout_successful, Toast.LENGTH_SHORT).show();
+                    if (isAdded()) {
+                        updateUserInterface();
+                        Toast.makeText(requireContext(), R.string.logout_successful, Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
 
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    Toast.makeText(getContext(), getString(R.string.logout_failed, error), Toast.LENGTH_SHORT).show();
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), getString(R.string.logout_failed, error), Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
         });
     }
 
-    private void loadData() {
-        loadTopSpotifySongs();
-    }
 
-    private void loadTopSpotifySongs() {
-        Call<TopTracksResponse> call = spotifyApiService.getTopTracks(5);
-        call.enqueue(new Callback<TopTracksResponse>() {
-            @Override
-            public void onResponse(Call<TopTracksResponse> call, Response<TopTracksResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Song> songs = response.body().getItems();
-                    mainHandler.post(() -> {
-                        if (!songs.isEmpty()) {
-                            SongAdapter adapter = new SongAdapter(songs, HomeFragment.this::playSong);
-                            rvPopularSongs.setAdapter(adapter);
-                        } else {
-                            handleEmptyState(rvPopularSongs, R.string.no_top_spotify_songs);
-                        }
-                    });
-                } else {
-                    mainHandler.post(() -> {
-                        Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TopTracksResponse> call, Throwable t) {
-                mainHandler.post(() -> {
-                    Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
-    }
 
     private void playSong(Song song) {
         // Implement this method to start playing the song
         // You might want to use a PlayerController or MusicPlaybackService here
-        Toast.makeText(getContext(), "Playing: " + song.getTitle(), Toast.LENGTH_SHORT).show();
-        // Example: playerController.playSong(song);
+        if (isAdded()) {
+            Toast.makeText(requireContext(), "Playing: " + song.getTitle(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void handleEmptyState(RecyclerView recyclerView, int messageResId) {
-        recyclerView.setVisibility(View.GONE);
-        Toast.makeText(getContext(), messageResId, Toast.LENGTH_SHORT).show();
+        // Implement this method to handle empty states in your RecyclerView
+        // You might want to show a placeholder or a message when there are no items to display
+        mainHandler.post(() -> {
+            if (isAdded()) {
+                Toast.makeText(requireContext(), messageResId, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
