@@ -16,6 +16,7 @@ public interface GenreDao {
 
     @Query("SELECT * FROM Genre")
     List<Genre> getAllGenres();
+
     @Update
     void update(Genre genre);
 

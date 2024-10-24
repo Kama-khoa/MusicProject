@@ -1,6 +1,7 @@
 package com.example.music_project.models;
 
 // Genre.java
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

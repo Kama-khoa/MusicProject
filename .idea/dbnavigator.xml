@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DBNavigator.Project.DDLFileAttachmentManager">
-    <mappings />
-    <preferences />
-  </component>
-  <component name="DBNavigator.Project.DataEditorManager">
-    <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="false" />
-    <value-preview-pinned value="false" />
-  </component>
-  <component name="DBNavigator.Project.DataExportManager">
-    <export-instructions>
-      <create-header value="true" />
-      <friendly-headers value="false" />
-      <quote-values-containing-separator value="true" />
-      <quote-all-values value="false" />
-      <value-separator value="" />
-      <begin-quote value="&quot;" />
-      <end-quote value="&quot;" />
-      <file-name value="" />
-      <file-location value="" />
-      <scope value="GLOBAL" />
-      <destination value="FILE" />
-      <format value="EXCEL" />
-      <charset value="windows-1252" />
-      <charset value="windows-1252" />
-    </export-instructions>
-  </component>
-  <component name="DBNavigator.Project.DatabaseBrowserManager">
-    <autoscroll-to-editor value="false" />
-    <autoscroll-from-editor value="true" />
-    <show-object-properties value="false" />
-    <loaded-nodes />
-  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="642c9632-3c51-48df-b38b-c8c0e761d3ca">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
@@ -44,38 +11,8 @@
       <console name="Connection 8" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
-  <component name="DBNavigator.Project.DatabaseEditorStateManager">
-    <last-used-providers />
-  </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
-  </component>
-  <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="642c9632-3c51-48df-b38b-c8c0e761d3ca" />
-    <connection id="ce6e81ba-6d4f-4d66-b777-be9c93bdd3e5" />
-    <connection id="4341ef28-05cb-43a9-afda-241e5a8bcd99" />
-  </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="4341ef28-05cb-43a9-afda-241e5a8bcd99" dataset="main.Playlist" active-filter-id="f54195a7-4f79-44e9-b2b5-89e88a71713c">
-      <filter id="f54195a7-4f79-44e9-b2b5-89e88a71713c" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
-    </filter-actions>
-    <filter-actions connection-id="642c9632-3c51-48df-b38b-c8c0e761d3ca" dataset="main.Playlist" active-filter-id="a8512203-0a8d-4174-a370-06b9e4d32e12">
-      <filter id="a8512203-0a8d-4174-a370-06b9e4d32e12" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
-    </filter-actions>
-    <filter-actions connection-id="ce6e81ba-6d4f-4d66-b777-be9c93bdd3e5" dataset="main.Playlist" active-filter-id="32ab310b-a18e-4e1d-a53d-36f0cdb58458">
-      <filter id="32ab310b-a18e-4e1d-a53d-36f0cdb58458" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND" />
-    </filter-actions>
-  </component>
-  <component name="DBNavigator.Project.ExecutionManager">
-    <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.MethodExecutionManager">
-    <method-browser />
-    <execution-history>
-      <group-entries value="true" />
-      <execution-inputs />
-    </execution-history>
-    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -770,9 +707,5 @@
         </visibility-settings>
       </environment>
     </general-settings>
-  </component>
-  <component name="DBNavigator.Project.StatementExecutionManager">
-    <execution-variables />
-    <execution-variable-types />
   </component>
 </project>

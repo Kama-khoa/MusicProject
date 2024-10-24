@@ -230,7 +230,7 @@ public class HomeFragment extends Fragment {
                     });
                 } else {
                     mainHandler.post(() -> {
-                        Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
                     });
                 }
             }
