@@ -1,14 +1,12 @@
 package com.example.music_project.views.fragments;
 
-import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +81,18 @@ public class AlbumFragment extends Fragment {
             ImageButton btn_setting = view.findViewById(R.id.btn_setting);
             btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
         }
+
+        Button btn_add_song = view.findViewById(R.id.btn_add_song);
+        btn_add_song.setOnClickListener(v -> {
+            // Create an instance of AddSongToAlbumFragment
+//            AddSongToAlbumFragment addSongToAlbumFragment = AddSongToAlbumFragment.newInstance(albumId);
+
+            // Replace the current fragment with AddSongToAlbumFragment
+//            getParentFragmentManager().beginTransaction()
+//                    .replace(R.id.fragment_container, addSongToAlbumFragment) // Replace with your container ID
+//                    .addToBackStack(null) // Add to back stack so the user can navigate back
+//                    .commit();
+        });
 
         // Khởi tạo SearchView
         SearchView searchView = view.findViewById(R.id.sv_album_search); // Thay đổi ID nếu cần

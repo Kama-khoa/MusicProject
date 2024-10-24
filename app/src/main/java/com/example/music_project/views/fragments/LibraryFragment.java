@@ -263,10 +263,10 @@ public class LibraryFragment extends Fragment {
 
                 // Cập nhật adapter
                 if (artistAdapter == null) {
-                    artistAdapter = new ArtistAdapter(artistList, artist -> {
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bạn đã chọn ca sĩ " + artist.getArtist_name(), Toast.LENGTH_SHORT).show());
-//                        loadArtistDetail(artist.getArtist_id(), artist.getArtist_name()); // Thay đổi phương thức loadArtistDetail theo nhu cầu của bạn
-                    });
+                    artistAdapter = new ArtistAdapter(artistList,
+                            artist -> loadArtistDetail(artist.getArtist_id(), artist.getArtist_name(),
+                                    artist.getBio(), artist.getDate_of_birth()) // Load chi tiết nghệ sĩ
+                    );
                     rvLibraryItems.setAdapter(artistAdapter);
                 } else {
                     artistAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
@@ -279,6 +279,7 @@ public class LibraryFragment extends Fragment {
             }
         });
     }
+
 
     // Tải danh sách album
     private void loadAlbums() {
@@ -296,9 +297,11 @@ public class LibraryFragment extends Fragment {
 
                 // Cập nhật adapter
                 if (albumAdapter == null) {
-                    albumAdapter = new AlbumAdapter(albumList, album -> {
-                        loadAlbumDetail( album.getAlbum_id(), album.getTitle(), String.valueOf(album.getArtist_id()), String.valueOf(album.getGenre_id()));
-                    });
+                    albumAdapter = new AlbumAdapter(albumList,
+                            album -> loadAlbumDetail(album.getAlbum_id(), album.getTitle(),
+                                    String.valueOf(album.getArtist_id()), String.valueOf(album.getGenre_id())),
+                            album -> showEditAlbumDialog(album)  // Handle long press event
+                    );
                     rvLibraryItems.setAdapter(albumAdapter);
                 } else {
                     albumAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
@@ -603,5 +606,25 @@ public class LibraryFragment extends Fragment {
                 .setNegativeButton("Hủy", (dialog, id) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    private void loadArtistDetail(int artistId, String artistName, String bio, Date dateOfBirth) {
+        // Khởi tạo Fragment chi tiết nghệ sĩ
+        ArtistDetailFragment artistDetailFragment = ArtistDetailFragment.newInstance(artistId, artistName, bio, dateOfBirth);
+
+        // Thay thế Fragment hiện tại bằng Fragment chi tiết nghệ sĩ
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, artistDetailFragment)  // Thay R.id.fragment_container bằng id của container Fragment trong layout của bạn
+                .addToBackStack(null)  // Thêm vào back stack để có thể quay lại
+                .commit();
+    }
+
+    // Function to show the Album edit dialog
+    private void showEditAlbumDialog(Album album) {
+        DialogEditAlbumFragment dialogEditAlbumFragment = DialogEditAlbumFragment.newInstance(album.getAlbum_id());
+        dialogEditAlbumFragment.setOnAlbumEditedListener(() -> {
+            Toast.makeText(getContext(), "Album đã được chỉnh sửa", Toast.LENGTH_SHORT).show();
+        });
+        dialogEditAlbumFragment.show(getFragmentManager(), "edit_album");
     }
 }
