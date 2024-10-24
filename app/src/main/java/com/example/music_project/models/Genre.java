@@ -1,6 +1,7 @@
 package com.example.music_project.models;
 
 // Genre.java
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -29,6 +30,11 @@ public class Genre {
 
     public void setGenre_name(String genre_name) {
         this.genre_name = genre_name;
+    }
+
+    @Override
+    public String toString() {
+        return genre_name;
     }
 }
 

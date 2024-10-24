@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(String error) {
                     mainHandler.post(() -> {
-                        Toast.makeText(getContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
                     });
                 }
             });
@@ -228,7 +228,7 @@ public class HomeFragment extends Fragment {
                     });
                 } else {
                     mainHandler.post(() -> {
-                        Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
                     });
                 }
             }
