@@ -1,5 +1,6 @@
 package com.example.music_project.models;
 
+// Album.java
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -74,6 +75,11 @@ public class Album {
     // New getter and setter for cover_image_path
     public String getCover_image_path() {
         return cover_image_path;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
     public void setCover_image_path(String cover_image_path) {

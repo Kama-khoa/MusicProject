@@ -1,6 +1,7 @@
 package com.example.music_project.models;
 
 // Artist.java
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import java.util.Date;
@@ -50,6 +51,11 @@ public class Artist {
 
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
+    }
+
+    @Override
+    public String toString() {
+        return artist_name;
     }
 }
 
