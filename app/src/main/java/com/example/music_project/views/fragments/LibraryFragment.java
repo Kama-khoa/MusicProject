@@ -208,7 +208,6 @@ public class LibraryFragment extends Fragment {
                 .commit();
     }
 
-
     // Thiết lập sự kiện cho các nút
     private void setupListeners() {
         btnPlaylist.setOnClickListener(view -> {
@@ -246,7 +245,7 @@ public class LibraryFragment extends Fragment {
                         playlistController.createPlaylist(userId, playlistName, new PlaylistController.OnPlaylistCreatedListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(getContext(), "Danh sách phát " + playlistName + " được tạo", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getContext(), "Danh sách phát " + playlistName + " được tạo", Toast.LENGTH_SHORT).show();
                                 loadPlaylistsByUserID(userId);
                             }
 

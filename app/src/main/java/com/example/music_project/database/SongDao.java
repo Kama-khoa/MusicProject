@@ -7,6 +7,7 @@ import androidx.room.Update;
 import androidx.room.Delete;
 import androidx.room.OnConflictStrategy;
 
+import com.example.music_project.models.PlaylistSong;
 import com.example.music_project.models.Song;
 
 import java.util.List;
@@ -51,4 +52,17 @@ public interface SongDao {
             "JOIN Artist a ON s.artist_id = a.artist_id " +
             "WHERE s.song_id = :songId")
     Song getSongWithArtist(int songId);
+
+    @Query("SELECT * FROM Song WHERE song_id IN (SELECT song_id FROM PlaylistSong WHERE playlist_id = :playlistId)")
+    List<Song> getSongsInPlaylist(int playlistId);
+
+    @Query("SELECT * FROM Song WHERE title LIKE '%' || :query || '%'")
+    List<Song> searchSongs(String query);
+
+    @Query("SELECT * FROM Song WHERE Song.song_id NOT IN (SELECT PlaylistSong.song_id FROM PlaylistSong WHERE PlaylistSong.playlist_id = :playlistId)")
+    List<Song> getAvailableSongs(int playlistId);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addSongToPlaylist(PlaylistSong playlistSong);
+
 }

@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "database-name").build();
+        AppDatabase db = Room.databaseBuilder(requireContext(), AppDatabase.class, "database-name").build();
         SongDao songDao = db.songDao();
 
         userController = new UserController(getContext());
@@ -94,7 +94,9 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(String error) {
                     mainHandler.post(() -> {
-                        Toast.makeText(getContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
+                        }
                     });
                 }
             });

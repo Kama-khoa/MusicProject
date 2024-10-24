@@ -3,9 +3,14 @@ package com.example.music_project.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.ColumnInfo;
+import androidx.room.TypeConverters;
+
+import com.example.music_project.database.Converters;
+
 import java.util.Date;
 
 @Entity(tableName = "PlayHistory")
+@TypeConverters({Converters.class})
 public class PlayHistory {
 
     @PrimaryKey(autoGenerate = true)

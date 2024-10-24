@@ -2,13 +2,20 @@ package com.example.music_project.models;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.TypeConverters;
+
+import com.example.music_project.database.Converters;
+
 import java.util.Date;
 
-@Entity(primaryKeys = {"user_id", "song_id"},
+@Entity(
+        primaryKeys = {"user_id", "song_id"},  // Khóa chính bao gồm cả user_id và song_id
         foreignKeys = {
-                @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id"),
-                @ForeignKey(entity = Song.class, parentColumns = "song_id", childColumns = "song_id")
-        })
+                @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Song.class, parentColumns = "song_id", childColumns = "song_id", onDelete = ForeignKey.CASCADE)
+        }
+)
+@TypeConverters({Converters.class})  // Sử dụng Converters để xử lý kiểu Date
 public class Favourite {
 
     public int user_id;

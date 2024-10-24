@@ -31,7 +31,7 @@ public class AlbumController {
 
     public void getAlbums(final AlbumController.OnAlbumsLoadedListener listener) {
         executorService.execute(() -> {
-            List<Album> albums = database.albumDao().getAllAbums();
+            List<Album> albums = database.albumDao().getAllAlbums();
             if (albums != null && !albums.isEmpty()) {
                 new Handler(Looper.getMainLooper()).post(() -> listener.onAlbumsLoaded(albums));
             } else {

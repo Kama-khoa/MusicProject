@@ -3,6 +3,7 @@ package com.example.music_project.views.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,7 +24,6 @@ import com.example.music_project.views.fragments.SongDialogFragment;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SongActivity extends AppCompatActivity implements SongDialogFragment.SongDialogListener {
@@ -36,12 +36,19 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
     private List<Song> songs = new ArrayList<>();
     private Uri selectedAudioUri;
 
+    private List<Artist> artists = new ArrayList<>();
+    private List<Album> albums = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_song);
 
-        songController = new SongController(AppDatabase.getInstance(this).songDao());
+        songController = new SongController(AppDatabase.getInstance(this).songDao(),
+                AppDatabase.getInstance(this).artistDao(),
+                AppDatabase.getInstance(this).albumDao(),
+                AppDatabase.getInstance(this).genreDao());
         initViews();
         setupRecyclerView();
         loadSongs();
@@ -74,12 +81,82 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
                 runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
             }
         });
+
+        songController.getAllArtists(new SongController.Callback<List<Artist>>() {
+            @Override
+            public void onSuccess(List<Artist> result) {
+                artists.clear();
+                artists.addAll(result);
+
+                Log.d("ArtistData", "Số nghệ sĩ nhận được: " + result.size());
+                for (Artist artist : result) {
+                    Log.d("ArtistData", "Nghệ sĩ: " + artist.getArtist_name()); // Thay đổi getName() nếu cần
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("ArtistData", "Lỗi nhận nghệ sĩ: " + error);
+            }
+        });
     }
 
     private void showAddSongDialog() {
-        SongDialogFragment dialog = new SongDialogFragment();
-        dialog.setListener(this);
-        dialog.show(getSupportFragmentManager(), "SongDialog");
+        // Gọi hàm để lấy danh sách nghệ sĩ
+        getArtists(new Callback<List<Artist>>() {
+            @Override
+            public void onSuccess(List<Artist> artistsList) {
+                artists.clear();
+                artists.addAll(artistsList); // Gán danh sách nghệ sĩ
+
+                // Gọi hàm để lấy danh sách album
+                getAlbums(new Callback<List<Album>>() {
+                    @Override
+                    public void onSuccess(List<Album> albumsList) {
+                        albums.clear();
+                        albums.addAll(albumsList); // Gán danh sách album
+
+                        // Gọi hàm để lấy danh sách thể loại
+                        getGenres(new Callback<List<Genre>>() {
+                            @Override
+                            public void onSuccess(List<Genre> genresList) {
+                                genres.clear();
+                                genres.addAll(genresList); // Gán danh sách thể loại
+
+                                // Kiểm tra nếu danh sách không rỗng
+                                if (artists.isEmpty() || albums.isEmpty() || genres.isEmpty()) {
+                                    Toast.makeText(SongActivity.this, "Không có dữ liệu nghệ sĩ, album hoặc thể loại", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                // Tạo và hiển thị SongDialogFragment
+                                SongDialogFragment dialog = new SongDialogFragment();
+                                dialog.setListener(SongActivity.this);
+                                dialog.setArtists(artists);
+                                dialog.setAlbums(albums);
+                                dialog.setGenres(genres);
+                                dialog.show(getSupportFragmentManager(), "SongDialog");
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+                    }
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+            }
+        });
     }
 
     private void onSongSelected(Song song) {
@@ -184,19 +261,53 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         }
     }
 
-    // Các phương thức này cần được triển khai để cung cấp dữ liệu cho SongDialogFragment
-    public List<Artist> getArtists() {
-        // TODO: Implement this method to fetch artists from your database
-        return new ArrayList<>();
+    public void getArtists(Callback<List<Artist>> callback) {
+        songController.getAllArtists(new SongController.Callback<List<Artist>>() {
+            @Override
+            public void onSuccess(List<Artist> result) {
+                callback.onSuccess(result); // Truyền danh sách nghệ sĩ vào callback
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+                callback.onError(error);
+            }
+        });
     }
 
-    public List<Album> getAlbums() {
-        // TODO: Implement this method to fetch albums from your database
-        return new ArrayList<>();
+    public void getAlbums(Callback<List<Album>> callback) {
+        songController.getAllAlbums(new SongController.Callback<List<Album>>() {
+            @Override
+            public void onSuccess(List<Album> result) {
+                callback.onSuccess(result); // Truyền danh sách album vào callback
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+                callback.onError(error);
+            }
+        });
     }
 
-    public List<Genre> getGenres() {
-        // TODO: Implement this method to fetch genres from your database
-        return new ArrayList<>();
+    public void getGenres(Callback<List<Genre>> callback) {
+        songController.getAllGenres(new SongController.Callback<List<Genre>>() {
+            @Override
+            public void onSuccess(List<Genre> result) {
+                callback.onSuccess(result); // Truyền danh sách thể loại vào callback
+            }
+
+            @Override
+            public void onError(String error) {
+                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
+                callback.onError(error);
+            }
+        });
+    }
+
+    public interface Callback<T> {
+        void onSuccess(T result);
+        void onError(String error);
     }
 }

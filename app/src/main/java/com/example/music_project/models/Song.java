@@ -1,17 +1,22 @@
 package com.example.music_project.models;
 
-// Song.java
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.music_project.database.Converters;
+
 import java.util.Date;
 
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id"),
-        @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id"),
-        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id")
+        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id", onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id", onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id", onDelete = ForeignKey.CASCADE)
 })
+@TypeConverters({Converters.class})
 public class Song {
 
     @PrimaryKey(autoGenerate = true)
@@ -24,9 +29,12 @@ public class Song {
     public int duration;
     public Date release_date;
     public String file_path;
+
     @Ignore
     private String artistName;
-    public Song(){}
+
+    public Song() {}
+
     public Song(String title, int artist_id, int album_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
         this.artist_id = artist_id;
@@ -35,8 +43,8 @@ public class Song {
         this.duration = duration;
         this.release_date = release_date;
         this.file_path = file_path;
+        this.is_sample = true;
     }
-
 
     // Getters and Setters
     public int getSong_id() {
@@ -118,5 +126,4 @@ public class Song {
     public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
-
 }

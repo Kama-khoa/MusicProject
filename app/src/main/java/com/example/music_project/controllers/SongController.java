@@ -1,6 +1,13 @@
 package com.example.music_project.controllers;
 
+import com.example.music_project.database.AlbumDao;
+import com.example.music_project.database.ArtistDao;
+import com.example.music_project.database.GenreDao;
 import com.example.music_project.database.SongDao;
+import com.example.music_project.models.Album;
+import com.example.music_project.models.Artist;
+import com.example.music_project.models.Genre;
+import com.example.music_project.models.PlaylistSong;
 import com.example.music_project.models.Song;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -8,10 +15,21 @@ import java.util.concurrent.Executors;
 
 public class SongController {
     private SongDao songDao;
+    private ArtistDao artistDao;
+    private AlbumDao albumDao;
+    private GenreDao genreDao;
     private ExecutorService executorService;
 
     public SongController(SongDao songDao) {
         this.songDao = songDao;
+        this.executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public SongController(SongDao songDao, ArtistDao artistDao, AlbumDao albumDao, GenreDao genreDao) {
+        this.songDao = songDao;
+        this.artistDao = artistDao;
+        this.albumDao = albumDao;
+        this.genreDao = genreDao;
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -79,4 +97,75 @@ public class SongController {
 
         void onError(String error);
     }
+
+    public void getAvailableSongs(int playlistId, Callback<List<Song>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Song> songs = songDao.getAvailableSongs(playlistId); // Gọi phương thức đã cập nhật trong SongDao
+                callback.onSuccess(songs);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách bài hát có sẵn: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getSongsInPlaylist(int playlistId, Callback<List<Song>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Song> songs = songDao.getSongsInPlaylist(playlistId);
+                callback.onSuccess(songs);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách bài hát trong playlist: " + e.getMessage());
+            }
+        });
+    }
+
+    public void addSongsToPlaylist(int playlistId, List<Song> songs, Callback<Void> callback) {
+        executorService.execute(() -> {
+            try {
+                for (Song song : songs) {
+                    // Tạo đối tượng PlaylistSong cho mỗi bài hát
+                    PlaylistSong playlistSong = new PlaylistSong(playlistId, song.getSong_id());
+                    songDao.addSongToPlaylist(playlistSong); // Gọi phương thức đã cập nhật trong SongDao
+                }
+                callback.onSuccess(null);
+            } catch (Exception e) {
+                callback.onError("Không thể thêm bài hát vào playlist: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getAllArtists(Callback<List<Artist>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Artist> artists = artistDao.getAllArtists(); // Lấy danh sách nghệ sĩ từ DAO
+                callback.onSuccess(artists);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách nghệ sĩ: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getAllAlbums(Callback<List<Album>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Album> albums = albumDao.getAllAlbums(); // Lấy danh sách album từ DAO
+                callback.onSuccess(albums);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách album: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getAllGenres(Callback<List<Genre>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Genre> genres = genreDao.getAllGenres(); // Lấy danh sách thể loại từ DAO
+                callback.onSuccess(genres);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách thể loại: " + e.getMessage());
+            }
+        });
+    }
+
 }

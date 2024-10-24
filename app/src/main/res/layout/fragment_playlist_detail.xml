@@ -2,18 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
+
         <SearchView
             android:id="@+id/sv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Tìm kiếm trong danh sách phát"/>
+            android:layout_width="358dp"
+            android:layout_height="match_parent"
+            android:hint="Tìm kiếm bài hát" />
 
         <ImageView
             android:id="@+id/img_playlist_edit_or_del"
@@ -26,29 +29,71 @@
 
     <ImageView
         android:id="@+id/img_playlist_cover"
-        android:layout_width="match_parent"
+        android:layout_width="377dp"
         android:layout_height="200dp"
         android:contentDescription="Playlist Cover Image"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_perm_identity"/>
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_perm_identity" />
 
     <TextView
         android:id="@+id/tv_playlist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="sans-serif"
+        android:hint="Playlist Name"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
+        android:orientation="horizontal"
+        android:layout_gravity="">
 
+        <TextView
+            android:id="@+id/tv_playlist_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:fontFamily="sans-serif"
+            android:hint="user name"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:textColor="#B0B0B0"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_add_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="#1DB954"
+            android:text="Thêm"
+            android:textColor="@color/black" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_playlist_user_name"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_playlist_details"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:text=""/>
+        android:layout_marginTop="12dp"
+        android:hint="Mô tả"
+        android:textColor="#B0B0B0"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"/>
+
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -56,14 +101,7 @@
           android:gravity="center"
 
           >
-          <Button
-              android:id="@+id/btn_add_song"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Thêm bài hát mới"
-              android:layout_marginLeft="30dp"
-              android:layout_marginRight="30dp"
-              />
+
       </LinearLayout>
 
 
