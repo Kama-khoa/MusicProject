@@ -14,7 +14,7 @@ public interface AlbumDao {
     long insert(Album album);
 
     @Query("SELECT * FROM Album")
-    List<Album> getAllAbums();
+    List<Album> getAllAlbums();
 
     @Query("SELECT * FROM Album WHERE album_id = :albumId")
     Album getAlbumById(int albumId);

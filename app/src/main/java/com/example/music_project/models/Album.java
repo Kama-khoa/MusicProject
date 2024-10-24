@@ -65,5 +65,10 @@ public class Album {
     public void setRelease_date(Date release_date) {
         this.release_date = release_date;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
 

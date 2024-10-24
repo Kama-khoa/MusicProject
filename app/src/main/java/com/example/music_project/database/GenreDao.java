@@ -17,6 +17,9 @@ public interface GenreDao {
     @Query("SELECT * FROM Genre WHERE genre_id = :genreId")
     Genre getGenreById(int genreId);
 
+    @Query("SELECT * FROM Genre")
+    List<Genre> getAllGenres();
+
     @Update
     void update(Genre genre);
 

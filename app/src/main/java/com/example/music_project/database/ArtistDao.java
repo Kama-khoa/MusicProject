@@ -9,13 +9,13 @@ import java.util.List;
 @Dao
 public interface ArtistDao {
     @Insert
-    long insert(Artist artist);
+    void insert(Artist artist);
 
     @Query("SELECT * FROM Artist WHERE artist_id = :artistId")
     Artist getArtistById(int artistId);
 
     @Query("SELECT * FROM Artist")
-    List<Artist> getArtists();
+    List<Artist> getAllArtists();
 
     @Update
     void update(Artist artist);
