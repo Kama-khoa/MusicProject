@@ -43,7 +43,7 @@ public class ArtistController {
     // Method to load all artists
     public void getArtists(final OnArtistsLoadedListener listener) {
         executorService.execute(() -> {
-            List<Artist> artists = database.artistDao().getArtists();
+            List<Artist> artists = database.artistDao().getAllArtists();
             if (artists != null && !artists.isEmpty()) {
                 new Handler(Looper.getMainLooper()).post(() -> listener.onArtistLoaded(artists));
             } else {

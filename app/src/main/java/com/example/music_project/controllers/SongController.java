@@ -157,7 +157,6 @@ public class SongController {
         void onFailure(String error);
     }
 
-
     public interface OnArtistsLoadedListener {
         void onArtistsLoaded(List<Artist> artists);
         void onFailure(String message);

@@ -111,24 +111,35 @@ public class ArtistDetailFragment extends Fragment {
             }
         });
 
-        // Load danh sách album
-        artistController.getArtistAlbums(artistId, new ArtistController.OnAlbumsLoadedListener() {
+        // Fetch artist name first, then load albums
+        artistController.getArtistById(artistId, new ArtistController.OnArtistLoadedListener() {
             @Override
-            public void onAlbumsLoaded(List<Album> albums) {
-                AlbumAdapter albumAdapter = new AlbumAdapter(albums, new AlbumAdapter.OnAlbumClickListener() {
+            public void onArtistLoaded(Artist artist) {
+                // Load danh sách album sau khi đã có thông tin nghệ sĩ
+                artistController.getArtistAlbums(artistId, new ArtistController.OnAlbumsLoadedListener() {
                     @Override
-                    public void onAlbumClick(Album album) {
-                        loadAlbumDetailFragment(album.getAlbum_id(), album.getTitle(), album.getArtist_id(), album.getGenre_id());
+                    public void onAlbumsLoaded(List<Album> albums) {
+                        // Create an adapter that also displays the artist name
+                        AlbumAdapter albumAdapter = new AlbumAdapter(albums, new AlbumAdapter.OnAlbumClickListener() {
+                            @Override
+                            public void onAlbumClick(Album album) {
+                                loadAlbumDetailFragment(album.getAlbum_id(), album.getTitle(), artistId, album.getGenre_id());
+                            }
+                        }, new AlbumAdapter.OnAlbumLongClickListener() {
+                            @Override
+                            public void onAlbumLongClick(Album album) {
+                                showEditAlbumDialog(album);
+                            }
+                        });
+                        rvAlbums.setAdapter(albumAdapter);
                     }
-                }, new AlbumAdapter.OnAlbumLongClickListener() {
+
                     @Override
-                    public void onAlbumLongClick(Album album) {
-                        showEditAlbumDialog(album);
+                    public void onFailure(String error) {
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
                     }
                 });
-                rvAlbums.setAdapter(albumAdapter);
             }
-
             @Override
             public void onFailure(String error) {
                 new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
