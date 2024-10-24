@@ -73,7 +73,6 @@
 //                                @Override
 //                                public void onSuccess() {
 //                                    Toast.makeText(getContext(), "Nghệ sĩ " + artistName + " được tạo", Toast.LENGTH_SHORT).show();
-//                                    loadArtists(); // Reload artists
 //                                }
 //
 //                                @Override

@@ -118,7 +118,7 @@ public class ArtistDetailFragment extends Fragment {
                 AlbumAdapter albumAdapter = new AlbumAdapter(albums, new AlbumAdapter.OnAlbumClickListener() {
                     @Override
                     public void onAlbumClick(Album album) {
-                        loadAlbumDetailFragment(album.getAlbum_id(), album.getTitle(), String.valueOf(album.getArtist_id()), String.valueOf(album.getGenre_id()));
+                        loadAlbumDetailFragment(album.getAlbum_id(), album.getTitle(), album.getArtist_id(), album.getGenre_id());
                     }
                 }, new AlbumAdapter.OnAlbumLongClickListener() {
                     @Override
@@ -136,7 +136,7 @@ public class ArtistDetailFragment extends Fragment {
         });
     }
 
-    private void loadAlbumDetailFragment(int albumId, String albumTitle, String artistId, String genreId) {
+    private void loadAlbumDetailFragment(int albumId, String albumTitle, int artistId, int genreId) {
         // Khởi tạo Fragment album
         AlbumFragment albumFragment = AlbumFragment.newInstance(albumId, albumTitle, artistId, genreId);
 

@@ -1,9 +1,12 @@
 package com.example.music_project.views.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,9 @@ import com.example.music_project.api.TopTracksResponse;
 import com.example.music_project.controllers.SongController;
 import com.example.music_project.controllers.UserController;
 import com.example.music_project.database.AppDatabase;
+import com.example.music_project.database.PlayHistoryDao;
 import com.example.music_project.database.SongDao;
+import com.example.music_project.models.PlayHistory;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.LoginActivity;
@@ -35,6 +40,7 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.room.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,6 +55,10 @@ public class HomeFragment extends Fragment {
     private Button btnLogin;
     private Handler mainHandler;
     private SpotifyApiService spotifyApiService;
+    private SongAdapter recentSongAdapter;
+    private SongAdapter popularSongAdapter;
+    private List<Song> recentSongs = new ArrayList<>();
+    private List<Song> popularSongs = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +66,7 @@ public class HomeFragment extends Fragment {
 
         AppDatabase db = Room.databaseBuilder(requireContext(), AppDatabase.class, "database-name").build();
         SongDao songDao = db.songDao();
+        PlayHistoryDao playHistoryDAO = db.playHistoryDao();
 
         userController = new UserController(requireContext());
         mainHandler = new Handler(Looper.getMainLooper());
@@ -68,10 +79,29 @@ public class HomeFragment extends Fragment {
         ivUserIcon = view.findViewById(R.id.iv_user_icon);
         btnLogin = view.findViewById(R.id.btn_login);
 
-        rvRecentSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvRecentSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         updateUserInterface();
+
+        // Adapter cho danh sách nhạc gần đây
+        recentSongAdapter = new SongAdapter(recentSongs, song -> {
+            // Xử lý khi người dùng nhấn vào bài hát gần đây
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+        });
+
+        // Adapter cho danh sách nhạc phổ biến
+        popularSongAdapter = new SongAdapter(popularSongs, song -> {
+            // Xử lý khi người dùng nhấn vào bài hát phổ biến
+            new Handler(Looper.getMainLooper()).post(() ->Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+        });
+
+        rvRecentSongs.setAdapter(recentSongAdapter);
+        rvPopularSongs.setAdapter(popularSongAdapter);
+
+        getCurrentUserId();
+        // Load dữ liệu bài hát gần đây và phổ biến
+        loadSongs();
 
         return view;
     }
@@ -221,8 +251,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
     private void playSong(Song song) {
         // Implement this method to start playing the song
         // You might want to use a PlayerController or MusicPlaybackService here
@@ -239,5 +267,76 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(requireContext(), messageResId, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loadSongs() {
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        PlayHistoryDao playHistoryDAO = db.playHistoryDao();
+
+        long userId = getUserIdFromPreferences();
+
+        playHistoryDAO.getRecentSongsFromHistory(userId).observe(getViewLifecycleOwner(), songs -> {
+            if (songs != null) {
+                recentSongs.clear();
+                recentSongs.addAll(songs);
+                recentSongAdapter.notifyDataSetChanged();
+
+                if (songs.isEmpty()) {
+                    handleEmptyState(rvRecentSongs, R.string.no_recent_songs);
+                }
+            }
+        });
+
+        // Load popular songs (this remains unchanged as it's not user-specific)
+        playHistoryDAO.getPopularSongsFromHistory().observe(getViewLifecycleOwner(), songs -> {
+            if (songs != null) {
+                popularSongs.clear();
+                popularSongs.addAll(songs);
+                popularSongAdapter.notifyDataSetChanged();
+
+                if (songs.isEmpty()) {
+                    handleEmptyState(rvPopularSongs, R.string.no_popular_songs);
+                }
+            }
+        });
+    }
+
+    private long getUserIdFromPreferences() {
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        return prefs.getLong("userId", -1); // Trả về -1 nếu không tìm thấy userId
+    }
+
+    // Lấy ID người dùng hiện tại và lưu vào SharedPreferences
+    private void getCurrentUserId() {
+        userController.getCurrentUser(new UserController.OnUserFetchedListener() {
+            @Override
+            public void onSuccess(User user) {
+                long userId = user.getUser_id();
+                saveUserId(userId);
+                saveUserName(user.getUsername()); // Lưu tên người dùng
+                Log.d("HomeFragment", "User ID: " + userId);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e("HomeFragment", "Error fetching user: " + error);
+                Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    // Thêm phương thức để lưu tên người dùng vào SharedPreferences
+    private void saveUserName(String userName) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
+        editor.putString("userName", userName);
+        editor.apply();
+        Log.d("HomeFragment", "Saved User Name: " + userName);
+    }
+
+    // Lưu User ID vào SharedPreferences
+    private void saveUserId(long userId) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
+        editor.putLong("userId", userId);
+        editor.apply();
+        Log.d("HomeFragment", "Saved User ID: " + userId);
     }
 }

@@ -79,4 +79,8 @@ public class Album {
     public void setCover_image_path(String cover_image_path) {
         this.cover_image_path = cover_image_path;
     }
+
+    public Album getAlbum() {
+        return this;
+    }
 }

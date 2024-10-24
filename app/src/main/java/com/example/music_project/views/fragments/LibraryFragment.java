@@ -39,6 +39,7 @@ import com.example.music_project.controllers.GenreController;
 import com.example.music_project.controllers.PlaylistController;
 import com.example.music_project.controllers.UserController;
 import com.example.music_project.models.Album;
+import com.example.music_project.models.AlbumWithDetails;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
 import com.example.music_project.models.Playlist;
@@ -46,6 +47,7 @@ import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
+import com.example.music_project.views.adapters.AlbumWithDetailsAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
 import com.example.music_project.views.adapters.SongAdapter;
@@ -249,7 +251,7 @@ public class LibraryFragment extends Fragment {
 
     // Tải danh sách nghệ sĩ
     private void loadArtists() {
-        artistController.getArtists(new ArtistController.OnArtistLoadedListener() {
+        artistController.getArtists(new ArtistController.OnArtistsLoadedListener() {
             @Override
             public void onArtistLoaded(List<Artist> artists) {
                 if (artists == null || artists.isEmpty()) {
@@ -280,7 +282,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-
     // Tải danh sách album
     private void loadAlbums() {
         albumController.getAlbums(new AlbumController.OnAlbumsLoadedListener() {
@@ -291,20 +292,42 @@ public class LibraryFragment extends Fragment {
                     return;
                 }
 
-                // Cập nhật danh sách album
-                albumList.clear();
-                albumList.addAll(albums);
+                // Danh sách mới để chứa AlbumWithDetails
+                List<AlbumWithDetails> albumDetailsList = new ArrayList<>();
 
-                // Cập nhật adapter
-                if (albumAdapter == null) {
-                    albumAdapter = new AlbumAdapter(albumList,
-                            album -> loadAlbumDetail(album.getAlbum_id(), album.getTitle(),
-                                    String.valueOf(album.getArtist_id()), String.valueOf(album.getGenre_id())),
-                            album -> showEditAlbumDialog(album)  // Handle long press event
-                    );
-                    rvLibraryItems.setAdapter(albumAdapter);
-                } else {
-                    albumAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
+                for (Album album : albums) {
+                    int artistId = album.getArtist_id();
+                    int genreId = album.getGenre_id();
+
+                    // Tạo đối tượng AlbumWithDetails và thêm vào danh sách
+                    artistController.getArtistById(artistId, new ArtistController.OnArtistLoadedListener() {
+                        @Override
+                        public void onArtistLoaded(Artist artist) {
+                            genreController.getGenreById(genreId, new GenreController.OnGenreLoadedListener() {
+                                @Override
+                                public void onGenreLoaded(Genre genre) {
+                                    // Tạo đối tượng AlbumWithDetails với tên tác giả và thể loại
+                                    AlbumWithDetails details = new AlbumWithDetails(album, artist.getArtist_name(), genre.getGenre_name());
+                                    albumDetailsList.add(details);
+
+                                    // Cập nhật adapter sau khi đã có tất cả dữ liệu
+                                    if (albumDetailsList.size() == albums.size()) {
+                                        updateAdapter(albumDetailsList);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(String error) {
+                                    Log.d("DEBUG", error);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Log.d("DEBUG", error);
+                        }
+                    });
                 }
             }
 
@@ -315,8 +338,23 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Phương thức tải danh sách bài hát trong playlist
-// Phương thức tải bài hát trong playlist và chuyển sang màn hình chi tiết
+    // Cập nhật adapter với danh sách AlbumWithDetails
+    private void updateAdapter(List<AlbumWithDetails> albumDetailsList) {
+        // Chạy trên luồng chính để cập nhật adapter
+        new Handler(Looper.getMainLooper()).post(() -> {
+            // Cập nhật adapter với albumDetailsList
+            AlbumWithDetailsAdapter albumWithDetailsAdapter = new AlbumWithDetailsAdapter(albumDetailsList,
+                    albumWithDetails -> loadAlbumDetail(albumWithDetails.getAlbum().getAlbum_id(),
+                            albumWithDetails.getAlbum().getTitle(),
+                            albumWithDetails.getAlbum().getArtist_id(),
+                            albumWithDetails.getAlbum().getGenre_id()),
+                    albumWithDetails -> showEditAlbumDialog(albumWithDetails.getAlbum()));  // Handle long press event
+
+            rvLibraryItems.setAdapter(albumWithDetailsAdapter);
+        });
+    }
+
+    // Phương thức tải bài hát trong playlist và chuyển sang màn hình chi tiết
     private void loadSongsInPlaylist(int playlistId, String playlistName, String userName) {
         DetailPlaylistFragment detailFragment = DetailPlaylistFragment.newInstance(playlistId, playlistName, userName);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -508,7 +546,7 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    private void loadAlbumDetail(int albumId, String albumName, String artistName, String genreName) {
+    private void loadAlbumDetail(int albumId, String albumName, int artistName, int genreName) {
         AlbumFragment albumDetailFragment = AlbumFragment.newInstance(albumId, albumName, artistName, genreName);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, albumDetailFragment)

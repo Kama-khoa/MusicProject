@@ -41,7 +41,7 @@ public class ArtistController {
     }
 
     // Method to load all artists
-    public void getArtists(final OnArtistLoadedListener listener) {
+    public void getArtists(final OnArtistsLoadedListener listener) {
         executorService.execute(() -> {
             List<Artist> artists = database.artistDao().getArtists();
             if (artists != null && !artists.isEmpty()) {
@@ -76,6 +76,17 @@ public class ArtistController {
         });
     }
 
+    public void getArtistById(int artistId, OnArtistLoadedListener listener) {
+        executorService.execute(() -> {
+            Artist artist = database.artistDao().getArtistById(artistId);
+            if (artist != null) {
+                listener.onArtistLoaded(artist);
+            } else {
+                listener.onFailure("Không tìm thấy nghệ sĩ với ID: " + artistId);
+            }
+        });
+    }
+
     // Listener interfaces
     public interface OnArtistCreatedListener {
         void onSuccess();
@@ -83,6 +94,11 @@ public class ArtistController {
     }
 
     public interface OnArtistLoadedListener {
+        void onArtistLoaded(Artist artist);
+        void onFailure(String error);
+    }
+
+    public interface OnArtistsLoadedListener {
         void onArtistLoaded(List<Artist> artists);
         void onFailure(String error);
     }

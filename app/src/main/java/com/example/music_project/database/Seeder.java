@@ -130,6 +130,32 @@ public class Seeder {
             db.historyDao().insert(history4);
             db.historyDao().insert(history5);
 
+            // Dữ liệu mẫu cho bảng PlayHistory
+            PlayHistory playHistory1 = new PlayHistory(1, 1);  // UserID 1, SongID 1
+            PlayHistory playHistory2 = new PlayHistory(1, 2);  // UserID 1, SongID 2
+            PlayHistory playHistory3 = new PlayHistory(2, 3);  // UserID 2, SongID 3
+            PlayHistory playHistory4 = new PlayHistory(3, 4);  // UserID 3, SongID 4
+            PlayHistory playHistory5 = new PlayHistory(4, 5);  // UserID 4, SongID 5
+
+            db.playHistoryDao().insert(playHistory1);
+            db.playHistoryDao().insert(playHistory2);
+            db.playHistoryDao().insert(playHistory3);
+            db.playHistoryDao().insert(playHistory4);
+            db.playHistoryDao().insert(playHistory5);
+
+            // Dữ liệu mẫu cho bảng AlbumSong
+            AlbumSong albumSong1 = new AlbumSong(1, 1);  // AlbumID 1, SongID 1
+            AlbumSong albumSong2 = new AlbumSong(1, 2);  // AlbumID 1, SongID 2
+            AlbumSong albumSong3 = new AlbumSong(2, 3);  // AlbumID 2, SongID 3
+            AlbumSong albumSong4 = new AlbumSong(3, 4);  // AlbumID 3, SongID 4
+            AlbumSong albumSong5 = new AlbumSong(4, 5);  // AlbumID 4, SongID 5
+
+            db.albumSongDao().insert(albumSong1);
+            db.albumSongDao().insert(albumSong2);
+            db.albumSongDao().insert(albumSong3);
+            db.albumSongDao().insert(albumSong4);
+            db.albumSongDao().insert(albumSong5);
+
         } catch (ParseException e) {
             e.printStackTrace(); // Xử lý lỗi nếu có
         }
