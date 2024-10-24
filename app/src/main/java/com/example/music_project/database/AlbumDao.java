@@ -14,7 +14,7 @@ public interface AlbumDao {
     long insert(Album album);
 
     @Query("SELECT * FROM Album")
-    List<Album> getAllAbums();
+    List<Album> getAllAlbums();
 
     @Query("SELECT * FROM Album WHERE album_id = :albumId")
     Album getAlbumById(int albumId);
@@ -25,7 +25,7 @@ public interface AlbumDao {
     @Query("SELECT genre_name FROM Genre WHERE genre_id = (SELECT genre_id FROM Album WHERE album_id = :albumId)")
     String getGenreNameByAlbumId(int albumId);
 
-    @Query("SELECT * FROM Album WHERE artist_id = :userId")
+    @Query("SELECT * FROM Album JOIN Artist ON Album.artist_id = Artist.artist_id WHERE Album.artist_id = :userId")
     List<Album> getAlbumsByUser(int userId);
 
     @Update

@@ -1,9 +1,12 @@
 package com.example.music_project.views.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,9 @@ import com.example.music_project.api.TopTracksResponse;
 import com.example.music_project.controllers.SongController;
 import com.example.music_project.controllers.UserController;
 import com.example.music_project.database.AppDatabase;
+import com.example.music_project.database.PlayHistoryDao;
 import com.example.music_project.database.SongDao;
+import com.example.music_project.models.PlayHistory;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.LoginActivity;
@@ -35,6 +40,7 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.room.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,15 +55,20 @@ public class HomeFragment extends Fragment {
     private Button btnLogin;
     private Handler mainHandler;
     private SpotifyApiService spotifyApiService;
+    private SongAdapter recentSongAdapter;
+    private SongAdapter popularSongAdapter;
+    private List<Song> recentSongs = new ArrayList<>();
+    private List<Song> popularSongs = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        AppDatabase db = Room.databaseBuilder(requireContext(), AppDatabase.class, "database-name").build();
+        AppDatabase db = Room.databaseBuilder(getContext(), AppDatabase.class, "database-name").build();
         SongDao songDao = db.songDao();
+        PlayHistoryDao playHistoryDAO = db.playHistoryDao();
 
-        userController = new UserController(requireContext());
+        userController = new UserController(getContext());
         mainHandler = new Handler(Looper.getMainLooper());
 
         String authToken = "YOUR_SPOTIFY_ACCESS_TOKEN";
@@ -68,10 +79,30 @@ public class HomeFragment extends Fragment {
         ivUserIcon = view.findViewById(R.id.iv_user_icon);
         btnLogin = view.findViewById(R.id.btn_login);
 
-        rvRecentSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvRecentSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+        rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         updateUserInterface();
+        loadData();
+
+        // Adapter cho danh sách nhạc gần đây
+        recentSongAdapter = new SongAdapter(recentSongs, song -> {
+            // Xử lý khi người dùng nhấn vào bài hát gần đây
+            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+        });
+
+        // Adapter cho danh sách nhạc phổ biến
+        popularSongAdapter = new SongAdapter(popularSongs, song -> {
+            // Xử lý khi người dùng nhấn vào bài hát phổ biến
+            new Handler(Looper.getMainLooper()).post(() ->Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+        });
+
+        rvRecentSongs.setAdapter(recentSongAdapter);
+        rvPopularSongs.setAdapter(popularSongAdapter);
+
+        getCurrentUserId();
+        // Load dữ liệu bài hát gần đây và phổ biến
+        loadSongs();
 
         return view;
     }
@@ -102,10 +133,6 @@ public class HomeFragment extends Fragment {
             ivUserIcon.setVisibility(View.GONE);
             btnLogin.setVisibility(View.VISIBLE);
             btnLogin.setOnClickListener(v -> openLoginScreen());
-
-            if (isAdded()) {
-                Toast.makeText(requireContext(),"Login button is visible and clickable",Toast.LENGTH_LONG).show();
-            }
         }
     }
 
@@ -122,7 +149,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void showUserMenu(View v) {
-        PopupMenu popup = new PopupMenu(requireContext(), v);
+        PopupMenu popup = new PopupMenu(getContext(), v);
         popup.getMenuInflater().inflate(R.menu.user_menu, popup.getMenu());
 
         popup.setOnMenuItemClickListener(item -> {
@@ -165,9 +192,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    if (isAdded()) {
-                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
                 });
             }
         });
@@ -185,9 +210,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    if (isAdded()) {
-                        Toast.makeText(requireContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getContext(), getString(R.string.failed_load_profile, error), Toast.LENGTH_SHORT).show();
                 });
             }
         });
@@ -203,41 +226,135 @@ public class HomeFragment extends Fragment {
             @Override
             public void onSuccess() {
                 mainHandler.post(() -> {
-                    if (isAdded()) {
-                        updateUserInterface();
-                        Toast.makeText(requireContext(), R.string.logout_successful, Toast.LENGTH_SHORT).show();
-                    }
+                    updateUserInterface();
+                    Toast.makeText(getContext(), R.string.logout_successful, Toast.LENGTH_SHORT).show();
                 });
             }
 
             @Override
             public void onFailure(String error) {
                 mainHandler.post(() -> {
-                    if (isAdded()) {
-                        Toast.makeText(requireContext(), getString(R.string.logout_failed, error), Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getContext(), getString(R.string.logout_failed, error), Toast.LENGTH_SHORT).show();
                 });
             }
         });
     }
 
+    private void loadData() {
+        loadTopSpotifySongs();
+    }
 
+    private void loadTopSpotifySongs() {
+        Call<TopTracksResponse> call = spotifyApiService.getTopTracks(5);
+        call.enqueue(new Callback<TopTracksResponse>() {
+            @Override
+            public void onResponse(Call<TopTracksResponse> call, Response<TopTracksResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Song> songs = response.body().getItems();
+                    mainHandler.post(() -> {
+                        if (!songs.isEmpty()) {
+                            SongAdapter adapter = new SongAdapter(songs, HomeFragment.this::playSong);
+                            rvPopularSongs.setAdapter(adapter);
+                        } else {
+                            handleEmptyState(rvPopularSongs, R.string.no_top_spotify_songs);
+                        }
+                    });
+                } else {
+                    mainHandler.post(() -> {
+                        Toast.makeText(requireContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopTracksResponse> call, Throwable t) {
+                mainHandler.post(() -> {
+                    Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
 
     private void playSong(Song song) {
         // Implement this method to start playing the song
         // You might want to use a PlayerController or MusicPlaybackService here
-        if (isAdded()) {
-            Toast.makeText(requireContext(), "Playing: " + song.getTitle(), Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getContext(), "Playing: " + song.getTitle(), Toast.LENGTH_SHORT).show();
+        // Example: playerController.playSong(song);
     }
 
     private void handleEmptyState(RecyclerView recyclerView, int messageResId) {
-        // Implement this method to handle empty states in your RecyclerView
-        // You might want to show a placeholder or a message when there are no items to display
-        mainHandler.post(() -> {
-            if (isAdded()) {
-                Toast.makeText(requireContext(), messageResId, Toast.LENGTH_SHORT).show();
+        recyclerView.setVisibility(View.GONE);
+        Toast.makeText(getContext(), messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadSongs() {
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        PlayHistoryDao playHistoryDAO = db.playHistoryDao();
+
+        long userId = getUserIdFromPreferences();
+
+        playHistoryDAO.getRecentSongsFromHistory(userId).observe(getViewLifecycleOwner(), songs -> {
+            if (songs != null) {
+                recentSongs.clear();
+                recentSongs.addAll(songs);
+                recentSongAdapter.notifyDataSetChanged();
+
+                if (songs.isEmpty()) {
+                    handleEmptyState(rvRecentSongs, R.string.no_recent_songs);
+                }
             }
         });
+
+        // Load popular songs (this remains unchanged as it's not user-specific)
+        playHistoryDAO.getPopularSongsFromHistory().observe(getViewLifecycleOwner(), songs -> {
+            if (songs != null) {
+                popularSongs.clear();
+                popularSongs.addAll(songs);
+                popularSongAdapter.notifyDataSetChanged();
+
+                if (songs.isEmpty()) {
+                    handleEmptyState(rvPopularSongs, R.string.no_popular_songs);
+                }
+            }
+        });
+    }
+
+    private long getUserIdFromPreferences() {
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        return prefs.getLong("userId", -1); // Trả về -1 nếu không tìm thấy userId
+    }
+
+    // Lấy ID người dùng hiện tại và lưu vào SharedPreferences
+    private void getCurrentUserId() {
+        userController.getCurrentUser(new UserController.OnUserFetchedListener() {
+            @Override
+            public void onSuccess(User user) {
+                long userId = user.getUser_id();
+                saveUserId(userId);
+                saveUserName(user.getUsername()); // Lưu tên người dùng
+                Log.d("HomeFragment", "User ID: " + userId);
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e("HomeFragment", "Error fetching user: " + error);
+                Toast.makeText(getContext(), "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    // Thêm phương thức để lưu tên người dùng vào SharedPreferences
+    private void saveUserName(String userName) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
+        editor.putString("userName", userName);
+        editor.apply();
+        Log.d("HomeFragment", "Saved User Name: " + userName);
+    }
+
+    // Lưu User ID vào SharedPreferences
+    private void saveUserId(long userId) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
+        editor.putLong("userId", userId);
+        editor.apply();
+        Log.d("HomeFragment", "Saved User ID: " + userId);
     }
 }

@@ -20,10 +20,12 @@ import java.util.Locale;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder> {
     private List<Album> albums;
     private OnAlbumClickListener listener;
+    private OnAlbumLongClickListener onAlbumLongClickListener;
 
-    public AlbumAdapter(List<Album> albums, OnAlbumClickListener listener) {
-        this.albums = albums;
-        this.listener = listener;
+    public AlbumAdapter(List<Album> albumList, OnAlbumClickListener onAlbumClickListener, OnAlbumLongClickListener onAlbumLongClickListener) {
+        this.albums = albumList;
+        this.listener = onAlbumClickListener;
+        this.onAlbumLongClickListener = onAlbumLongClickListener;
     }
 
     @NonNull
@@ -36,7 +38,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     @Override
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         Album album = albums.get(position);
-        holder.bind(album, listener);
+        holder.bind(album, listener, onAlbumLongClickListener);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             tvAlbumReleaseDate = itemView.findViewById(R.id.tv_album_release_date);
             imgAlbumCover = itemView.findViewById(R.id.img_album_cover);
         }
-        public void bind(Album album, OnAlbumClickListener listener){
+        public void bind(Album album, OnAlbumClickListener listener, OnAlbumLongClickListener longClickListener){
             Log.d("AlbumAdapter", "Album Title: " + album.getTitle());
             tvAlbumTitle.setText(album.getTitle());
             tvAlbumArtist.setText(String.valueOf(album.getArtist_id()));
@@ -94,6 +96,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 
             // Xử lý sự kiện nhấn vào một album
             itemView.setOnClickListener(v -> listener.onAlbumClick(album));
+
+            itemView.setOnLongClickListener(v -> {
+                longClickListener.onAlbumLongClick(album);
+                return true;
+            });
         }
+    }
+    public interface OnAlbumLongClickListener {
+        void onAlbumLongClick(Album album);
     }
 }

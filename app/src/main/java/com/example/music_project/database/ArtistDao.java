@@ -15,7 +15,7 @@ public interface ArtistDao {
     Artist getArtistById(int artistId);
 
     @Query("SELECT * FROM Artist")
-    List<Artist> getArtists();
+    List<Artist> getAllArtists();
 
     @Update
     void update(Artist artist);

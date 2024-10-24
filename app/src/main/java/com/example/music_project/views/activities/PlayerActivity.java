@@ -56,7 +56,7 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        songController = new SongController(AppDatabase.getInstance(this).songDao());
+        songController = new SongController(AppDatabase.getInstance(this).songDao(), AppDatabase.getInstance(this).albumSongDao());
 
         albumCoverImageView = findViewById(R.id.albumCoverImageView);
         trackInfoTextView = findViewById(R.id.trackInfoTextView);

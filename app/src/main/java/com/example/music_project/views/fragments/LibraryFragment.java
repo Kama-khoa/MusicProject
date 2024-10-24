@@ -5,9 +5,11 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -37,6 +39,7 @@ import com.example.music_project.controllers.GenreController;
 import com.example.music_project.controllers.PlaylistController;
 import com.example.music_project.controllers.UserController;
 import com.example.music_project.models.Album;
+import com.example.music_project.models.AlbumWithDetails;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
 import com.example.music_project.models.Playlist;
@@ -44,6 +47,7 @@ import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
+import com.example.music_project.views.adapters.AlbumWithDetailsAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
 import com.example.music_project.views.adapters.SongAdapter;
@@ -75,6 +79,8 @@ public class LibraryFragment extends Fragment {
     private List<Album> albumList = new ArrayList<>();
     private List<Artist> artistList = new ArrayList<>();
     private Handler mainHandler;
+    private static final int PICK_IMAGE_REQUEST = 1; // Define the request code
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
@@ -84,6 +90,7 @@ public class LibraryFragment extends Fragment {
         albumController = new AlbumController(getContext());
         userController = new UserController(getContext());
         artistController = new ArtistController(getContext());
+        genreController = new GenreController(getContext());
 
         rvLibraryItems = view.findViewById(R.id.rv_library_items);
         rvLibraryItems.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -244,7 +251,7 @@ public class LibraryFragment extends Fragment {
 
     // Tải danh sách nghệ sĩ
     private void loadArtists() {
-        artistController.getArtists(new ArtistController.OnArtistLoadedListener() {
+        artistController.getArtists(new ArtistController.OnArtistsLoadedListener() {
             @Override
             public void onArtistLoaded(List<Artist> artists) {
                 if (artists == null || artists.isEmpty()) {
@@ -258,10 +265,10 @@ public class LibraryFragment extends Fragment {
 
                 // Cập nhật adapter
                 if (artistAdapter == null) {
-                    artistAdapter = new ArtistAdapter(artistList, artist -> {
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bạn đã chọn ca sĩ " + artist.getArtist_name(), Toast.LENGTH_SHORT).show());
-//                        loadArtistDetail(artist.getArtist_id(), artist.getArtist_name()); // Thay đổi phương thức loadArtistDetail theo nhu cầu của bạn
-                    });
+                    artistAdapter = new ArtistAdapter(artistList,
+                            artist -> loadArtistDetail(artist.getArtist_id(), artist.getArtist_name(),
+                                    artist.getBio(), artist.getDate_of_birth()) // Load chi tiết nghệ sĩ
+                    );
                     rvLibraryItems.setAdapter(artistAdapter);
                 } else {
                     artistAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
@@ -285,18 +292,42 @@ public class LibraryFragment extends Fragment {
                     return;
                 }
 
-                // Cập nhật danh sách album
-                albumList.clear();
-                albumList.addAll(albums);
+                // Danh sách mới để chứa AlbumWithDetails
+                List<AlbumWithDetails> albumDetailsList = new ArrayList<>();
 
-                // Cập nhật adapter
-                if (albumAdapter == null) {
-                    albumAdapter = new AlbumAdapter(albumList, album -> {
-                        loadAlbumDetail( album.getAlbum_id(), album.getTitle(), String.valueOf(album.getArtist_id()), String.valueOf(album.getGenre_id()));
+                for (Album album : albums) {
+                    int artistId = album.getArtist_id();
+                    int genreId = album.getGenre_id();
+
+                    // Tạo đối tượng AlbumWithDetails và thêm vào danh sách
+                    artistController.getArtistById(artistId, new ArtistController.OnArtistLoadedListener() {
+                        @Override
+                        public void onArtistLoaded(Artist artist) {
+                            genreController.getGenreById(genreId, new GenreController.OnGenreLoadedListener() {
+                                @Override
+                                public void onGenreLoaded(Genre genre) {
+                                    // Tạo đối tượng AlbumWithDetails với tên tác giả và thể loại
+                                    AlbumWithDetails details = new AlbumWithDetails(album, artist.getArtist_name(), genre.getGenre_name());
+                                    albumDetailsList.add(details);
+
+                                    // Cập nhật adapter sau khi đã có tất cả dữ liệu
+                                    if (albumDetailsList.size() == albums.size()) {
+                                        updateAdapter(albumDetailsList);
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(String error) {
+                                    Log.d("DEBUG", error);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Log.d("DEBUG", error);
+                        }
                     });
-                    rvLibraryItems.setAdapter(albumAdapter);
-                } else {
-                    albumAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
                 }
             }
 
@@ -307,8 +338,23 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Phương thức tải danh sách bài hát trong playlist
-// Phương thức tải bài hát trong playlist và chuyển sang màn hình chi tiết
+    // Cập nhật adapter với danh sách AlbumWithDetails
+    private void updateAdapter(List<AlbumWithDetails> albumDetailsList) {
+        // Chạy trên luồng chính để cập nhật adapter
+        new Handler(Looper.getMainLooper()).post(() -> {
+            // Cập nhật adapter với albumDetailsList
+            AlbumWithDetailsAdapter albumWithDetailsAdapter = new AlbumWithDetailsAdapter(albumDetailsList,
+                    albumWithDetails -> loadAlbumDetail(albumWithDetails.getAlbum().getAlbum_id(),
+                            albumWithDetails.getAlbum().getTitle(),
+                            albumWithDetails.getAlbum().getArtist_id(),
+                            albumWithDetails.getAlbum().getGenre_id()),
+                    albumWithDetails -> showEditAlbumDialog(albumWithDetails.getAlbum()));  // Handle long press event
+
+            rvLibraryItems.setAdapter(albumWithDetailsAdapter);
+        });
+    }
+
+    // Phương thức tải bài hát trong playlist và chuyển sang màn hình chi tiết
     private void loadSongsInPlaylist(int playlistId, String playlistName, String userName) {
         DetailPlaylistFragment detailFragment = DetailPlaylistFragment.newInstance(playlistId, playlistName, userName);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -382,11 +428,18 @@ public class LibraryFragment extends Fragment {
 
         EditText edtAlbumName = dialogView.findViewById(R.id.edt_album_name);
         Spinner spinnerGenre = dialogView.findViewById(R.id.spinner_genre);
-        TextView tvReleaseDate = dialogView.findViewById(R.id.tv_release_date);
+        EditText edtReleaseDate = dialogView.findViewById(R.id.edt_release_date);
+        ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_cover);
+        Uri selectedImageUri = null;
+        // Pre-fill the release date EditText with the current date in dd-MM-yyyy format
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        edtReleaseDate.setText(currentDate);
 
-        // Lấy ngày hiện tại và hiển thị trong TextView
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        tvReleaseDate.setText(currentDate);
+        // Set onClickListener for the album cover ImageView to select an image
+        imgAlbumCover.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        });
 
         // Lấy danh sách genre từ database và hiển thị trong Spinner
         genreController.getAllGenres(new GenreController.OnGenresLoadedListener() {
@@ -415,6 +468,7 @@ public class LibraryFragment extends Fragment {
                 .setPositiveButton("Tạo", (dialog, id) -> {
                     String albumName = edtAlbumName.getText().toString().trim();
                     Genre selectedGenre = (Genre) spinnerGenre.getSelectedItem();
+                    String releaseDateStr = edtReleaseDate.getText().toString().trim(); // Get the user-entered or pre-filled date
 
                     if (!albumName.isEmpty() && selectedGenre != null) { // Kiểm tra selectedGenre không null
 
@@ -425,11 +479,22 @@ public class LibraryFragment extends Fragment {
                         long userIdLong = preferences.getLong("userId", -1);
                         int userId = (int) userIdLong;
 
-                        // Tạo album với ngày phát hành hiện tại
-                        Date releaseDate = new Date();
-                        Album album = new Album(albumName, userId, genreId, releaseDate);
+                        Date releaseDate;
+                        try {
+                            releaseDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).parse(releaseDateStr);
+                        } catch (ParseException e) {
+                            releaseDate = new Date();
+                        }
 
-                        // Gọi hàm tạo album từ AlbumController
+                        Album album = new Album(albumName, userId, genreId, releaseDate, null);
+
+                        // Nếu selectedImageUri không phải là null, thì lưu ảnh
+                        if (selectedImageUri != null) {
+                            String albumCoverPath = saveImageToStorage(selectedImageUri);
+                            album.setCover_image_path(albumCoverPath);
+                        }
+
+                        // Call AlbumController to create the album
                         albumController.createAlbum(userId, album, new AlbumController.OnAlbumCreatedListener() {
                             @Override
                             public void onSuccess() {
@@ -457,6 +522,12 @@ public class LibraryFragment extends Fragment {
                 .show();
     }
 
+    // Method to save image to storage (simplified)
+    private String saveImageToStorage(Uri imageUri) {
+        // Implement logic to save the image and return the file path
+        return imageUri.getPath(); // Just a placeholder, handle saving the image properly
+    }
+
     private void loadAlbumsByUserID(int userId) {
         albumController.getAlbumsByUserID(userId, new AlbumController.OnAlbumsLoadedListener() {
             @Override
@@ -475,7 +546,7 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    private void loadAlbumDetail(int albumId, String albumName, String artistName, String genreName) {
+    private void loadAlbumDetail(int albumId, String albumName, int artistName, int genreName) {
         AlbumFragment albumDetailFragment = AlbumFragment.newInstance(albumId, albumName, artistName, genreName);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, albumDetailFragment)
@@ -573,5 +644,25 @@ public class LibraryFragment extends Fragment {
                 .setNegativeButton("Hủy", (dialog, id) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    private void loadArtistDetail(int artistId, String artistName, String bio, Date dateOfBirth) {
+        // Khởi tạo Fragment chi tiết nghệ sĩ
+        ArtistDetailFragment artistDetailFragment = ArtistDetailFragment.newInstance(artistId, artistName, bio, dateOfBirth);
+
+        // Thay thế Fragment hiện tại bằng Fragment chi tiết nghệ sĩ
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, artistDetailFragment)  // Thay R.id.fragment_container bằng id của container Fragment trong layout của bạn
+                .addToBackStack(null)  // Thêm vào back stack để có thể quay lại
+                .commit();
+    }
+
+    // Function to show the Album edit dialog
+    private void showEditAlbumDialog(Album album) {
+        DialogEditAlbumFragment dialogEditAlbumFragment = DialogEditAlbumFragment.newInstance(album.getAlbum_id());
+        dialogEditAlbumFragment.setOnAlbumEditedListener(() -> {
+            Toast.makeText(getContext(), "Album đã được chỉnh sửa", Toast.LENGTH_SHORT).show();
+        });
+        dialogEditAlbumFragment.show(getFragmentManager(), "edit_album");
     }
 }

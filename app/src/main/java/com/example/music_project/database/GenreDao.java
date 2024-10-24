@@ -11,7 +11,7 @@ public interface GenreDao {
     @Insert
     void insert(Genre genre);
 
-    @Query("SELECT * FROM genre")
+    @Query("SELECT * FROM Genre")
     List<Genre> getAllGenres();
 
     @Query("SELECT * FROM Genre WHERE genre_id = :genreId")

@@ -51,7 +51,7 @@ public class AlbumController {
 
     public void getAlbums(final AlbumController.OnAlbumsLoadedListener listener) {
         executorService.execute(() -> {
-            List<Album> albums = database.albumDao().getAllAbums();
+            List<Album> albums = database.albumDao().getAllAlbums();
             if (albums != null && !albums.isEmpty()) {
                 new Handler(Looper.getMainLooper()).post(() -> listener.onAlbumsLoaded(albums));
             } else {
@@ -86,9 +86,71 @@ public class AlbumController {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                listener.onFailure("Failed to load songs: " + e.getMessage());
+                new Handler(Looper.getMainLooper()).post(() ->
+                        listener.onFailure(e.getMessage())
+                );
             }
         });
+    }
+
+    public void getAlbumById(int albumId, OnAlbumLoadedListener listener) {
+        executorService.execute(() -> {
+            Album album = database.albumDao().getAlbumById(albumId); // Tìm album theo ID
+            if (album != null) {
+                // Nếu tìm thấy album, trả về album thông qua listener
+                new Handler(Looper.getMainLooper()).post(() -> listener.onAlbumLoaded(album));
+            } else {
+                // Trả về thông báo lỗi nếu không tìm thấy
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album not found"));
+            }
+        });
+    }
+
+    // Interface cho listener khi album được tải thành công hoặc lỗi
+    public interface OnAlbumLoadedListener {
+        void onAlbumLoaded(Album album);
+        void onFailure(String error);
+    }
+
+    public void updateAlbum(int albumId, String title, String coverImagePath, OnAlbumUpdatedListener listener) {
+        executorService.execute(() -> {
+            Album album = database.albumDao().getAlbumById(albumId); // Tìm album theo ID
+            if (album != null) {
+                album.setTitle(title);
+                album.setCover_image_path(coverImagePath);
+                database.albumDao().update(album); // Cập nhật album trong cơ sở dữ liệu
+
+                // Gọi lại listener khi cập nhật thành công
+                new Handler(Looper.getMainLooper()).post(listener::onAlbumUpdated);
+            } else {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album not found"));
+            }
+        });
+    }
+
+    public interface OnAlbumUpdatedListener {
+        void onAlbumUpdated();
+        void onFailure(String error);
+    }
+
+
+    public void deleteAlbum(int albumId, OnAlbumDeletedListener listener) {
+        executorService.execute(() -> {
+            Album album = database.albumDao().getAlbumById(albumId); // Tìm album theo ID
+            if (album != null) {
+                database.albumDao().delete(album); // Xóa album trong cơ sở dữ liệu
+
+                // Gọi lại listener khi xóa thành công
+                new Handler(Looper.getMainLooper()).post(listener::onAlbumDeleted);
+            } else {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album not found"));
+            }
+        });
+    }
+
+    public interface OnAlbumDeletedListener {
+        void onAlbumDeleted();
+        void onFailure(String error);
     }
 
 
@@ -102,15 +164,8 @@ public class AlbumController {
         void onFailure(String error);
     }
 
-//    public interface OnSongAddedToPlaylistListener {
-//        void onSuccess();
-//        void onFailure(String error);
-//    }
-
     public interface OnSongsLoadedListener {
         void onSongsLoaded(List<Song> songs);
         void onFailure(String error);
     }
-
-
 }

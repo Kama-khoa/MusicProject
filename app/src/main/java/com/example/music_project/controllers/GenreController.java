@@ -31,6 +31,23 @@ public class GenreController {
         });
     }
 
+    // Thêm hàm getGenreById
+    public void getGenreById(int genreId, OnGenreLoadedListener listener) {
+        new Thread(() -> {
+            Genre genre = database.genreDao().getGenreById(genreId);
+            if (genre != null) {
+                listener.onGenreLoaded(genre);
+            } else {
+                listener.onFailure("Không tìm thấy thể loại với ID: " + genreId);
+            }
+        }).start();
+    }
+
+    public interface OnGenreLoadedListener {
+        void onGenreLoaded(Genre genre);
+        void onFailure(String error);
+    }
+
     public interface OnGenresLoadedListener {
         void onGenresLoaded(List<Genre> genres);
         void onFailure(String error);

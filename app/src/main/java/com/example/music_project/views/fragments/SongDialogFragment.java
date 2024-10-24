@@ -1,7 +1,10 @@
 package com.example.music_project.views.fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -24,6 +30,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SongDialogFragment extends DialogFragment {
+    private static final int PICK_AUDIO_REQUEST = 1; // Mã yêu cầu cho tệp âm thanh
+
     private EditText etTitle;
     private Spinner spArtist, spAlbum, spGenre;
     private TextView tvDuration;
@@ -32,6 +40,12 @@ public class SongDialogFragment extends DialogFragment {
     private SongDialogListener listener;
     private Song song;
     private String audioFilePath;
+
+    private List<Artist> artists;
+    private List<Album> albums;
+    private List<Genre> genres;
+
+    private ActivityResultLauncher<Intent> audioFileLauncher;
 
     public interface SongDialogListener {
         void onSongSaved(Song song);
@@ -90,22 +104,48 @@ public class SongDialogFragment extends DialogFragment {
         btnDelete.setOnClickListener(v -> deleteSong());
         btnUpload.setOnClickListener(v -> requestAudioFile());
 
+        audioFileLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Uri audioUri = result.getData().getData();
+                        if (audioUri != null) {
+                            audioFilePath = audioUri.toString();
+                            // Cập nhật UI để hiển thị tên tệp âm thanh đã được chọn
+                            if (btnUpload != null) {
+                                btnUpload.setText(audioFilePath); // Hoặc sử dụng audioFilePath nếu bạn muốn hiển thị đường dẫn
+                            }
+                        }
+                    }
+                }
+        );
+
         return view;
     }
 
-    private void populateSpinners() {
-        SongActivity activity = (SongActivity) getActivity();
-        if (activity != null) {
-            List<Artist> artists = activity.getArtists();
-            List<Album> albums = activity.getAlbums();
-            List<Genre> genres = activity.getGenres();
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
 
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
+
+    private void populateSpinners() {
+        if (this.artists != null) {
             ArrayAdapter<Artist> artistAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, artists);
             spArtist.setAdapter(artistAdapter);
+        }
 
+        if (this.albums != null) {
             ArrayAdapter<Album> albumAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, albums);
             spAlbum.setAdapter(albumAdapter);
-
+        }
+        if(this.genres != null) {
             ArrayAdapter<Genre> genreAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, genres);
             spGenre.setAdapter(genreAdapter);
         }
@@ -144,9 +184,9 @@ public class SongDialogFragment extends DialogFragment {
     }
 
     private void requestAudioFile() {
-        if (listener != null) {
-            listener.onAudioFileRequested();
-        }
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("audio/*");
+        audioFileLauncher.launch(intent);
     }
 
     public void setListener(SongDialogListener listener) {
@@ -160,4 +200,21 @@ public class SongDialogFragment extends DialogFragment {
             btnUpload.setText("Audio đã chọn");
         }
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_AUDIO_REQUEST && resultCode == getActivity().RESULT_OK && data != null) {
+//            Uri audioUri = data.getData();
+//            if (audioUri != null) {
+//                audioFilePath = audioUri.toString();
+//                // Cập nhật UI để hiển thị rằng một tệp âm thanh đã được chọn
+//                if (btnUpload != null) {
+//                    btnUpload.setText("Audio đã chọn");
+//                }
+//            }
+//        }
+//    }
+
+
 }
