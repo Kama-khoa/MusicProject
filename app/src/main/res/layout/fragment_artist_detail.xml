@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Ảnh và tên nghệ sĩ -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/ivArtistAvatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/artist_avatar" />
+
+        <TextView
+            android:id="@+id/tvArtistName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="22dp"
+            android:layout_toEndOf="@id/ivArtistAvatar"
+            android:text="Tên nghệ sĩ"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_artist_detail_dob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvArtistName"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/ivArtistAvatar"
+            android:text="Ngày sinh"
+            android:textColor="#D0D0D0"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <!-- Danh sách bài hát -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Phổ biến"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSongs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+    <!-- Danh sách album -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Album"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAlbums"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:overScrollMode="never"
+        android:scrollbars="horizontal" />
+
+    <!-- Tiểu sử nghệ sĩ -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Tiểu sử"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvArtistBio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nội dung tiểu sử ca sĩ sẽ hiển thị ở đây"
+        android:textColor="#404040"
+        android:textSize="14sp" />
+</LinearLayout>

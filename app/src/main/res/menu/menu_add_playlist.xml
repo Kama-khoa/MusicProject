@@ -3,4 +3,16 @@
         android:id="@+id/add_playlist"
         android:title="Thêm Danh Sách Phát"
         android:icon="@drawable/ic_add" />
+    <item
+        android:id="@+id/add_album"
+        android:title="Thêm Album"
+        android:icon="@drawable/ic_add" />
+    <item
+        android:id="@+id/add_artist"
+        android:title="Thêm Nghệ Sĩ"
+        android:icon="@drawable/ic_add" />
+    <item
+        android:id="@+id/add_song"
+        android:title="Thêm bài hát"
+        android:icon="@drawable/ic_add" />
 </menu>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Search bar to search for songs by title, artist, or genre -->
+    <SearchView
+        android:id="@+id/sv_song_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Tìm kiếm bài hát, nghệ sĩ, thể loại" />
+
+    <!-- Filter buttons for Artist and Genre -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp">
+
+        <Button
+            android:id="@+id/btn_filter_artist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lọc theo Nghệ sĩ" />
+
+        <Button
+            android:id="@+id/btn_filter_genre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lọc theo Thể loại" />
+    </LinearLayout>
+
+    <!-- RecyclerView for displaying songs -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_select_songs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Button for adding a new song -->
+    <Button
+        android:id="@+id/btn_add_new_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm bài hát mới" />
+
+    <!-- Button for adding selected songs to album -->
+    <Button
+        android:id="@+id/btn_add_to_album"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm vào Album"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

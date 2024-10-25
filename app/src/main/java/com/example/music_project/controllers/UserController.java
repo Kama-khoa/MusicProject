@@ -20,9 +20,9 @@ public class UserController {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public void registerUser(String username, String email, String password, final OnUserRegisteredListener listener) {
+    public void registerUser(String username, String email, String password,String role, final OnUserRegisteredListener listener) {
         executorService.execute(() -> {
-            User user = new User(username, email, password);
+            User user = new User(username, email, password,role);
             long userId = database.userDao().insert(user);
             if (userId > 0) {
                 listener.onSuccess();
@@ -82,7 +82,7 @@ public class UserController {
         });
     }
 
-    public void setUserRole(int userId, String role, final OnUserUpdatedListener listener) {
+    public void setUserRole(long userId, String role, final OnUserUpdatedListener listener) {
         executorService.execute(() -> {
             try {
                 User user = database.userDao().getUserById(userId);
@@ -99,7 +99,7 @@ public class UserController {
         });
     }
 
-    public void setUserUploadPermission(int userId, boolean canUpload, final OnUserUpdatedListener listener) {
+    public void setUserUploadPermission(long userId, boolean canUpload, final OnUserUpdatedListener listener) {
         executorService.execute(() -> {
             try {
                 User user = database.userDao().getUserById(userId);
@@ -115,7 +115,8 @@ public class UserController {
             }
         });
     }
-    public void getProfileImagePath(int userId, final OnProfileImageFetchedListener listener) {
+
+    public void getProfileImagePath(long userId, final OnProfileImageFetchedListener listener) {
         executorService.execute(() -> {
             User user = database.userDao().getUserById(userId);
             if (user != null) {
@@ -126,7 +127,7 @@ public class UserController {
         });
     }
 
-    public void updateProfileImagePath(int userId, String imagePath, final OnUserUpdatedListener listener) {
+    public void updateProfileImagePath(long userId, String imagePath, final OnUserUpdatedListener listener) {
         executorService.execute(() -> {
             try {
                 User user = database.userDao().getUserById(userId);
@@ -143,7 +144,6 @@ public class UserController {
         });
     }
 
-
     private void saveUserSession(long userId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(PREF_USER_ID, userId);
@@ -157,7 +157,7 @@ public class UserController {
     }
 
     private long getUserId() {
-        return sharedPreferences.getLong(PREF_USER_ID, -1); // Thay đổi từ getInt sang getLong
+        return sharedPreferences.getLong(PREF_USER_ID, -1);
     }
 
     public interface OnUserRegisteredListener {
@@ -184,6 +184,7 @@ public class UserController {
         void onSuccess();
         void onFailure(String error);
     }
+
     public interface OnProfileImageFetchedListener {
         void onSuccess(String imagePath);
         void onFailure(String error);

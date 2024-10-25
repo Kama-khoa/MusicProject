@@ -3,6 +3,7 @@ package com.example.music_project.controllers;
 import com.example.music_project.database.AlbumDao;
 import com.example.music_project.database.ArtistDao;
 import com.example.music_project.database.GenreDao;
+import com.example.music_project.database.AlbumSongDao;
 import com.example.music_project.database.SongDao;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Artist;
@@ -21,6 +22,7 @@ import com.example.music_project.models.Genre;
 
 public class SongController {
     private SongDao songDao;
+    private AlbumSongDao albumSongDao;
     private ArtistDao artistDao;
     private AlbumDao albumDao;
     private GenreDao genreDao;
@@ -31,6 +33,12 @@ public class SongController {
         this.artistDao = artistDao;
         this.albumDao = albumDao;
         this.genreDao = genreDao;
+        this.executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public SongController(SongDao songDao, AlbumSongDao albumSongDao) {
+        this.songDao = songDao;
+        this.albumSongDao = albumSongDao;
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -104,6 +112,18 @@ public class SongController {
                 }
             } catch (Exception e) {
                 callback.onError("Không thể lấy thông tin bài hát: " + e.getMessage());
+            }
+        });
+    }
+
+    // Load songs for a specific album
+    public void getSongsForAlbum(int albumId, OnSongsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Song> songs = albumSongDao.getSongsByAlbumId(albumId);
+            if (songs != null && !songs.isEmpty()) {
+                listener.onSongsLoaded(songs);
+            } else {
+                listener.onFailure("No songs found for the album.");
             }
         });
     }
@@ -200,4 +220,8 @@ public class SongController {
         void onFailure(String message);
     }
 
+    public interface OnSongsLoadedListener {
+        void onSongsLoaded(List<Song> songs);
+        void onFailure(String error);
+    }
 }

@@ -54,10 +54,6 @@
             android:name=".views.activities.ProfileActivity"
             android:label="@string/profile_activity_title" />
 
-        <!-- Intent filter moved into an activity -->
-
-
-        <!-- Services -->
         <service android:name=".services.MusicPlaybackService" />
 
         <!-- Receivers -->

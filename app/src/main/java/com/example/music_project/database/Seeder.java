@@ -12,11 +12,11 @@ public class Seeder {
 
         try {
             // Dữ liệu mẫu cho bảng User
-            User user1 = new User("johndoe", "john@example.com", "password123");
-            User user2 = new User("janedoe", "jane@example.com", "password456");
-            User user3 = new User("alexsmith", "alex@example.com", "password789");
-            User user4 = new User("emilyjohnson", "emily@example.com", "password012");
-            User user5 = new User("michaelbrown", "michael@example.com", "password345");
+            User user1 = new User("johndoe", "john@example.com", "password123","USER");
+            User user2 = new User("janedoe", "jane@example.com", "password456","USER");
+            User user3 = new User("alexsmith", "alex@example.com", "password789","USER");
+            User user4 = new User("emilyjohnson", "emily@example.com", "password012","USER");
+            User user5 = new User("michaelbrown", "michael@example.com", "password345","USER");
 
             db.userDao().insert(user1);
             db.userDao().insert(user2);
@@ -51,11 +51,11 @@ public class Seeder {
             db.genreDao().insert(genre5);
 
             // Dữ liệu mẫu cho bảng Album
-            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"));
-            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"));
-            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"));
-            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"));
-            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"));
+            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
 
             db.albumDao().insert(album1);
             db.albumDao().insert(album2);
@@ -129,6 +129,32 @@ public class Seeder {
             db.historyDao().insert(history3);
             db.historyDao().insert(history4);
             db.historyDao().insert(history5);
+
+            // Dữ liệu mẫu cho bảng PlayHistory
+            PlayHistory playHistory1 = new PlayHistory(1, 1);  // UserID 1, SongID 1
+            PlayHistory playHistory2 = new PlayHistory(1, 2);  // UserID 1, SongID 2
+            PlayHistory playHistory3 = new PlayHistory(2, 3);  // UserID 2, SongID 3
+            PlayHistory playHistory4 = new PlayHistory(3, 4);  // UserID 3, SongID 4
+            PlayHistory playHistory5 = new PlayHistory(4, 5);  // UserID 4, SongID 5
+
+            db.playHistoryDao().insert(playHistory1);
+            db.playHistoryDao().insert(playHistory2);
+            db.playHistoryDao().insert(playHistory3);
+            db.playHistoryDao().insert(playHistory4);
+            db.playHistoryDao().insert(playHistory5);
+
+            // Dữ liệu mẫu cho bảng AlbumSong
+            AlbumSong albumSong1 = new AlbumSong(1, 1);  // AlbumID 1, SongID 1
+            AlbumSong albumSong2 = new AlbumSong(1, 2);  // AlbumID 1, SongID 2
+            AlbumSong albumSong3 = new AlbumSong(2, 3);  // AlbumID 2, SongID 3
+            AlbumSong albumSong4 = new AlbumSong(3, 4);  // AlbumID 3, SongID 4
+            AlbumSong albumSong5 = new AlbumSong(4, 5);  // AlbumID 4, SongID 5
+
+            db.albumSongDao().insert(albumSong1);
+            db.albumSongDao().insert(albumSong2);
+            db.albumSongDao().insert(albumSong3);
+            db.albumSongDao().insert(albumSong4);
+            db.albumSongDao().insert(albumSong5);
 
         } catch (ParseException e) {
             e.printStackTrace(); // Xử lý lỗi nếu có

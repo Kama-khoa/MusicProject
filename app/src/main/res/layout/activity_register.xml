@@ -45,6 +45,28 @@
         android:backgroundTint="@color/primary"
         android:layout_marginTop="16dp"/>
 
+    <!-- RadioGroup for Role Selection -->
+    <RadioGroup
+        android:id="@+id/rg_role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rb_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ARTIST"
+            android:textColor="@color/primary" />
+
+        <RadioButton
+            android:id="@+id/rb_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="USER"
+            android:textColor="@color/primary" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"

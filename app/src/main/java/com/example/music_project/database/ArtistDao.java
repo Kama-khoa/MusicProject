@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface ArtistDao {
     @Insert
-    void insert(Artist artist);
+    long insert(Artist artist);
 
     @Query("SELECT * FROM Artist WHERE artist_id = :artistId")
     Artist getArtistById(int artistId);

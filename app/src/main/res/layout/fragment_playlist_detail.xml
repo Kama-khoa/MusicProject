@@ -25,6 +25,7 @@
             android:src="@drawable/ic_more_vert" />
     </LinearLayout>
 
+
     <ImageView
         android:id="@+id/img_playlist_cover"
         android:layout_width="match_parent"

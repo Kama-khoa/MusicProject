@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Album cover show the selected image and trigger image selection-->
+    <ImageView
+        android:id="@+id/img_album_cover"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_album_cover"
+        android:contentDescription="Album cover" />
+
+    <!-- Tên album -->
+    <EditText
+        android:id="@+id/edt_album_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên album mới"
+        android:inputType="text" />
+
+    <!-- Thể loại (Spinner) -->
+    <Spinner
+        android:id="@+id/spinner_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"/>
+
+    <!-- Ngày phát hành (cho phép tự động nhập hoặc người dùng tự chọn) -->
+    <EditText
+        android:id="@+id/edt_release_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày phát hành (dd-MM-yyyy)"
+        android:inputType="date"
+        android:paddingTop="8dp"
+        android:textColor="#757575" />
+
+</LinearLayout>

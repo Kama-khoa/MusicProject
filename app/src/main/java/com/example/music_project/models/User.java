@@ -8,7 +8,7 @@ import java.util.Date;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    public int user_id;
+    public long user_id;
 
     public String username;
     public String email;
@@ -17,20 +17,20 @@ public class User {
     public Date date_joined;
     public boolean canUploadContent;
     public String profileImagePath;
-    public User(String username,String email,String password){
+    public User(String username,String email,String password,String role){
         this.username=username;
         this.email=email;
         this.password=password;
-        this.role = "USER";
+        this.role = role;
         this.date_joined = new Date();
         this.canUploadContent = true;
         this.profileImagePath=null;
     }
-    public int getUser_id() {
+    public long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 
@@ -74,7 +74,7 @@ public class User {
         this.date_joined = date_joined;
     }
     public boolean isAdmin() {
-        return "ADMIN".equals(this.role);
+        return "ARTIST".equals(this.role);
     }
 
     public boolean canUploadContent() {

@@ -21,7 +21,7 @@ public interface SongDao {
     Song getSongById(int songId);
 
     @Query("SELECT * FROM Song WHERE Artist_id = :artist")
-    List<Song> getSongsByArtist(String artist);
+    List<Song> getSongsByArtist(int artist);
 
     @Query("SELECT * FROM song ") // Lấy 10 bài hát gần đây ORDER BY created_at DESC LIMIT 10
     List<Song> getRecentSongs();
