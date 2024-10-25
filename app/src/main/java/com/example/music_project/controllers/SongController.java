@@ -1,5 +1,6 @@
 package com.example.music_project.controllers;
 
+import com.example.music_project.database.AlbumSongDao;
 import com.example.music_project.database.SongDao;
 import com.example.music_project.models.Song;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.example.music_project.models.Genre;
 
 public class SongController {
     private SongDao songDao;
+    private AlbumSongDao albumSongDao;
     private ArtistDao artistDao;
     private AlbumDao albumDao;
     private GenreDao genreDao;
@@ -24,6 +26,12 @@ public class SongController {
         this.artistDao = artistDao;
         this.albumDao = albumDao;
         this.genreDao = genreDao;
+        this.executorService = Executors.newSingleThreadExecutor();
+    }
+
+    public SongController(SongDao songDao, AlbumSongDao albumSongDao) {
+        this.songDao = songDao;
+        this.albumSongDao = albumSongDao;
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -93,6 +101,18 @@ public class SongController {
         });
     }
 
+    // Load songs for a specific album
+    public void getSongsForAlbum(int albumId, OnSongsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Song> songs = albumSongDao.getSongsByAlbumId(albumId);
+            if (songs != null && !songs.isEmpty()) {
+                listener.onSongsLoaded(songs);
+            } else {
+                listener.onFailure("No songs found for the album.");
+            }
+        });
+    }
+
     public void getAllArtists(Callback<List<Artist>> callback) {
         executorService.execute(() -> {
             try {
@@ -130,6 +150,11 @@ public class SongController {
         void onSuccess(T result);
 
         void onError(String error);
+    }
+
+    public interface OnSongsLoadedListener {
+        void onSongsLoaded(List<Song> songs);
+        void onFailure(String error);
     }
 
     public interface OnArtistsLoadedListener {
