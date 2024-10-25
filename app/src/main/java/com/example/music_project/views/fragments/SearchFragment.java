@@ -89,34 +89,34 @@ public class SearchFragment extends Fragment {
         searchPlaylists(query);
     }
 
-    private void searchAlbums(String query) {
-        // Tìm kiếm album
-        albumController.searchAlbums(query, new AlbumController.OnAlbumsLoadedListener() {
-            @Override
-            public void onAlbumsLoaded(List<Album> albums) {
-                Log.d("SearchFragment", "Albums loaded: " + albums.size());
-                if (albums != null && !albums.isEmpty()) {
-                    albumList.clear();
-                    albumList.addAll(albums);
-                    if (albumAdapter == null) {
-                        albumAdapter = new AlbumAdapter(albumList, album -> {
-                            // Chuyển tới màn hình chi tiết album
-                        });
-                        rvSearchResults.setAdapter(albumAdapter);
-                    } else {
-                        albumAdapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Log.d("SearchFragment", "No albums found.");
-                }
-            }
-
-            @Override
-            public void onFailure(String error) {
-                showToast(error);
-            }
-        });
-    }
+//    private void searchAlbums(String query) {
+//        // Tìm kiếm album
+//        albumController.searchAlbums(query, new AlbumController.OnAlbumsLoadedListener() {
+//            @Override
+//            public void onAlbumsLoaded(List<Album> albums) {
+//                Log.d("SearchFragment", "Albums loaded: " + albums.size());
+//                if (albums != null && !albums.isEmpty()) {
+//                    albumList.clear();
+//                    albumList.addAll(albums);
+//                    if (albumAdapter == null) {
+//                        albumAdapter = new AlbumAdapter(albumList, album -> {
+//                            // Chuyển tới màn hình chi tiết album
+//                        });
+//                        rvSearchResults.setAdapter(albumAdapter);
+//                    } else {
+//                        albumAdapter.notifyDataSetChanged();
+//                    }
+//                } else {
+//                    Log.d("SearchFragment", "No albums found.");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(String error) {
+//                showToast(error);
+//            }
+//        });
+//    }
 
     private void searchPlaylists(String query) {
         // Tìm kiếm playlist
@@ -139,7 +139,7 @@ public class SearchFragment extends Fragment {
                 } else {
                     Log.d("SearchFragment", "No playlists found.");
                     // Gọi hàm tìm kiếm album nếu không tìm thấy playlist
-                    searchAlbums(query);
+                    //searchAlbums(query);
                 }
             }
 
