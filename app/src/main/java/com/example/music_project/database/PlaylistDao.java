@@ -29,4 +29,7 @@ public interface PlaylistDao {
 
     @Delete
     void delete(Playlist playlist);
+
+    @Query("SELECT * FROM Playlist WHERE title LIKE '%' || :query || '%'")
+    List<Playlist> searchPlaylists(String query);
 }

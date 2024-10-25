@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment {
         String authToken = "YOUR_SPOTIFY_ACCESS_TOKEN";
         spotifyApiService = SpotifyApiClient.getClient(authToken).create(SpotifyApiService.class);
 
+
         rvRecentSongs = view.findViewById(R.id.rv_recent_songs);
         rvPopularSongs = view.findViewById(R.id.rv_popular_songs);
         ivUserIcon = view.findViewById(R.id.iv_user_icon);

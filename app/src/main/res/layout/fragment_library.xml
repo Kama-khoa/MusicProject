@@ -27,29 +27,32 @@
 
         <TextView
             android:id="@+id/tv_library_title"
-            android:layout_width="wrap_content"
+            android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif"
             android:text="Thư viện"
             android:textColor="#000000"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:id="@+id/iv_search_library"
+            android:layout_width="148dp"
+            android:layout_height="29dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
             android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
             android:src="@drawable/ic_search"
             app:tint="#000000" />
 
         <ImageView
             android:id="@+id/iv_add"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_add"
             app:tint="#000000" />
@@ -70,28 +73,35 @@
                 android:id="@+id/btn_playlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_button"
+                android:textColorHint="@color/black"
                 android:text="Danh sách phát"
-                android:textColor="#FFFFFF"
-                android:layout_marginLeft="10dp"/>
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:backgroundTint="#1DB954"
+                android:textColor="@color/black"
+                android:layout_marginLeft="15dp"/>
 
             <Button
                 android:id="@+id/btn_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/rounded_button"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
                 android:text="Album"
-                android:textColor="#FFFFFF"/>
+                android:backgroundTint="#1DB954"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/btn_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/rounded_button"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
                 android:text="Nghệ sĩ"
-                android:textColor="#FFFFFF"/>
+                android:backgroundTint="#1DB954"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -103,10 +113,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="16dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
         android:scrollbars="vertical"/>
 
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
 <!--        android:id="@+id/bottom_navigation"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

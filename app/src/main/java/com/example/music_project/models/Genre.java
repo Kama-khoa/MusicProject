@@ -11,6 +11,7 @@ public class Genre {
     @PrimaryKey(autoGenerate = true)
     public int genre_id;
     public String genre_name;
+
     public Genre(String genre_name) {
         this.genre_name = genre_name;
     }

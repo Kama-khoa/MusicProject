@@ -168,4 +168,18 @@ public class AlbumController {
         void onSongsLoaded(List<Song> songs);
         void onFailure(String error);
     }
+
+    public void searchAlbums(String query, final OnAlbumsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Album> albums = database.albumDao().searchAlbums(query); // Cần phương thức searchAlbums trong DAO
+            if (albums != null && !albums.isEmpty()) {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onAlbumsLoaded(albums));
+            } else {
+                // Nếu không tìm thấy album, thông báo lỗi
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Không tìm thấy album nào"));
+            }
+        });
+    }
+
+
 }

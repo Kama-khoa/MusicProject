@@ -27,4 +27,7 @@ public interface PlaylistSongDao {
 
     @Query("SELECT * FROM Song INNER JOIN PlaylistSong ON Song.song_id = PlaylistSong.song_id WHERE PlaylistSong.playlist_id = :playlistId")
     List<Song> getSongsByPlaylistId(int playlistId);
+
+    @Query("SELECT * FROM PlaylistSong WHERE playlist_id = :playlistId AND song_id = :songId LIMIT 1")
+    PlaylistSong getPlaylistSong(int playlistId, int songId);
 }

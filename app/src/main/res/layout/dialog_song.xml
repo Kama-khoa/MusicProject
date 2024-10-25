@@ -12,36 +12,43 @@
         android:layout_height="wrap_content"
         android:hint="Tiêu đề bài hát"
         android:inputType="text"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_edittext_background"
+    android:padding="12dp" />
 
     <!-- Artist Spinner -->
     <Spinner
         android:id="@+id/sp_artist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="41dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_spinner_background" /> <!-- Thay đổi nền -->
 
     <!-- Album Spinner -->
     <Spinner
         android:id="@+id/sp_album"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="38dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_spinner_background" /> <!-- Thay đổi nền -->
 
     <!-- Genre Spinner -->
     <Spinner
         android:id="@+id/sp_genre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="38dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_spinner_background" />
 
     <!-- Duration TextView -->
     <TextView
         android:id="@+id/tv_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Thời lượng"
-        android:layout_marginBottom="16dp" />
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
     <!-- Upload Audio Button -->
     <Button
@@ -49,7 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tải lên file âm thanh"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#1DB954"
+    android:textColor="#040404" />
 
     <!-- Action Buttons Layout -->
     <LinearLayout
@@ -64,7 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Lưu"
-            android:layout_marginEnd="4dp" />
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#1D56B9"
+        android:textColor="#FFFFFF" />
 
         <!-- Cancel Button -->
         <Button
@@ -73,7 +84,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Hủy"
-            android:layout_marginStart="4dp" />
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#FF4444"
+        android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Delete Button -->
@@ -83,6 +96,8 @@
         android:layout_height="wrap_content"
         android:text="Xóa"
         android:layout_marginTop="16dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:backgroundTint="#FF4444"
+    android:textColor="#FFFFFF" />
 
 </LinearLayout>

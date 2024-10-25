@@ -4,9 +4,14 @@ package com.example.music_project.models;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.music_project.database.Converters;
+
 import java.util.Date;
 
 @Entity
+@TypeConverters({Converters.class})
 public class Artist {
 
     @PrimaryKey(autoGenerate = true)

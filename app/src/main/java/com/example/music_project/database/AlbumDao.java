@@ -33,4 +33,7 @@ public interface AlbumDao {
 
     @Delete
     void delete(Album album);
+
+    @Query("SELECT * FROM Album WHERE title LIKE '%' || :query || '%'")
+    List<Album> searchAlbums(String query);
 }

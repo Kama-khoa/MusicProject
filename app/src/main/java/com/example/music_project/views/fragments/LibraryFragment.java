@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +43,14 @@ import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumWithDetails;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
+import com.example.music_project.models.Artist;
 import com.example.music_project.models.Playlist;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
 import com.example.music_project.views.adapters.AlbumWithDetailsAdapter;
+import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
 import com.example.music_project.views.adapters.SongAdapter;
@@ -69,6 +72,8 @@ public class LibraryFragment extends Fragment {
     private ArtistController artistController;
 
     private Button btnPlaylist, btnAlbum, btnArtist;
+
+    private ImageView iv_search_library;
     private PlaylistAdapter playlistAdapter;
     private AlbumAdapter albumAdapter;
     private SongAdapter songAdapter;
@@ -89,6 +94,7 @@ public class LibraryFragment extends Fragment {
         playlistController = new PlaylistController(getContext());
         albumController = new AlbumController(getContext());
         userController = new UserController(getContext());
+        iv_search_library = view.findViewById(R.id.iv_search_library);
         artistController = new ArtistController(getContext());
         genreController = new GenreController(getContext());
 
@@ -100,16 +106,27 @@ public class LibraryFragment extends Fragment {
         btnAlbum = view.findViewById(R.id.btn_album);
         btnArtist = view.findViewById(R.id.btn_artist);
 
+
         ImageView ivAdd = view.findViewById(R.id.iv_add);
 
         // Xử lý khi nhấn nút thêm playlist
         ivAdd.setOnClickListener(v -> showAddMenu(v));
+
+        iv_search_library.setOnClickListener(v -> {
+            // Chuyển sang SearchFragment
+            SearchFragment searchFragment = new SearchFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, searchFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         // Thiết lập sự kiện cho các nút
         setupListeners();
 
         // Lấy User ID hiện tại và lưu vào SharedPreferences
         getCurrentUserId();
+        loadPlaylists();
 
         return view;
     }
@@ -363,6 +380,7 @@ public class LibraryFragment extends Fragment {
                 .commit();
     }
 
+
     // Hiển thị dialog thêm playlist
     private void showAddPlaylistDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -383,7 +401,7 @@ public class LibraryFragment extends Fragment {
                         playlistController.createPlaylist(userId, playlistName, new PlaylistController.OnPlaylistCreatedListener() {
                             @Override
                             public void onSuccess() {
-                                Toast.makeText(getContext(), "Danh sách phát " + playlistName + " được tạo", Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getContext(), "Danh sách phát " + playlistName + " được tạo", Toast.LENGTH_SHORT).show();
                                 loadPlaylistsByUserID(userId);
                             }
 
@@ -416,6 +434,22 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPlaylists();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, result) -> {
+            if (result.getBoolean("playlistDeleted", false)) {
+                loadPlaylists();
             }
         });
     }

@@ -1,14 +1,15 @@
 package com.example.music_project.models;
 
 // Album.java
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id"),
-        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id")
+        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id", onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id", onDelete = ForeignKey.CASCADE)
 })
 public class Album {
 

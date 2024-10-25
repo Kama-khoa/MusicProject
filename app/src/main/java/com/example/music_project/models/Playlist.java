@@ -4,9 +4,21 @@ package com.example.music_project.models;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.music_project.database.Converters;
+
 import java.util.Date;
 
-@Entity(foreignKeys = @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id"))
+@Entity(
+        foreignKeys = @ForeignKey(
+                entity = User.class,
+                parentColumns = "user_id",
+                childColumns = "user_id",
+                onDelete = ForeignKey.CASCADE
+        )
+)
+@TypeConverters({Converters.class})  // Sử dụng Converters để xử lý kiểu Date
 public class Playlist {
 
     @PrimaryKey(autoGenerate = true)
@@ -14,15 +26,15 @@ public class Playlist {
     public int user_id;
     public String title;
     public Date date_created;
-    private String details;
-    private int imageResource;
+    public String details;
+    public String imageResource;
 
     public Playlist(int user_id, String title, Date date_created) {
         this.user_id = user_id;
         this.title = title;
         this.date_created = date_created;
         this.details = null;
-        this.imageResource = -1;
+        this.imageResource = null;
     }
 
     public int getPlaylist_id() {
@@ -65,11 +77,11 @@ public class Playlist {
         this.details = details;
     }
 
-    public int getImageResource() {
+    public String getImageResource() {
         return imageResource;
     }
 
-    public void setImageResource(int imageResource) {
+    public void setImageResource(String imageResource) {
         this.imageResource = imageResource;
     }
 }
