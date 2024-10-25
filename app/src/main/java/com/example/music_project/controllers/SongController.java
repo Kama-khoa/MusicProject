@@ -35,6 +35,13 @@ public class SongController {
     }
 
 
+    public SongController(SongDao songDao) {
+        this.songDao = songDao;
+        this.artistDao = null;
+        this.albumDao = null;
+        this.genreDao = null;
+        this.executorService = Executors.newSingleThreadExecutor();
+    }
     public void addSong(Song song, Callback<Void> callback) {
         executorService.execute(() -> {
             try {

@@ -7,33 +7,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
+        android:layout_height="33dp"
+        android:orientation="horizontal">
 
         <SearchView
             android:id="@+id/sv_search"
-            android:layout_width="358dp"
-            android:layout_height="match_parent"
-            android:hint="Tìm kiếm bài hát" />
+            android:layout_width="365dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:queryHint="Tìm kiếm bài hát" />
 
         <ImageView
             android:id="@+id/img_playlist_edit_or_del"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="right"
-            android:src="@drawable/ic_more_vert"/>
+            android:src="@drawable/ic_more_vert" />
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/img_playlist_cover"
-        android:layout_width="377dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:contentDescription="Playlist Cover Image"
         android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/ic_perm_identity" />
 
     <TextView
@@ -45,29 +43,28 @@
         android:hint="Playlist Name"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="5dp"
         android:textSize="28sp"
         android:textStyle="bold" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="">
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/tv_playlist_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
-            android:hint="user name"
+            android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="5dp"
             android:textColor="#B0B0B0"
+            android:hint="user name"
+            android:layout_marginBottom="10dp"
             android:textSize="16sp" />
 
         <Button
@@ -77,8 +74,10 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:backgroundTint="#1DB954"
+            android:fontFamily="sans-serif"
             android:text="Thêm"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -86,47 +85,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:layout_marginTop="12dp"
-        android:hint="Mô tả"
         android:textColor="#B0B0B0"
         android:fontFamily="sans-serif"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:hint="mô tả "/>
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:gravity="center"
+    <TextView
+        android:text="Danh sách bài hát: "
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#716F6F"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp" />
 
-          >
-
-      </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_songs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:text="Các bài hát được đề xuất "
-        ></TextView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_suggested_songs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
+    android:layout_weight="1"
+    android:layout_marginTop="10dp"
+    android:paddingLeft="10dp" />
 </LinearLayout>

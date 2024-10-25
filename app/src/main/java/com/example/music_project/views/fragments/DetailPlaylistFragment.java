@@ -402,8 +402,12 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
         playlistController.deletePlaylist(playlistId, new PlaylistController.OnPlaylistDeletedListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(getContext(), "Xóa playlist thành công!", Toast.LENGTH_SHORT).show();
-                requireActivity().getSupportFragmentManager().popBackStack();
+                Bundle result = new Bundle();
+                result.putBoolean("playlistDeleted", true);
+                getParentFragmentManager().setFragmentResult("requestKey", result);
+
+                // Quay lại LibraryFragment
+                getActivity().getSupportFragmentManager().popBackStack();
             }
 
             @Override

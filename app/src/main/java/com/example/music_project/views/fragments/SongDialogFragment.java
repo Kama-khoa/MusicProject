@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +25,10 @@ import com.example.music_project.models.Song;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Genre;
+import android.media.MediaMetadataRetriever;
 import com.example.music_project.views.activities.SongActivity;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -111,7 +114,28 @@ public class SongDialogFragment extends DialogFragment {
                         Uri audioUri = result.getData().getData();
                         if (audioUri != null) {
                             audioFilePath = audioUri.toString();
-                            // Cập nhật UI để hiển thị tên tệp âm thanh đã được chọn
+
+                            // Khởi tạo MediaMetadataRetriever bên trong try
+                            try (MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                                 ParcelFileDescriptor pfd = getContext().getContentResolver().openFileDescriptor(audioUri, "r")) {
+
+                                if (pfd != null) {
+                                    mmr.setDataSource(pfd.getFileDescriptor()); // Thiết lập nguồn từ FileDescriptor
+
+                                    // Lấy độ dài bài hát (đơn vị là microsecond)
+                                    String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                                    if (durationStr != null) {
+                                        long durationInMillis = Long.parseLong(durationStr);
+                                        long durationInSeconds = durationInMillis / 1000;
+                                        tvDuration.setText("Thời lượng: "+ String.format("%d:%02d", durationInSeconds / 60, durationInSeconds % 60));
+                                    }
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                tvDuration.setText("Không thể lấy độ dài bài hát");
+                            }
+
                             if (btnUpload != null) {
                                 btnUpload.setText(audioFilePath); // Hoặc sử dụng audioFilePath nếu bạn muốn hiển thị đường dẫn
                             }
@@ -119,6 +143,8 @@ public class SongDialogFragment extends DialogFragment {
                     }
                 }
         );
+
+
 
         return view;
     }

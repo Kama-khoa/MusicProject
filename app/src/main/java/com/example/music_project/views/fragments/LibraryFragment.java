@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,8 @@ public class LibraryFragment extends Fragment {
     private UserController userController;
 
     private Button btnPlaylist, btnAlbum, btnArtist;
+
+    private ImageView iv_search_library;
     private PlaylistAdapter playlistAdapter;
     private AlbumAdapter albumAdapter;
     private SongAdapter songAdapter;
@@ -58,6 +61,7 @@ public class LibraryFragment extends Fragment {
         playlistController = new PlaylistController(getContext());
         albumController = new AlbumController(getContext());
         userController = new UserController(getContext());
+        iv_search_library = view.findViewById(R.id.iv_search_library);
 
         rvLibraryItems = view.findViewById(R.id.rv_library_items);
         rvLibraryItems.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -67,16 +71,27 @@ public class LibraryFragment extends Fragment {
         btnAlbum = view.findViewById(R.id.btn_album);
         btnArtist = view.findViewById(R.id.btn_artist);
 
+
         ImageView ivAdd = view.findViewById(R.id.iv_add);
 
         // Xử lý khi nhấn nút thêm playlist
         ivAdd.setOnClickListener(v -> showAddPlaylistMenu(v));
+
+        iv_search_library.setOnClickListener(v -> {
+            // Chuyển sang SearchFragment
+            SearchFragment searchFragment = new SearchFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, searchFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         // Thiết lập sự kiện cho các nút
         setupListeners();
 
         // Lấy User ID hiện tại và lưu vào SharedPreferences
         getCurrentUserId();
+        loadPlaylists();
 
         return view;
     }
@@ -278,6 +293,22 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onFailure(String error) {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadPlaylists();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, result) -> {
+            if (result.getBoolean("playlistDeleted", false)) {
+                loadPlaylists();
             }
         });
     }

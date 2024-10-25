@@ -224,4 +224,15 @@ public class PlaylistController {
         void onSongDeleted(Song song);  // Called when the song is successfully deleted
         void onFailure(String error);   // Called if there was an error
     }
+
+    public void searchPlaylists(String query, final OnPlaylistsLoadedListener listener) {
+        executorService.execute(() -> {
+            List<Playlist> playlists = database.playlistDao().searchPlaylists(query);
+            if (playlists != null && !playlists.isEmpty()) {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onPlaylistsLoaded(playlists));
+            } else {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Không tìm thấy danh sách phát nào"));
+            }
+        });
+    }
 }
