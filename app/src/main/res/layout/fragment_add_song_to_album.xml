@@ -21,19 +21,17 @@
         android:gravity="center_vertical"
         android:paddingVertical="8dp">
 
-        <Button
-            android:id="@+id/btn_filter_artist"
+        <Spinner
+            android:id="@+id/spinner_artist"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lọc theo Nghệ sĩ" />
+            android:layout_height="48dp"
+            android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/btn_filter_genre"
+        <Spinner
+            android:id="@+id/spinner_genre"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Lọc theo Thể loại" />
+            android:layout_height="48dp"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <!-- RecyclerView for displaying songs -->

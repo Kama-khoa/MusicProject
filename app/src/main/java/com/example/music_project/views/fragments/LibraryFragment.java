@@ -520,7 +520,7 @@ public class LibraryFragment extends Fragment {
                             releaseDate = new Date();
                         }
 
-                        Album album = new Album(albumName, userId, genreId, releaseDate, null);
+                        Album album = new Album(albumName, userId, genreId, releaseDate);
 
                         // Nếu selectedImageUri không phải là null, thì lưu ảnh
                         if (selectedImageUri != null) {

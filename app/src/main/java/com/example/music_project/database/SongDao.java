@@ -7,6 +7,7 @@ import androidx.room.Update;
 import androidx.room.Delete;
 import androidx.room.OnConflictStrategy;
 
+import com.example.music_project.models.AlbumSong;
 import com.example.music_project.models.PlaylistSong;
 import com.example.music_project.models.Song;
 
@@ -56,13 +57,21 @@ public interface SongDao {
     @Query("SELECT * FROM Song WHERE song_id IN (SELECT song_id FROM PlaylistSong WHERE playlist_id = :playlistId)")
     List<Song> getSongsInPlaylist(int playlistId);
 
+    @Query("SELECT * FROM Song WHERE song_id IN(SELECT song_id FROM AlbumSong WHERE AlbumSong.album_id = :albumId)")
+    List<Song> getSongsByAlbumId(int albumId);
+
     @Query("SELECT * FROM Song WHERE title LIKE '%' || :query || '%'")
     List<Song> searchSongs(String query);
 
     @Query("SELECT * FROM Song WHERE Song.song_id NOT IN (SELECT PlaylistSong.song_id FROM PlaylistSong WHERE PlaylistSong.playlist_id = :playlistId)")
     List<Song> getAvailableSongs(int playlistId);
 
+    @Query("SELECT * FROM Song WHERE Song.song_id NOT IN (SELECT AlbumSong.song_id FROM AlbumSong WHERE AlbumSong.album_id = :albumId)")
+    List<Song> getAvailableAlbumSongs(int albumId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addSongToPlaylist(PlaylistSong playlistSong);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addSongToAlbum(AlbumSong albumSong);
 }

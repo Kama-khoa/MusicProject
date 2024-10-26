@@ -51,11 +51,11 @@ public class Seeder {
             db.genreDao().insert(genre5);
 
             // Dữ liệu mẫu cho bảng Album
-            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"));
+            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"));
+            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"));
+            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"));
+            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"));
 
             db.albumDao().insert(album1);
             db.albumDao().insert(album2);
@@ -66,11 +66,11 @@ public class Seeder {
 
 
             // Dữ liệu mẫu cho bảng Song
-            Song song1 = new Song("Chờ Nghe Bước Em Về", 1, 1, 1, 240, format.parse("2023-01-01"), "res/raw/chot_nghe_buoc_em_ve.mp3");
-            Song song2 = new Song("Đông Cửa Tắt Đèn", 1, 2, 1, 200, format.parse("2023-01-01"), "res/raw/dong_cua_tat_den.mp3");
-            Song song3 = new Song("Hà Nội", 2, 3, 2, 300, format.parse("2023-02-01"), "res/raw/ha_noi.mp3");
-            Song song4 = new Song("Những Kẻ Mộng Mơ", 3, 4, 3, 250, format.parse("2023-03-01"), "res/raw/nhung_ke_mong_mo.mp3");
-            Song song5 = new Song("Suốt Đêm", 4, 5, 4, 180, format.parse("2023-04-01"), "res/raw/suot_dem.mp3");
+            Song song1 = new Song("Chờ Nghe Bước Em Về", 1, 1, 240, format.parse("2023-01-01"), "res/raw/chot_nghe_buoc_em_ve.mp3");
+            Song song2 = new Song("Đông Cửa Tắt Đèn", 2, 1, 200, format.parse("2023-01-01"), "res/raw/dong_cua_tat_den.mp3");
+            Song song3 = new Song("Hà Nội", 3, 2, 300, format.parse("2023-02-01"), "res/raw/ha_noi.mp3");
+            Song song4 = new Song("Những Kẻ Mộng Mơ", 4, 3, 250, format.parse("2023-03-01"), "res/raw/nhung_ke_mong_mo.mp3");
+            Song song5 = new Song("Suốt Đêm", 5, 4, 180, format.parse("2023-04-01"), "res/raw/suot_dem.mp3");
 
             db.songDao().insert(song1);
             db.songDao().insert(song2);

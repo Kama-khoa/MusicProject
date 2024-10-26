@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Entity(foreignKeys = {
         @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id", onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id", onDelete = ForeignKey.CASCADE),
         @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id", onDelete = ForeignKey.CASCADE)
 })
 @TypeConverters({Converters.class})
@@ -23,7 +22,6 @@ public class Song {
     public int song_id;
     public boolean is_sample;
     public int artist_id;
-    public int album_id;
     public int genre_id;
     public String title;
     public int duration;
@@ -35,10 +33,9 @@ public class Song {
 
     public Song() {}
 
-    public Song(String title, int artist_id, int album_id, int genre_id, int duration, Date release_date, String file_path) {
+    public Song(String title, int artist_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
         this.artist_id = artist_id;
-        this.album_id = album_id;
         this.genre_id = genre_id;
         this.duration = duration;
         this.release_date = release_date;
@@ -61,14 +58,6 @@ public class Song {
 
     public void setArtist_id(int artist_id) {
         this.artist_id = artist_id;
-    }
-
-    public int getAlbum_id() {
-        return album_id;
-    }
-
-    public void setAlbum_id(int album_id) {
-        this.album_id = album_id;
     }
 
     public int getGenre_id() {

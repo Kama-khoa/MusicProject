@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#9AB4E2"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Ảnh và tên nghệ sĩ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:id="@+id/sv_album_search"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content">
+
+        </SearchView>
+
+        <ImageButton
+            android:id="@+id/btn_setting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#9AB4E2"
+            android:contentDescription="@string/settings"
+            app:srcCompat="@drawable/ic_setting" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:background="#4EA852">
 
         <ImageView
             android:id="@+id/ivArtistAvatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="#FFFFFF"
             android:scaleType="centerCrop"
             android:src="@drawable/artist_avatar" />
 
@@ -77,8 +102,8 @@
         android:id="@+id/rvAlbums"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
         android:overScrollMode="never"
         android:scrollbars="horizontal" />
 
