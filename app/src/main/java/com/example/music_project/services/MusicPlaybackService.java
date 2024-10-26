@@ -36,15 +36,18 @@ public class MusicPlaybackService extends Service {
             return;
         }
 
+        // Reset state
+        isPrepared = false;
+
         // Nếu đang phát bài hát cũ, dừng và giải phóng
         if (mediaPlayer != null) {
             mediaPlayer.release();
+            mediaPlayer = null;
         }
 
         try {
             // Khởi tạo MediaPlayer mới
             mediaPlayer = new MediaPlayer();
-            isPrepared = false;
             currentResourceId = resourceId;
 
             // Tạo Uri từ resource ID
@@ -77,22 +80,10 @@ public class MusicPlaybackService extends Service {
             // Chuẩn bị và phát nhạc
             mediaPlayer.prepareAsync();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Error playing song: " + e.getMessage());
             Toast.makeText(this,
                     "Không thể phát bài hát: " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-            isPrepared = false;
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Invalid resource URI: " + e.getMessage());
-            Toast.makeText(this,
-                    "Resource không hợp lệ: " + e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-            isPrepared = false;
-        } catch (Exception e) {
-            Log.e(TAG, "Unexpected error: " + e.getMessage());
-            Toast.makeText(this,
-                    "Lỗi không xác định: " + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
             isPrepared = false;
         }
@@ -151,5 +142,8 @@ public class MusicPlaybackService extends Service {
             mediaPlayer = null;
             isPrepared = false;
         }
+    }
+    public boolean isPrepared() {
+        return isPrepared;
     }
 }

@@ -89,7 +89,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/play_pause_button"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_play" />
+            android:src="@drawable/ic_pause" />
 
         <ImageButton
             android:id="@+id/nextButton"
