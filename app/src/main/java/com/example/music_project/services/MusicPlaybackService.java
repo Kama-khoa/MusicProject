@@ -6,14 +6,17 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
-import androidx.annotation.Nullable;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.music_project.models.Song;
-import java.io.IOException;
 
 public class MusicPlaybackService extends Service {
+    private static final String TAG = "MusicPlaybackService";
     private final IBinder binder = new MusicBinder();
     private MediaPlayer mediaPlayer;
-    private Song currentSong;
+    private boolean isPrepared = false;
+    private Song currentSong = null;
 
     public class MusicBinder extends Binder {
         public MusicPlaybackService getService() {
@@ -21,74 +24,114 @@ public class MusicPlaybackService extends Service {
         }
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mediaPlayer = new MediaPlayer();
-    }
-
     public void playSong(Song song) {
-        if (currentSong != null && currentSong.getSong_id() == song.getSong_id() && mediaPlayer.isPlaying()) {
-            return; // Nếu bài hát đang phát là bài hát được yêu cầu, không làm gì cả
+        if (song == null || song.getFile_path() == null) {
+            Log.e(TAG, "Invalid song or file path");
+            Toast.makeText(this, "Cannot play song: Invalid song data", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         currentSong = song;
+        isPrepared = false;
+
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
         try {
-            mediaPlayer.reset();
-            if (song.getFile_path().startsWith("android.resource")) {
-                mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(song.getFile_path()));
-            } else {
-                mediaPlayer.setDataSource(song.getFile_path());
-            }
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
+            mediaPlayer = new MediaPlayer();
+            Uri songUri = Uri.parse(song.getFile_path());
+
+            mediaPlayer.setDataSource(getApplicationContext(), songUri);
+
+            mediaPlayer.setOnPreparedListener(mp -> {
+                isPrepared = true;
+                mp.start();
+                Log.d(TAG, "Now playing: " + song.getTitle() + " by " + song.getArtistName());
+            });
+
+            mediaPlayer.setOnErrorListener((mp, what, extra) -> {
+                Log.e(TAG, "MediaPlayer error: " + what + ", " + extra);
+                Toast.makeText(getApplicationContext(),
+                        "Error playing music: " + what,
+                        Toast.LENGTH_SHORT).show();
+                isPrepared = false;
+                return false;
+            });
+
+            mediaPlayer.setOnCompletionListener(mp -> {
+                Log.d(TAG, "Song completed: " + song.getTitle());
+                isPrepared = false;
+            });
+
+            mediaPlayer.prepareAsync();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error playing song: " + e.getMessage());
+            Toast.makeText(this,
+                    "Cannot play song: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+            isPrepared = false;
         }
     }
 
-    public void pause() {
-        if (mediaPlayer.isPlaying()) {
+    public boolean isPlaying() {
+        return mediaPlayer != null && mediaPlayer.isPlaying();
+    }
+
+    public void pauseSong() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }
     }
 
-    public void resume() {
-        if (!mediaPlayer.isPlaying()) {
+    public void resumeSong() {
+        if (mediaPlayer != null && !mediaPlayer.isPlaying() && isPrepared) {
             mediaPlayer.start();
         }
     }
 
-    public void stop() {
-        mediaPlayer.stop();
-        mediaPlayer.reset();
-        currentSong = null;
-    }
-
-    public boolean isPlaying() {
-        return mediaPlayer.isPlaying();
-    }
-
     public int getCurrentPosition() {
-        return mediaPlayer.getCurrentPosition();
+        if (mediaPlayer != null && isPrepared) {
+            return mediaPlayer.getCurrentPosition();
+        }
+        return 0;
     }
 
     public int getDuration() {
-        return mediaPlayer.getDuration();
+        if (mediaPlayer != null && isPrepared) {
+            return mediaPlayer.getDuration();
+        }
+        return 0;
     }
 
     public void seekTo(int position) {
-        mediaPlayer.seekTo(position);
+        if (mediaPlayer != null && isPrepared) {
+            mediaPlayer.seekTo(position);
+        }
+    }
+
+    public void stopSong() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            isPrepared = false;
+        }
     }
 
     public Song getCurrentSong() {
         return currentSong;
+    }
+
+    public boolean isPrepared() {
+        return isPrepared;
     }
 
     @Override
@@ -97,16 +140,7 @@ public class MusicPlaybackService extends Service {
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
+            isPrepared = false;
         }
-    }
-
-    // Add method to play next song
-    public void playNext() {
-        // Logic to play next song in your playlist
-    }
-
-    // Add method to play previous song
-    public void playPrevious() {
-        // Logic to play previous song in your playlist
     }
 }

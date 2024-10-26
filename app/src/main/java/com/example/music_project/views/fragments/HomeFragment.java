@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.api.TopTracksResponse;
+import com.example.music_project.controllers.PlayerController;
 import com.example.music_project.controllers.SongController;
 import com.example.music_project.controllers.UserController;
 import com.example.music_project.database.AppDatabase;
@@ -29,6 +30,7 @@ import com.example.music_project.models.PlayHistory;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.LoginActivity;
+import com.example.music_project.views.activities.PlayerActivity;
 import com.example.music_project.views.activities.ProfileActivity;
 import com.example.music_project.views.activities.SettingsActivity;
 import com.example.music_project.views.activities.SongActivity;
@@ -84,18 +86,20 @@ public class HomeFragment extends Fragment {
         rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         updateUserInterface();
-        loadData();
 
         // Adapter cho danh sách nhạc gần đây
         recentSongAdapter = new SongAdapter(recentSongs, song -> {
-            // Xử lý khi người dùng nhấn vào bài hát gần đây
-            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+            // Khởi chạy PlayerActivity và truyền song_id
+            Intent intent = new Intent(getActivity(), PlayerActivity.class);
+            intent.putExtra("SONG_ID", song.getSong_id()); // Truyền ID hoặc đường dẫn bài hát
+            startActivity(intent);
         });
-
         // Adapter cho danh sách nhạc phổ biến
         popularSongAdapter = new SongAdapter(popularSongs, song -> {
             // Xử lý khi người dùng nhấn vào bài hát phổ biến
-            new Handler(Looper.getMainLooper()).post(() ->Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+            Intent intent = new Intent(getActivity(), PlayerActivity.class);
+            intent.putExtra("SONG_ID", song.getSong_id()); // Truyền ID hoặc đường dẫn bài hát
+            startActivity(intent);
         });
 
         rvRecentSongs.setAdapter(recentSongAdapter);
@@ -241,40 +245,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void loadData() {
-        loadTopSpotifySongs();
-    }
 
-    private void loadTopSpotifySongs() {
-        Call<TopTracksResponse> call = spotifyApiService.getTopTracks(5);
-        call.enqueue(new Callback<TopTracksResponse>() {
-            @Override
-            public void onResponse(Call<TopTracksResponse> call, Response<TopTracksResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Song> songs = response.body().getItems();
-                    mainHandler.post(() -> {
-                        if (!songs.isEmpty()) {
-                            SongAdapter adapter = new SongAdapter(songs, HomeFragment.this::playSong);
-                            rvPopularSongs.setAdapter(adapter);
-                        } else {
-                            handleEmptyState(rvPopularSongs, R.string.no_top_spotify_songs);
-                        }
-                    });
-                } else {
-                    mainHandler.post(() -> {
-                        Toast.makeText(requireContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<TopTracksResponse> call, Throwable t) {
-                mainHandler.post(() -> {
-                    Toast.makeText(getContext(), R.string.failed_load_spotify_songs, Toast.LENGTH_SHORT).show();
-                });
-            }
-        });
-    }
 
     private void playSong(Song song) {
         // Implement this method to start playing the song

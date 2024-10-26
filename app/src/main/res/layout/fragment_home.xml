@@ -22,15 +22,18 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_user"
+            android:tint="@android:color/white"
             android:visibility="gone" />
 
     </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bài hát gần đây"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />
 
@@ -43,8 +46,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bài hát phổ biến"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp" />
 

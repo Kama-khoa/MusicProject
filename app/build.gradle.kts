@@ -54,4 +54,6 @@ dependencies {
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
     implementation(libs.recyclerview)
+    implementation(libs.androidx.media)
+    implementation(kotlin("script-runtime"))
 }
