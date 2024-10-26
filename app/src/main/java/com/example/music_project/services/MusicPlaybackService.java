@@ -9,14 +9,14 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.example.music_project.models.Song;
 
 public class MusicPlaybackService extends Service {
     private static final String TAG = "MusicPlaybackService";
     private final IBinder binder = new MusicBinder();
     private MediaPlayer mediaPlayer;
     private boolean isPrepared = false;
-    private String currentResourceId = null;
+    private Song currentSong = null;
 
     public class MusicBinder extends Binder {
         public MusicPlaybackService getService() {
@@ -29,61 +29,53 @@ public class MusicPlaybackService extends Service {
         return binder;
     }
 
-    public void playSong(String resourceId) {
-        if (resourceId == null) {
-            Log.e(TAG, "Resource ID is null");
-            Toast.makeText(this, "Không thể phát bài hát: Resource ID không hợp lệ", Toast.LENGTH_SHORT).show();
+    public void playSong(Song song) {
+        if (song == null || song.getFile_path() == null) {
+            Log.e(TAG, "Invalid song or file path");
+            Toast.makeText(this, "Cannot play song: Invalid song data", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Reset state
+        currentSong = song;
         isPrepared = false;
 
-        // Nếu đang phát bài hát cũ, dừng và giải phóng
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
 
         try {
-            // Khởi tạo MediaPlayer mới
             mediaPlayer = new MediaPlayer();
-            currentResourceId = resourceId;
+            Uri songUri = Uri.parse(song.getFile_path());
 
-            // Tạo Uri từ resource ID
-            Uri songUri = Uri.parse("android.resource://" + getPackageName() + "/raw/" + resourceId);
-
-            // Set data source với Uri
             mediaPlayer.setDataSource(getApplicationContext(), songUri);
 
-            // Set các listener
             mediaPlayer.setOnPreparedListener(mp -> {
                 isPrepared = true;
                 mp.start();
-                Log.d(TAG, "Media player prepared and started");
+                Log.d(TAG, "Now playing: " + song.getTitle() + " by " + song.getArtistName());
             });
 
             mediaPlayer.setOnErrorListener((mp, what, extra) -> {
                 Log.e(TAG, "MediaPlayer error: " + what + ", " + extra);
                 Toast.makeText(getApplicationContext(),
-                        "Lỗi phát nhạc: " + what,
+                        "Error playing music: " + what,
                         Toast.LENGTH_SHORT).show();
                 isPrepared = false;
                 return false;
             });
 
             mediaPlayer.setOnCompletionListener(mp -> {
-                Log.d(TAG, "Song completed");
+                Log.d(TAG, "Song completed: " + song.getTitle());
                 isPrepared = false;
             });
 
-            // Chuẩn bị và phát nhạc
             mediaPlayer.prepareAsync();
 
         } catch (Exception e) {
             Log.e(TAG, "Error playing song: " + e.getMessage());
             Toast.makeText(this,
-                    "Không thể phát bài hát: " + e.getMessage(),
+                    "Cannot play song: " + e.getMessage(),
                     Toast.LENGTH_SHORT).show();
             isPrepared = false;
         }
@@ -134,6 +126,14 @@ public class MusicPlaybackService extends Service {
         }
     }
 
+    public Song getCurrentSong() {
+        return currentSong;
+    }
+
+    public boolean isPrepared() {
+        return isPrepared;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -142,8 +142,5 @@ public class MusicPlaybackService extends Service {
             mediaPlayer = null;
             isPrepared = false;
         }
-    }
-    public boolean isPrepared() {
-        return isPrepared;
     }
 }

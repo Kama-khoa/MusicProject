@@ -156,7 +156,6 @@ public class PlayerActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (song != null) {
                     updateSongInfo(song);
-
                     String filePath = song.getFile_path();
                     if (filePath != null && !filePath.isEmpty()) {
                         String resourceName = filePath
@@ -172,7 +171,9 @@ public class PlayerActivity extends AppCompatActivity {
                         );
 
                         if (resourceId != 0) {
-                            playSong(resourceId);
+                            // Update the file path with the content URI for the resource
+                            song.setFile_path("android.resource://" + getPackageName() + "/" + resourceId);
+                            playSong(song);
                         } else {
                             Toast.makeText(this, "Không tìm thấy tài nguyên nhạc", Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "Resource not found: " + resourceName);
@@ -185,11 +186,9 @@ public class PlayerActivity extends AppCompatActivity {
             });
         });
     }
-
-    private void playSong(int rawResourceId) {
+    private void playSong(Song song) {
         if (isBound && musicService != null) {
-            musicService.playSong(String.valueOf(rawResourceId));
-            // Đợi một chút để MediaPlayer được khởi tạo
+            musicService.playSong(song);
             handler.postDelayed(() -> {
                 setupMediaPlayerUI();
                 startSeekBarUpdate();

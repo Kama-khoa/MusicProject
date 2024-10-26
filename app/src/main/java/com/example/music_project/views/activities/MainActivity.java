@@ -123,13 +123,13 @@ public class MainActivity extends AppCompatActivity {
         return playbackFragment != null && playbackFragment.isPlaying();
     }
 
-    /**
-     * Get the currently playing song
-     * @return Song object that is currently playing, or null if none
-     */
-    public Song getCurrentPlayingSong() {
-        return playbackFragment != null ? playbackFragment.getCurrentSong() : null;
-    }
+//    /**
+//     * Get the currently playing song
+//     * @return Song object that is currently playing, or null if none
+//     */
+//    public Song getCurrentPlayingSong() {
+//        return playbackFragment != null ? playbackFragment.getCurrentSong() : null;
+//    }
 
     @Override
     protected void onDestroy() {

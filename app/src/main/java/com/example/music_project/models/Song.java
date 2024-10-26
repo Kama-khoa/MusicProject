@@ -11,23 +11,41 @@ import com.example.music_project.database.Converters;
 
 import java.util.Date;
 
-@Entity(foreignKeys = {
-        @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id", onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id", onDelete = ForeignKey.CASCADE),
-        @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id", onDelete = ForeignKey.CASCADE)
-})
+@Entity(tableName = "Song",
+        foreignKeys = {
+                @ForeignKey(entity = Artist.class, parentColumns = "artist_id", childColumns = "artist_id", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Album.class, parentColumns = "album_id", childColumns = "album_id", onDelete = ForeignKey.CASCADE),
+                @ForeignKey(entity = Genre.class, parentColumns = "genre_id", childColumns = "genre_id", onDelete = ForeignKey.CASCADE)
+        })
 @TypeConverters({Converters.class})
 public class Song {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "song_id")
     public int song_id;
+
+    @ColumnInfo(name = "is_sample")
     public boolean is_sample;
+
+    @ColumnInfo(name = "artist_id")
     public int artist_id;
+
+    @ColumnInfo(name = "album_id")
     public int album_id;
+
+    @ColumnInfo(name = "genre_id")
     public int genre_id;
+
+    @ColumnInfo(name = "title")
     public String title;
+
+    @ColumnInfo(name = "duration")
     public int duration;
+
+    @ColumnInfo(name = "release_date")
     public Date release_date;
+
+    @ColumnInfo(name = "file_path")
     public String file_path;
 
     @Ignore
