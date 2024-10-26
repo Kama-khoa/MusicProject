@@ -26,19 +26,19 @@ import com.example.music_project.services.MusicPlaybackService;
 
 public class PlaybackDialogFragment extends Fragment {
     private static final String TAG = "PlaybackDialogFragment";
+    private static final int UPDATE_INTERVAL = 500; // 500ms for smoother updates
 
     // Service related
     private MusicPlaybackService musicService;
     private boolean isBound = false;
     private Handler handler;
     private Song currentSong;
+    private Runnable updateProgressRunnable;
 
     // UI Components
     private ImageButton playPauseButton;
     private ImageButton previousButton;
     private ImageButton nextButton;
-    private ImageButton shuffleButton;
-    private ImageButton repeatButton;
     private SeekBar seekBar;
     private TextView currentTimeTextView;
     private TextView totalTimeTextView;
@@ -62,8 +62,9 @@ public class PlaybackDialogFragment extends Fragment {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            musicService = null;
             isBound = false;
-            stopPlaybackUpdates();
+            pauseProgressUpdates();
         }
     };
 
@@ -71,7 +72,22 @@ public class PlaybackDialogFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new Handler();
+        setupUpdateRunnable();
         bindMusicService();
+    }
+
+    private void setupUpdateRunnable() {
+        updateProgressRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (isAdded() && !isRemoving()) {
+                    updateProgressUI();
+                    if (isPlaying()) {
+                        handler.postDelayed(this, UPDATE_INTERVAL);
+                    }
+                }
+            }
+        };
     }
 
     @Nullable
@@ -93,50 +109,144 @@ public class PlaybackDialogFragment extends Fragment {
         playPauseButton = view.findViewById(R.id.playPauseButton);
         previousButton = view.findViewById(R.id.previousButton);
         nextButton = view.findViewById(R.id.nextButton);
-        shuffleButton = view.findViewById(R.id.shuffleButton);
-        repeatButton = view.findViewById(R.id.repeatButton);
         seekBar = view.findViewById(R.id.seekBar);
         currentTimeTextView = view.findViewById(R.id.currentTimeTextView);
         totalTimeTextView = view.findViewById(R.id.totalTimeTextView);
         songTitleTextView = view.findViewById(R.id.songTitleTextView);
         artistNameTextView = view.findViewById(R.id.artistNameTextView);
         albumArtImageView = view.findViewById(R.id.albumArtImageView);
+
+        // Set default seekbar properties
+        seekBar.setMax(1000); // Using 1000 as base for smoother seeking
     }
 
     private void setupListeners() {
-        playPauseButton.setOnClickListener(v -> togglePlayPause());
-        previousButton.setOnClickListener(v -> playPreviousSong());
-        nextButton.setOnClickListener(v -> playNextSong());
-        shuffleButton.setOnClickListener(v -> toggleShuffle());
-        repeatButton.setOnClickListener(v -> toggleRepeat());
+        playPauseButton.setOnClickListener(v -> {
+            if (isBound && musicService != null) {
+                togglePlayPause();
+            }
+        });
+
+        previousButton.setOnClickListener(v -> {
+            if (isBound && musicService != null) {
+                playPreviousSong();
+            }
+        });
+
+        nextButton.setOnClickListener(v -> {
+            if (isBound && musicService != null) {
+                playNextSong();
+            }
+        });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser && isBound) {
-                    currentTimeTextView.setText(formatTime(progress));
+                if (fromUser && isBound && musicService != null && isAdded() && currentTimeTextView != null) {
+                    long duration = musicService.getDuration();
+                    long newPosition = (duration * progress) / 1000L;
+                    currentTimeTextView.setText(formatTime((int) newPosition));
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 isDraggingSeekBar = true;
+                pauseProgressUpdates();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if (isBound && musicService != null) {
+                    long duration = musicService.getDuration();
+                    long newPosition = (duration * seekBar.getProgress()) / 1000L;
+                    musicService.seekTo((int) newPosition);
+                }
                 isDraggingSeekBar = false;
-                if (isBound) {
-                    musicService.seekTo(seekBar.getProgress());
+                if (musicService != null && musicService.isPlaying()) {
+                    resumeProgressUpdates();
                 }
             }
         });
     }
 
-    private void onServiceBound() {
-        updatePlaybackInfo();
-        if (currentSong != null) {
+    private void togglePlayPause() {
+        if (!isBound || musicService == null) return;
+
+        if (musicService.isPlaying()) {
+            musicService.pauseSong();
+            pauseProgressUpdates();
+        } else {
+            musicService.resumeSong();
+            resumeProgressUpdates();
+        }
+        updatePlayPauseButton();
+    }
+
+    private void playPreviousSong() {
+        // Implement previous song logic
+        if (isBound && musicService != null) {
+            // Add your previous song implementation
             updateCurrentSongUI();
+            resumeProgressUpdates();
+        }
+    }
+
+    private void playNextSong() {
+        // Implement next song logic
+        if (isBound && musicService != null) {
+            // Add your next song implementation
+            updateCurrentSongUI();
+            resumeProgressUpdates();
+        }
+    }
+
+    private void updateProgressUI() {
+        if (!isBound || musicService == null || isDraggingSeekBar || !isAdded()) return;
+
+        try {
+            long currentPosition = musicService.getCurrentPosition();
+            long duration = musicService.getDuration();
+
+            if (duration > 0) {
+                // Convert to scale of 1000 for smoother seeking
+                int progress = (int) ((1000L * currentPosition) / duration);
+                seekBar.setProgress(progress);
+                currentTimeTextView.setText(formatTime((int) currentPosition));
+                totalTimeTextView.setText(formatTime((int) duration));
+            }
+
+            updatePlayPauseButton();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating progress: " + e.getMessage());
+        }
+    }
+
+    private void updatePlayPauseButton() {
+        if (!isAdded()) return;
+
+        boolean isPlaying = isBound && musicService != null && musicService.isPlaying();
+        playPauseButton.setImageResource(isPlaying ? R.drawable.ic_pause : R.drawable.ic_play);
+    }
+
+    private void resumeProgressUpdates() {
+        handler.removeCallbacks(updateProgressRunnable);
+        handler.post(updateProgressRunnable);
+    }
+
+    private void pauseProgressUpdates() {
+        handler.removeCallbacks(updateProgressRunnable);
+    }
+
+    private void onServiceBound() {
+        if (musicService != null) {
+            updateCurrentSongUI();
+            updatePlayPauseButton();
+            updateProgressUI();
+            if (musicService.isPlaying()) {
+                resumeProgressUpdates();
+            }
         }
     }
 
@@ -145,85 +255,17 @@ public class PlaybackDialogFragment extends Fragment {
         if (isBound && musicService != null) {
             musicService.playSong(song.getFile_path());
             updateCurrentSongUI();
+            resumeProgressUpdates();
         }
     }
 
     private void updateCurrentSongUI() {
-        if (currentSong == null) return;
+        if (!isAdded() || currentSong == null) return;
 
         songTitleTextView.setText(currentSong.getTitle());
         artistNameTextView.setText(currentSong.getArtistName());
+        // You can load album art here if available
         albumArtImageView.setImageResource(R.drawable.default_album_art);
-    }
-
-    private void togglePlayPause() {
-        if (!isBound || musicService == null) return;
-
-        if (musicService.isPlaying()) {
-            musicService.pauseSong();
-            playPauseButton.setImageResource(R.drawable.ic_play);
-        } else {
-            musicService.resumeSong();
-            playPauseButton.setImageResource(R.drawable.ic_pause);
-        }
-    }
-
-    private void playPreviousSong() {
-        if (isBound && musicService != null) {
-            // Implement previous song logic here
-        }
-    }
-
-    private void playNextSong() {
-        if (isBound && musicService != null) {
-            // Implement next song logic here
-        }
-    }
-
-    private void toggleShuffle() {
-        isShuffleEnabled = !isShuffleEnabled;
-        shuffleButton.setImageResource(isShuffleEnabled ?
-                R.drawable.ic_shuffle_on : R.drawable.ic_shuffle_off);
-    }
-
-    private void toggleRepeat() {
-        isRepeatEnabled = !isRepeatEnabled;
-        repeatButton.setImageResource(isRepeatEnabled ?
-                R.drawable.ic_repeat_on : R.drawable.ic_repeat_off);
-    }
-
-    private void updatePlaybackInfo() {
-        if (!isBound || musicService == null) return;
-
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (isBound && musicService != null && !isDraggingSeekBar) {
-                    try {
-                        int currentPosition = musicService.getCurrentPosition();
-                        int duration = musicService.getDuration();
-
-                        if (duration > 0) {
-                            seekBar.setMax(duration);
-                            seekBar.setProgress(currentPosition);
-                            currentTimeTextView.setText(formatTime(currentPosition));
-                            totalTimeTextView.setText(formatTime(duration));
-
-                            playPauseButton.setImageResource(
-                                    musicService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play
-                            );
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error updating playback info: " + e.getMessage());
-                    }
-                }
-                handler.postDelayed(this, 1000);
-            }
-        });
-    }
-
-    private void stopPlaybackUpdates() {
-        handler.removeCallbacksAndMessages(null);
     }
 
     private String formatTime(int milliseconds) {
@@ -241,12 +283,32 @@ public class PlaybackDialogFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (isBound && musicService != null) {
+            updateCurrentSongUI();
+            updatePlayPauseButton();
+            updateProgressUI();
+            if (musicService.isPlaying()) {
+                resumeProgressUpdates();
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pauseProgressUpdates();
+    }
+
+    @Override
     public void onDestroy() {
-        super.onDestroy();
-        stopPlaybackUpdates();
+        pauseProgressUpdates();
         if (isBound) {
             requireContext().unbindService(serviceConnection);
             isBound = false;
         }
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 }

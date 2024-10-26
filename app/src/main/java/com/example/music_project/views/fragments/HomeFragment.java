@@ -97,7 +97,9 @@ public class HomeFragment extends Fragment {
         // Adapter cho danh sách nhạc phổ biến
         popularSongAdapter = new SongAdapter(popularSongs, song -> {
             // Xử lý khi người dùng nhấn vào bài hát phổ biến
-            new Handler(Looper.getMainLooper()).post(() ->Toast.makeText(getContext(), "Bài hát: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+            Intent intent = new Intent(getActivity(), PlayerActivity.class);
+            intent.putExtra("SONG_ID", song.getSong_id()); // Truyền ID hoặc đường dẫn bài hát
+            startActivity(intent);
         });
 
         rvRecentSongs.setAdapter(recentSongAdapter);
