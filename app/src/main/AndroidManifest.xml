@@ -7,9 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -37,7 +38,6 @@
                 <data android:scheme="myapp" android:host="callback" />
             </intent-filter>
         </activity>
-
         <activity android:name=".views.activities.LoginActivity"
             android:exported="false" />
         <activity android:name=".views.activities.SongActivity"
@@ -54,8 +54,8 @@
             android:name=".views.activities.ProfileActivity"
             android:label="@string/profile_activity_title" />
 
-        <service android:name=".services.MusicPlaybackService" />
 
+        <service android:name=".services.MusicPlaybackService" />
         <!-- Receivers -->
         <receiver android:name=".receivers.MusicControlReceiver"
             android:exported="false">

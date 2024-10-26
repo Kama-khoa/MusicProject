@@ -18,4 +18,5 @@
     <color name="background_color">#121212</color>
     <color name="colorAccent">#FF4081</color>
     <color name="accent">#FF4081</color>
+    <color name="player_background">#FFFFFF</color>
 </resources>
