@@ -1,6 +1,7 @@
 package com.example.music_project.views.fragments;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.controllers.AlbumController;
 import com.example.music_project.models.Album;
@@ -39,6 +43,7 @@ public class DialogEditAlbumFragment extends DialogFragment {
 
     private int albumId; // Lưu album ID để dễ quản lý
     private String currentCoverImagePath; // Lưu đường dẫn ảnh hiện tại
+    private Uri newImageUri;
 
     public static DialogEditAlbumFragment newInstance(int albumId) {
         DialogEditAlbumFragment fragment = new DialogEditAlbumFragment();
@@ -47,6 +52,20 @@ public class DialogEditAlbumFragment extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    private final ActivityResultLauncher<Intent> selectImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                    newImageUri = result.getData().getData();
+                    if (newImageUri != null) {
+                        Glide.with(this)
+                                .load(newImageUri)
+                                .into(imgAlbumCover);
+                    }
+                }
+            }
+    );
 
     @Override
     public void onStart() {
@@ -71,21 +90,33 @@ public class DialogEditAlbumFragment extends DialogFragment {
         Button btnCancel = view.findViewById(R.id.btn_album_cancle); // Nút hủy
         Button btnDelete = view.findViewById(R.id.btn_album_delete);
 
-        rvSongs.setLayoutManager(new LinearLayoutManager(getContext()));
-        songAdapter = new SongAdapter(songList, song -> Toast.makeText(getContext(), "Selected: " + song.getTitle(), Toast.LENGTH_SHORT).show());
-        rvSongs.setAdapter(songAdapter);
-
         albumController = new AlbumController(getContext());
 
         if (getArguments() != null) {
             albumId = getArguments().getInt("album_id");
-            loadAlbumDetails(albumId); // Tải thông tin album và bài hát
         }
+
+        rvSongs.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        loadAlbumDetails(albumId);
+
+        songAdapter = new SongAdapter(songList, song -> Toast.makeText(getContext(), "Selected: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+
+//        songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
+//            @Override
+//            public void onSongLongClick(Song song) {
+//                // Hiển thị hộp thoại xác nhận khi nhấn lâu
+//                showDeleteSongConfirmationDialog(song);
+//            }
+//        });
+
+        rvSongs.setAdapter(songAdapter);
+
+        imgAlbumCover.setOnClickListener(v -> selectImage());
 
         // Xử lý sự kiện nút lưu
         btnSave.setOnClickListener(v -> {
             saveAlbumDetails();
-            loadAlbumDetails(albumId);
         });
 
         // Xử lý sự kiện nút hủy
@@ -94,10 +125,13 @@ public class DialogEditAlbumFragment extends DialogFragment {
         // Xử lý sự kiện nút xóa
         btnDelete.setOnClickListener(v -> deleteAlbum());
 
-        // Add swipe-to-delete functionality
-        // setupSwipeToDelete();
-
         return view;
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        selectImageLauncher.launch(intent);
     }
 
     private void loadAlbumDetails(int albumId) {
@@ -109,8 +143,9 @@ public class DialogEditAlbumFragment extends DialogFragment {
                     etAlbumTitle.setText(album.getTitle());
                     currentCoverImagePath = album.getCover_image_path();
                     if (currentCoverImagePath != null && !currentCoverImagePath.isEmpty()) {
-                        // Hiển thị ảnh cover (bạn cần thêm logic load ảnh từ file/URI)
-                        imgAlbumCover.setImageURI(Uri.parse(currentCoverImagePath));
+                        Glide.with(requireContext())
+                                .load(currentCoverImagePath)
+                                .into(imgAlbumCover);
                     }
                     // Tải danh sách bài hát
                     loadSongsInAlbum(albumId);
@@ -128,39 +163,45 @@ public class DialogEditAlbumFragment extends DialogFragment {
         albumController.getSongsInAlbum(albumId, new AlbumController.OnSongsLoadedListener() {
             @Override
             public void onSongsLoaded(List<Song> songs) {
-                songList.clear();
-                songList.addAll(songs);
-                songAdapter.notifyDataSetChanged();
+                if (songs != null && !songs.isEmpty()) {
+                    songList.clear();
+                    songList.addAll(songs);
+                    songAdapter.notifyDataSetChanged(); // Cập nhật adapter
+                } else {
+                    Toast.makeText(getContext(), "Không có bài hát nào trong album", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(String error) {
-                getActivity().runOnUiThread(() ->
-                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show()
-                );
+                // Switch to the main thread to show the Toast
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        Toast.makeText(getContext(), "Failed to load album: " + error, Toast.LENGTH_SHORT).show();
+                    });
+                }
             }
         });
     }
 
     private void saveAlbumDetails() {
         String newTitle = etAlbumTitle.getText().toString();
-        String newCoverImagePath = currentCoverImagePath; // Nếu bạn cho phép thay đổi ảnh cover, cập nhật ở đây
+        String newCoverImagePath = newImageUri != null ? newImageUri.toString() : currentCoverImagePath; // Nếu bạn cho phép thay đổi ảnh cover, cập nhật ở đây
 
         // Cập nhật album trong cơ sở dữ liệu
         albumController.updateAlbum(albumId, newTitle, newCoverImagePath, new AlbumController.OnAlbumUpdatedListener() {
             @Override
             public void onAlbumUpdated() {
-                Toast.makeText(getContext(), "Album updated successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Album chỉnh sửa thành công!", Toast.LENGTH_SHORT).show();
                 if (onAlbumEditedListener != null) {
                     onAlbumEditedListener.onAlbumEdited();
                 }
-                loadAlbumDetails(albumId);
                 dismiss();
             }
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(getContext(), "Failed to update album: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Album chỉnh sửa thất bại: " + error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -168,13 +209,13 @@ public class DialogEditAlbumFragment extends DialogFragment {
     private void deleteAlbum() {
         // Hiển thị dialog xác nhận xóa
         new AlertDialog.Builder(getContext())
-                .setTitle("Delete Album")
-                .setMessage("Are you sure you want to delete this album?")
-                .setPositiveButton("Yes", (dialog, which) -> {
+                .setTitle("Xóa Album")
+                .setMessage("Bạn có chắc chắn muốn xóa album này không?")
+                .setPositiveButton("Có", (dialog, which) -> {
                     albumController.deleteAlbum(albumId, new AlbumController.OnAlbumDeletedListener() {
                         @Override
                         public void onAlbumDeleted() {
-                            Toast.makeText(getContext(), "Album deleted successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Album được xóa thành công!", Toast.LENGTH_SHORT).show();
                             if (onAlbumEditedListener != null) {
                                 onAlbumEditedListener.onAlbumEdited();
                             }
@@ -187,44 +228,40 @@ public class DialogEditAlbumFragment extends DialogFragment {
 
                         @Override
                         public void onFailure(String error) {
-                            Toast.makeText(getContext(), "Failed to delete album: " + error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Album xóa thất bại: " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton("Không", null)
                 .show();
     }
-
-//    private void setupSwipeToDelete() {
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+//
+//    private void showDeleteSongConfirmationDialog(Song song) {
+//        new AlertDialog.Builder(requireContext())
+//                .setTitle("Xóa Bài Hát")
+//                .setMessage("Bạn có chắc chắn muốn xóa bài hát \"" + song.getTitle() + "\" khỏi album không?")
+//                .setPositiveButton("Có", (dialog, which) -> {
+//                    deleteSongFromAlbum(song);
+//                    loadSongsInAlbum(albumId);
+//                })
+//                .setNegativeButton("Không", null)
+//                .show();
+//    }
+//
+//    private void deleteSongFromAlbum(Song song) {
+//        int albumId = getArguments().getInt("album_id");
+//        albumController.deleteSongFromAlbum(albumId, song.getSong_id(), new AlbumController.OnSongDeletedListener() {
 //            @Override
-//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                return false;
+//            public void onSongDeleted(Song song) {
+//                Toast.makeText(getContext(), "Đã xóa bài hát khỏi playlist", Toast.LENGTH_SHORT).show();
+//                loadSongsInAlbum(albumId);
 //            }
 //
 //            @Override
-//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-//                // Get the position of the song to delete
-//                int position = viewHolder.getAdapterPosition();
-//                Song song = songList.get(position);
-//                // Remove the song from the list and update adapter
-//                songList.remove(position);
-//                songAdapter.notifyItemRemoved(position);
-//                // Optionally, call the controller to delete the song from the album in the database
-//                albumController.deleteSongFromAlbum(song.getId(), new AlbumController.OnSongDeletedListener() {
-//                    @Override
-//                    public void onSongDeleted() {
-//                        Toast.makeText(getContext(), "Deleted: " + song.getTitle(), Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(String error) {
-//                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+//            public void onFailure(String error) {
+//                Toast.makeText(getContext(), "Lỗi khi xóa bài hát: " + error, Toast.LENGTH_SHORT).show();
 //            }
 //        });
-//        itemTouchHelper.attachToRecyclerView(rvSongs);
 //    }
 
     public void setOnAlbumEditedListener(OnAlbumEditedListener listener) {

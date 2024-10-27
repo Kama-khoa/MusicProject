@@ -20,10 +20,12 @@ public class Artist {
     public String artist_name;
     public String bio;
     public Date date_of_birth;
+    public String avatar;
     public Artist(String artist_name, String bio, Date date_of_birth) {
         this.artist_name = artist_name;
         this.bio = bio;
         this.date_of_birth = date_of_birth;
+        this.avatar=null;
     }
     // Getters and Setters
     public int getArtist_id() {
@@ -57,6 +59,10 @@ public class Artist {
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
     }
+
+    public String getAvatar() {return avatar; }
+
+    public void setAvatar(String avatar) {this.avatar = avatar;}
 
     @Override
     public String toString() {

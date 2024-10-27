@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumSong;
+import com.example.music_project.models.PlaylistSong;
 import com.example.music_project.models.Song;
 
 import java.util.List;
@@ -16,15 +17,15 @@ public interface AlbumSongDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(AlbumSong albumSong);
 
-    @Query("DELETE FROM album_song WHERE album_id = :albumId AND song_id = :songId")
+    @Query("DELETE FROM AlbumSong WHERE album_id = :albumId AND song_id = :songId")
     void delete(long albumId, long songId);
 
-    @Query("SELECT * FROM album_song WHERE album_id = :albumId")
-    List<AlbumSong> getSongsForAlbum(long albumId);
+    @Query("SELECT * FROM AlbumSong WHERE album_id = :albumId")
+    List<AlbumSong> getSongsForAlbum(int albumId);
 
-    @Query("SELECT * FROM album_song WHERE song_id = :songId")
-    List<AlbumSong> getAlbumsForSong(long songId);
+    @Query("SELECT * FROM AlbumSong WHERE song_id = :songId")
+    List<AlbumSong> getAlbumsForSong(int songId);
 
-    @Query("SELECT Song.* FROM Song INNER JOIN Album ON Song.album_id = Album.album_id WHERE Album.album_id = :albumId")
-    List<Song> getSongsByAlbumId(int albumId);
+    @Query("SELECT * FROM AlbumSong WHERE album_id = :albumId AND song_id = :songId LIMIT 1")
+    AlbumSong getAlbumSong(int albumId, int songId);
 }

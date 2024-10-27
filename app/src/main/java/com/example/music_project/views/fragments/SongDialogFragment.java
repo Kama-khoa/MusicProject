@@ -180,7 +180,6 @@ public class SongDialogFragment extends DialogFragment {
     private void saveSong() {
         String title = etTitle.getText().toString();
         Artist selectedArtist = (Artist) spArtist.getSelectedItem();
-        Album selectedAlbum = (Album) spAlbum.getSelectedItem();
         Genre selectedGenre = (Genre) spGenre.getSelectedItem();
 
         if (song == null) {
@@ -189,7 +188,6 @@ public class SongDialogFragment extends DialogFragment {
 
         song.setTitle(title);
         song.setArtist_id(selectedArtist.getArtist_id());
-        song.setAlbum_id(selectedAlbum.getAlbum_id());
         song.setGenre_id(selectedGenre.getGenre_id());
         if (audioFilePath != null) {
             song.setFile_path(audioFilePath);

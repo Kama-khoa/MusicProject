@@ -13,19 +13,23 @@ import com.example.music_project.R;
 import com.example.music_project.models.Song;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder> {
-    private List<Song> songs;
-    private List<Song> songsFull;
-    private OnSongClickListener listener;
-    private OnSongLongClickListener longClickListener;
-    private List<Song> selectedSongs = new ArrayList<>();
+    private List<Song> songs; // Danh sách bài hát để hiển thị
+    private List<Song> songsFull; // Danh sách đầy đủ để tìm kiếm
+    private OnSongClickListener listener; // Listener cho sự kiện nhấp chuột
+    private OnSongLongClickListener longClickListener; // Listener cho sự kiện nhấn giữ
+    private Set<Integer> selectedSongIds = new HashSet<>(); // Set để theo dõi trạng thái chọn của từng bài hát dựa trên ID
 
+    // Giao diện cho sự kiện nhấn vào bài hát
     public interface OnSongClickListener {
         void onSongClick(Song song);
     }
 
+    // Giao diện cho sự kiện nhấn giữ vào bài hát
     public interface OnSongLongClickListener {
         void onSongLongClick(Song song);
     }
@@ -47,6 +51,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     public void onBindViewHolder(@NonNull SongViewHolder holder, int position) {
         Song song = songs.get(position);
         holder.bind(song);
+
+        // Kiểm tra xem bài hát có đang được chọn hay không và cập nhật màu nền
+        if (selectedSongIds.contains(song.getSong_id())) {
+            holder.itemView.setBackgroundColor(Color.LTGRAY); // Đã chọn
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE); // Không được chọn
+        }
     }
 
     // Phương thức để thiết lập OnSongLongClickListener
@@ -54,7 +65,14 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         this.longClickListener = listener;
     }
 
+    // Trả về danh sách các bài hát đã chọn
     public List<Song> getSelectedSongs() {
+        List<Song> selectedSongs = new ArrayList<>();
+        for (Song song : songs) {
+            if (selectedSongIds.contains(song.getSong_id())) {
+                selectedSongs.add(song);
+            }
+        }
         return selectedSongs;
     }
 
@@ -68,36 +86,36 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             tvArtist = itemView.findViewById(R.id.tv_artist);
             ivCover = itemView.findViewById(R.id.iv_song_cover);
 
+            // Sự kiện nhấn vào bài hát
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
                     Song clickedSong = songs.get(position);
-                    if (selectedSongs.contains(clickedSong)) {
-                        selectedSongs.remove(clickedSong); // Nếu bài hát đã được chọn, bỏ chọn nó
-                        itemView.setBackgroundColor(Color.WHITE); // Thay đổi màu nền để thể hiện trạng thái không chọn
+                    if (selectedSongIds.contains(clickedSong.getSong_id())) {
+                        selectedSongIds.remove(clickedSong.getSong_id()); // Bỏ chọn
+                        itemView.setBackgroundColor(Color.WHITE); // Trạng thái không chọn
                     } else {
-                        selectedSongs.add(clickedSong); // Chọn bài hát
-                        itemView.setBackgroundColor(Color.LTGRAY); // Thay đổi màu nền để thể hiện trạng thái được chọn
+                        selectedSongIds.add(clickedSong.getSong_id()); // Thêm vào danh sách đã chọn
+                        itemView.setBackgroundColor(Color.LTGRAY); // Trạng thái đã chọn
                     }
-                    listener.onSongClick(clickedSong); // Gọi lại callback khi người dùng click
+                    listener.onSongClick(clickedSong);
                 }
             });
 
+            // Sự kiện nhấn giữ vào bài hát
             itemView.setOnLongClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION && longClickListener != null) {
                     Song longClickedSong = songs.get(position);
-                    longClickListener.onSongLongClick(longClickedSong); // Gọi lại callback khi người dùng nhấn lâu
+                    longClickListener.onSongLongClick(longClickedSong);
                 }
                 return true;
             });
-
         }
 
         void bind(Song song) {
             tvTitle.setText(song.getTitle());
             tvArtist.setText(song.getArtistName());
-            // Tạm thời bỏ qua phần load ảnh cover
             ivCover.setImageResource(R.drawable.default_song_cover);
         }
     }
@@ -107,6 +125,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         return songs.size();
     }
 
+    // Cập nhật danh sách bài hát mới
     public void updateSongs(List<Song> newSongs) {
         this.songs = newSongs;
         notifyDataSetChanged();
@@ -119,14 +138,12 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         } else {
             List<Song> filteredList = new ArrayList<>();
             for (Song song : songsFull) {
-                if (song.getTitle().toLowerCase().contains(query.toLowerCase())) { // Tìm kiếm theo chữ cái xuất hiện trong tiêu đề
+                if (song.getTitle().toLowerCase().contains(query.toLowerCase())) { // Tìm kiếm theo tiêu đề
                     filteredList.add(song);
                 }
             }
-            songs = filteredList; // Cập nhật danh sách với các bài hát đã lọc
+            songs = filteredList;
         }
-        notifyDataSetChanged(); // Cập nhật RecyclerView
+        notifyDataSetChanged();
     }
-
-
 }

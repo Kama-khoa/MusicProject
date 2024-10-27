@@ -6,6 +6,7 @@ import com.example.music_project.database.GenreDao;
 import com.example.music_project.database.AlbumSongDao;
 import com.example.music_project.database.SongDao;
 import com.example.music_project.models.Album;
+import com.example.music_project.models.AlbumSong;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
 import com.example.music_project.models.PlaylistSong;
@@ -119,7 +120,7 @@ public class SongController {
     // Load songs for a specific album
     public void getSongsForAlbum(int albumId, OnSongsLoadedListener listener) {
         executorService.execute(() -> {
-            List<Song> songs = albumSongDao.getSongsByAlbumId(albumId);
+            List<Song> songs = songDao.getSongsByAlbumId(albumId);
             if (songs != null && !songs.isEmpty()) {
                 listener.onSongsLoaded(songs);
             } else {
@@ -204,6 +205,44 @@ public class SongController {
         });
     }
 
+    public void getSongsInAlbum(int AlbumId, Callback<List<Song>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Song> songs = songDao.getSongsByAlbumId(AlbumId);
+                callback.onSuccess(songs);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách bài hát trong album: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getAvailableAlbumSongs(int albumId, Callback<List<Song>> callback) {
+        executorService.execute(() -> {
+            try {
+                List<Song> songs = songDao.getAvailableAlbumSongs(albumId); // Gọi phương thức đã cập nhật trong SongDao
+                callback.onSuccess(songs);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy danh sách bài hát có sẵn: " + e.getMessage());
+            }
+        });
+    }
+
+    public void addSongsToAlbum(int albumId, List<Song> songs, Callback<Void> callback) {
+        executorService.execute(() -> {
+            try {
+                for (Song song : songs) {
+                    AlbumSong albumSong = new AlbumSong(albumId, song.getSong_id());
+                    // Insert the albumSong record into the database
+                    songDao.addSongToAlbum(albumSong);
+                }
+                // Notify success
+                callback.onSuccess(null);
+            } catch (Exception e) {
+                // Notify failure
+                callback.onError(e.getMessage());
+            }
+        });
+    }
 
     public interface OnArtistsLoadedListener {
         void onArtistsLoaded(List<Artist> artists);

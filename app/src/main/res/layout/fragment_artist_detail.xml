@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Ảnh và tên nghệ sĩ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:id="@+id/sv_album_search"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:background="#1B1B1B">
+
+        </SearchView>
+
+        <ImageButton
+            android:id="@+id/btn_setting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#000000"
+            android:contentDescription="@string/settings"
+            android:tint="#1B1B1B"
+            app:srcCompat="@drawable/ic_setting" />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:background="#000000">
 
         <ImageView
             android:id="@+id/ivArtistAvatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="centerCrop"
-            android:src="@drawable/artist_avatar" />
+            android:src="@drawable/artist_avatar"
+            android:tint="#FFFFFF" />
 
         <TextView
             android:id="@+id/tvArtistName"
@@ -28,7 +56,7 @@
             android:layout_marginTop="22dp"
             android:layout_toEndOf="@id/ivArtistAvatar"
             android:text="Tên nghệ sĩ"
-            android:textColor="@color/black"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -41,7 +69,7 @@
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/ivArtistAvatar"
             android:text="Ngày sinh"
-            android:textColor="#D0D0D0"
+            android:textColor="#A2A2A2"
             android:textSize="16sp" />
     </RelativeLayout>
 
@@ -51,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Phổ biến"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -68,8 +96,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Album"
-        android:textColor="@color/black"
+        android:text="Album "
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -77,8 +105,8 @@
         android:id="@+id/rvAlbums"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
         android:overScrollMode="never"
         android:scrollbars="horizontal" />
 
@@ -88,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Tiểu sử"
-        android:textColor="@color/black"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -97,6 +125,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nội dung tiểu sử ca sĩ sẽ hiển thị ở đây"
-        android:textColor="#404040"
+        android:textColor="#A2A2A2"
         android:textSize="14sp" />
 </LinearLayout>

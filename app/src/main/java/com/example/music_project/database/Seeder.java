@@ -92,11 +92,11 @@ public class Seeder {
             db.genreDao().insert(genre5);
 
             // Dữ liệu mẫu cho bảng Album
-            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
-            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"),"G:\\Code\\MusicProject1\\app\\src\\main\\res\\drawable\\sample_album_cover.png");
+            Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"));
+            Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"));
+            Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"));
+            Album album4 = new Album("Album 4", 4, 1,  format.parse("2023-04-01"));
+            Album album5 = new Album("Album 5", 5, 1,  format.parse("2023-05-01"));
 
             db.albumDao().insert(album1);
             db.albumDao().insert(album2);
@@ -107,33 +107,33 @@ public class Seeder {
 
 
             // Dữ liệu mẫu cho bảng Song
-            Song song1 = new Song("À Lôi", 1, 1, 1, 210, format.parse("2023-01-01"), "res/raw/a_loi.mp3");
-            Song song2 = new Song("Ánh Sao Và Bầu Trời", 2, 2, 1, 200, format.parse("2023-01-02"), "res/raw/anh_sao_va_bau_troi.mp3");
-            Song song3 = new Song("Anh Thích Em Như Vậy", 3, 3, 1, 230, format.parse("2023-01-03"), "res/raw/anh_thich_em_nhu_vay.mp3");
-            Song song4 = new Song("Cẩm Tú Cầu", 4, 4, 1, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3");
-            Song song5 = new Song("Chân Ái", 5, 5, 1, 220, format.parse("2023-01-05"), "res/raw/chan_ai.mp3");
-            Song song6 = new Song("Chìm Sâu", 6, 1, 1, 215, format.parse("2023-01-06"), "res/raw/chim_sau.mp3");
-            Song song7 = new Song("Chịu Cách Mình Nói Thua", 7, 1, 1, 210, format.parse("2023-01-07"), "res/raw/chiu_cach_minh_noi_thua.mp3");
-            Song song8 = new Song("Chợt Nghe Bước Em Về", 8, 1, 1, 240, format.parse("2023-01-08"), "res/raw/chot_nghe_buoc_em_ve.mp3");
-            Song song9 = new Song("Đợi Đến Tháng 13", 9, 3, 1, 245, format.parse("2023-01-09"), "res/raw/doi_den_thang_13.mp3");
-            Song song10 = new Song("Đóng Cửa, Tắt Đèn", 10, 3, 1, 210, format.parse("2023-01-10"), "res/raw/dong_cua_tat_den.mp3");
-            Song song11 = new Song("Em Xinh", 11, 4, 1, 220, format.parse("2023-01-11"), "res/raw/em_xinh.mp3");
-            Song song12 = new Song("Hà Nội", 12, 5, 1, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3");
-            Song song13 = new Song("Hãy Trao Cho Anh", 13, 3, 1, 210, format.parse("2023-01-13"), "res/raw/hay_trao_cho_anh.mp3");
-            Song song14 = new Song("Hoa Nở Bên Đường", 14, 4, 1, 215, format.parse("2023-01-14"), "res/raw/hoa_no_ben_duong.mp3");
-            Song song15 = new Song("Hư Không", 15, 5, 1, 260, format.parse("2023-01-15"), "res/raw/hu_khong.mp3");
-            Song song16 = new Song("Không Thể Say", 16, 1, 1, 230, format.parse("2023-01-16"), "res/raw/khong_the_say.mp3");
-            Song song17 = new Song("Lời Tạm Biệt Chưa Nói", 17, 1, 1, 240, format.parse("2023-01-17"), "res/raw/loi_tam_biet_chua_noi.mp3");
-            Song song18 = new Song("Nâng Chén Tiêu Sầu", 18, 1, 1, 250, format.parse("2023-01-18"), "res/raw/nang_chen_tieu_sau.mp3");
-            Song song19 = new Song("Nắng Có Mang Em Về", 19, 1, 1, 255, format.parse("2023-01-19"), "res/raw/nang_co_mang_em_ve.mp3");
-            Song song20 = new Song("Như Anh Đã Thấy Em", 20, 2, 1, 245, format.parse("2023-01-20"), "res/raw/nhu_anh_da_thay_em.mp3");
-            Song song21 = new Song("Những Kẻ Mộng Mơ", 21, 2, 1, 300, format.parse("2023-01-21"), "res/raw/nhung_ke_mong_mo.mp3");
-            Song song22 = new Song("Sau Lời Từ Khước", 22, 2, 1, 260, format.parse("2023-01-22"), "res/raw/sau_loi_tu_khuoc.mp3");
-            Song song23 = new Song("Suốt Đêm", 23, 3, 1, 225, format.parse("2023-01-23"), "res/raw/suot_dem.mp3");
-            Song song24 = new Song("Thương Ly Biệt", 24, 4, 1, 230, format.parse("2023-01-24"), "res/raw/thuong_ly_biet.mp3");
-            Song song25 = new Song("Thuyền Không Bến Đợi", 25, 5, 1, 240, format.parse("2023-01-25"), "res/raw/thuyen_khong_ben_doi.mp3");
-            Song song26 = new Song("Từng Quen", 26, 2, 1, 240, format.parse("2023-01-26"), "res/raw/tung_quen.mp3");
-            Song song27 = new Song("Waiting For You", 27, 2, 1, 240, format.parse("2023-01-27"), "res/raw/waiting_for_you.mp3");
+            Song song1 = new Song("À Lôi", 1, 1, 210, format.parse("2023-01-01"), "res/raw/a_loi.mp3");
+            Song song2 = new Song("Ánh Sao Và Bầu Trời", 2, 2, 200, format.parse("2023-01-02"), "res/raw/anh_sao_va_bau_troi.mp3");
+            Song song3 = new Song("Anh Thích Em Như Vậy", 3, 3, 230, format.parse("2023-01-03"), "res/raw/anh_thich_em_nhu_vay.mp3");
+            Song song4 = new Song("Cắm Tủ Cầu", 4, 4, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3");
+            Song song5 = new Song("Chân Ái", 5, 5, 220, format.parse("2023-01-05"), "res/raw/chan_ai.mp3");
+            Song song6 = new Song("Chim Sâu", 6, 1, 215, format.parse("2023-01-06"), "res/raw/chim_sau.mp3");
+            Song song7 = new Song("Chịu Cách Mình Nói Thua", 7, 1,  210, format.parse("2023-01-07"), "res/raw/chiu_cach_minh_noi_thua.mp3");
+            Song song8 = new Song("Chợt Nghe Bước Em Về", 8, 1, 240, format.parse("2023-01-08"), "res/raw/chot_nghe_buoc_em_ve.mp3");
+            Song song9 = new Song("Đội Đèn Tháng 13", 9, 3, 245, format.parse("2023-01-09"), "res/raw/doi_den_thang_13.mp3");
+            Song song10 = new Song("Đóng Cửa, Tắt Đèn", 10, 3, 210, format.parse("2023-01-10"), "res/raw/dong_cua_tat_den.mp3");
+            Song song11 = new Song("Em Xinh", 11, 4, 220, format.parse("2023-01-11"), "res/raw/em_xinh.mp3");
+            Song song12 = new Song("Hà Nội", 12, 5, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3");
+            Song song13 = new Song("Hãy Trao Cho Anh", 13, 3, 210, format.parse("2023-01-13"), "res/raw/hay_trao_cho_anh.mp3");
+            Song song14 = new Song("Hoa Nở Bên Đường", 14, 4, 215, format.parse("2023-01-14"), "res/raw/hoa_no_ben_duong.mp3");
+            Song song15 = new Song("Hư Không", 15, 5, 260, format.parse("2023-01-15"), "res/raw/hu_khong.mp3");
+            Song song16 = new Song("Không Thể Say", 16, 1, 230, format.parse("2023-01-16"), "res/raw/khong_the_say.mp3");
+            Song song17 = new Song("Lời Tạm Biệt Chưa Nói", 17, 1, 240, format.parse("2023-01-17"), "res/raw/loi_tam_biet_chua_noi.mp3");
+            Song song18 = new Song("Nâng Chén Tiêu Sầu", 18, 1, 250, format.parse("2023-01-18"), "res/raw/nang_chen_tieu_sau.mp3");
+            Song song19 = new Song("Nàng Có Mang Em Về", 19, 1, 255, format.parse("2023-01-19"), "res/raw/nang_co_mang_em_ve.mp3");
+            Song song20 = new Song("Như Anh Đã Thấy Em", 20, 2, 245, format.parse("2023-01-20"), "res/raw/nhu_anh_da_thay_em.mp3");
+            Song song21 = new Song("Những Kẻ Mộng Mơ", 21, 2, 300, format.parse("2023-01-21"), "res/raw/nhung_ke_mong_mo.mp3");
+            Song song22 = new Song("Sau Lời Từ Khước", 22, 2, 260, format.parse("2023-01-22"), "res/raw/sau_loi_tu_khuoc.mp3");
+            Song song23 = new Song("Suốt Đêm", 23, 3, 225, format.parse("2023-01-23"), "res/raw/suot_dem.mp3");
+            Song song24 = new Song("Thương Ly Biệt", 24, 4, 230, format.parse("2023-01-24"), "res/raw/thuong_ly_biet.mp3");
+            Song song25 = new Song("Thuyền Không Bến Đợi", 25, 5, 240, format.parse("2023-01-25"), "res/raw/thuyen_khong_ben_doi.mp3");
+            Song song26 = new Song("Từng Quen", 26, 2, 240, format.parse("2023-01-26"), "res/raw/tung_quen.mp3");
+            Song song27 = new Song("Waiting For You", 27, 2, 240, format.parse("2023-01-27"), "res/raw/waiting_for_you.mp3");
             db.songDao().insert(song1);
             db.songDao().insert(song2);
             db.songDao().insert(song3);

@@ -1,7 +1,9 @@
 package com.example.music_project.views.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,10 +31,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.controllers.AlbumController;
 import com.example.music_project.controllers.ArtistController;
@@ -84,6 +88,7 @@ public class LibraryFragment extends Fragment {
     private List<Album> albumList = new ArrayList<>();
     private List<Artist> artistList = new ArrayList<>();
     private Handler mainHandler;
+    private Uri selectedImageUri = null;
     private static final int PICK_IMAGE_REQUEST = 1; // Define the request code
 
     @Override
@@ -464,12 +469,17 @@ public class LibraryFragment extends Fragment {
         Spinner spinnerGenre = dialogView.findViewById(R.id.spinner_genre);
         EditText edtReleaseDate = dialogView.findViewById(R.id.edt_release_date);
         ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_cover);
-        Uri selectedImageUri = null;
+        // Set default album cover
+        Glide.with(this)
+                .load(R.drawable.sample_album_cover)
+                .error(R.drawable.default_album_art)
+                .into(imgAlbumCover);
+
         // Pre-fill the release date EditText with the current date in dd-MM-yyyy format
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         edtReleaseDate.setText(currentDate);
 
-        // Set onClickListener for the album cover ImageView to select an image
+        // Set onClickListener for album cover selection
         imgAlbumCover.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
@@ -520,12 +530,18 @@ public class LibraryFragment extends Fragment {
                             releaseDate = new Date();
                         }
 
-                        Album album = new Album(albumName, userId, genreId, releaseDate, null);
+                        Album album = new Album(albumName, userId, genreId, releaseDate);
 
                         // Nếu selectedImageUri không phải là null, thì lưu ảnh
                         if (selectedImageUri != null) {
                             String albumCoverPath = saveImageToStorage(selectedImageUri);
                             album.setCover_image_path(albumCoverPath);
+
+                            // Load selected image into ImageView using Glide
+                            Glide.with(this)
+                                    .load(selectedImageUri)
+                                    .error(R.drawable.default_album_art)
+                                    .into(imgAlbumCover);
                         }
 
                         // Call AlbumController to create the album
@@ -556,12 +572,6 @@ public class LibraryFragment extends Fragment {
                 .show();
     }
 
-    // Method to save image to storage (simplified)
-    private String saveImageToStorage(Uri imageUri) {
-        // Implement logic to save the image and return the file path
-        return imageUri.getPath(); // Just a placeholder, handle saving the image properly
-    }
-
     private void loadAlbumsByUserID(int userId) {
         albumController.getAlbumsByUserID(userId, new AlbumController.OnAlbumsLoadedListener() {
             @Override
@@ -578,6 +588,11 @@ public class LibraryFragment extends Fragment {
                 Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String saveImageToStorage(Uri imageUri) {
+        // Implement logic to save the image and return the file path
+        return imageUri.getPath(); // Just a placeholder, handle saving the image properly
     }
 
     private void loadAlbumDetail(int albumId, String albumName, int artistName, int genreName) {

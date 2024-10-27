@@ -15,6 +15,7 @@
             android:layout_width="365dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#1B1B1B"
             android:queryHint="Tìm kiếm bài hát" />
 
         <ImageView
@@ -22,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="right"
-            android:src="@drawable/ic_more_vert" />
+            android:src="@drawable/ic_more_vert"
+            android:tint="#1B1B1B" />
     </LinearLayout>
 
 
@@ -30,10 +32,11 @@
         android:id="@+id/img_playlist_cover"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="5dp"
         android:contentDescription="Playlist Cover Image"
         android:scaleType="centerCrop"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_perm_identity" />
+        android:src="@drawable/ic_perm_identity"
+        android:tint="#FFFFFF" />
 
     <TextView
         android:id="@+id/tv_playlist_name"
@@ -44,6 +47,7 @@
         android:hint="Playlist Name"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -77,7 +81,6 @@
             android:backgroundTint="#1DB954"
             android:fontFamily="sans-serif"
             android:text="Thêm"
-            android:textColor="@color/black"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -94,16 +97,16 @@
         android:hint="mô tả "/>
 
     <TextView
-        android:text="Danh sách bài hát: "
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#716F6F"
         android:fontFamily="sans-serif"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:text="Danh sách bài hát: "
+        android:textColor="#A6A6A6"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 
 
