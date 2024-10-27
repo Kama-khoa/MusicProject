@@ -9,7 +9,7 @@
     <!-- Album Cover -->
 
     <ImageView
-        android:id="@+id/img_album_cover"
+        android:id="@+id/img_album_square_cover"
         android:layout_width="214dp"
         android:layout_height="151dp"
         android:layout_gravity="center"

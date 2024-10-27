@@ -1,9 +1,7 @@
 package com.example.music_project.views.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,26 +10,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,14 +38,11 @@ import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumWithDetails;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
-import com.example.music_project.models.Artist;
 import com.example.music_project.models.Playlist;
-import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.SongActivity;
 import com.example.music_project.views.adapters.AlbumAdapter;
 import com.example.music_project.views.adapters.AlbumWithDetailsAdapter;
-import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.ArtistAdapter;
 import com.example.music_project.views.adapters.PlaylistAdapter;
 import com.example.music_project.views.adapters.SongAdapter;
@@ -288,8 +276,7 @@ public class LibraryFragment extends Fragment {
                 // Cập nhật adapter
                 if (artistAdapter == null) {
                     artistAdapter = new ArtistAdapter(artistList,
-                            artist -> loadArtistDetail(artist.getArtist_id(), artist.getArtist_name(),
-                                    artist.getBio(), artist.getDate_of_birth()) // Load chi tiết nghệ sĩ
+                            artist -> loadArtistDetail(artist.getArtist_id()) // Load chi tiết nghệ sĩ
                     );
                     rvLibraryItems.setAdapter(artistAdapter);
                 } else {
@@ -468,7 +455,7 @@ public class LibraryFragment extends Fragment {
         EditText edtAlbumName = dialogView.findViewById(R.id.edt_album_name);
         Spinner spinnerGenre = dialogView.findViewById(R.id.spinner_genre);
         EditText edtReleaseDate = dialogView.findViewById(R.id.edt_release_date);
-        ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_cover);
+        ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_square_cover);
         // Set default album cover
         Glide.with(this)
                 .load(R.drawable.sample_album_cover)
@@ -695,9 +682,9 @@ public class LibraryFragment extends Fragment {
                 .show();
     }
 
-    private void loadArtistDetail(int artistId, String artistName, String bio, Date dateOfBirth) {
+    private void loadArtistDetail(int artistId) {
         // Khởi tạo Fragment chi tiết nghệ sĩ
-        ArtistDetailFragment artistDetailFragment = ArtistDetailFragment.newInstance(artistId, artistName, bio, dateOfBirth);
+        ArtistDetailFragment artistDetailFragment = ArtistDetailFragment.newInstance(artistId);
 
         // Thay thế Fragment hiện tại bằng Fragment chi tiết nghệ sĩ
         getActivity().getSupportFragmentManager().beginTransaction()

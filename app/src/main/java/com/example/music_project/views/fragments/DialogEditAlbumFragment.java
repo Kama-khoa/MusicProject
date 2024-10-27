@@ -17,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -83,7 +82,7 @@ public class DialogEditAlbumFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_edit_album, container, false);
 
-        imgAlbumCover = view.findViewById(R.id.img_album_cover);
+        imgAlbumCover = view.findViewById(R.id.img_album_square_cover);
         etAlbumTitle = view.findViewById(R.id.et_album_title);
         rvSongs = view.findViewById(R.id.rv_album_songs);
         Button btnSave = view.findViewById(R.id.btn_album_update); // Nút lưu
@@ -100,17 +99,9 @@ public class DialogEditAlbumFragment extends DialogFragment {
 
         loadAlbumDetails(albumId);
 
-        songAdapter = new SongAdapter(songList, song -> Toast.makeText(getContext(), "Selected: " + song.getTitle(), Toast.LENGTH_SHORT).show());
-
-//        songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
-//            @Override
-//            public void onSongLongClick(Song song) {
-//                // Hiển thị hộp thoại xác nhận khi nhấn lâu
-//                showDeleteSongConfirmationDialog(song);
-//            }
-//        });
-
-        rvSongs.setAdapter(songAdapter);
+//        songAdapter = new SongAdapter(songList, song -> Toast.makeText(getContext(), "Selected: " + song.getTitle(), Toast.LENGTH_SHORT).show());
+//
+//        rvSongs.setAdapter(songAdapter);
 
         imgAlbumCover.setOnClickListener(v -> selectImage());
 
@@ -148,7 +139,7 @@ public class DialogEditAlbumFragment extends DialogFragment {
                                 .into(imgAlbumCover);
                     }
                     // Tải danh sách bài hát
-                    loadSongsInAlbum(albumId);
+//                    loadSongsInAlbum(albumId);
                 }
             }
 
@@ -235,34 +226,6 @@ public class DialogEditAlbumFragment extends DialogFragment {
                 .setNegativeButton("Không", null)
                 .show();
     }
-//
-//    private void showDeleteSongConfirmationDialog(Song song) {
-//        new AlertDialog.Builder(requireContext())
-//                .setTitle("Xóa Bài Hát")
-//                .setMessage("Bạn có chắc chắn muốn xóa bài hát \"" + song.getTitle() + "\" khỏi album không?")
-//                .setPositiveButton("Có", (dialog, which) -> {
-//                    deleteSongFromAlbum(song);
-//                    loadSongsInAlbum(albumId);
-//                })
-//                .setNegativeButton("Không", null)
-//                .show();
-//    }
-//
-//    private void deleteSongFromAlbum(Song song) {
-//        int albumId = getArguments().getInt("album_id");
-//        albumController.deleteSongFromAlbum(albumId, song.getSong_id(), new AlbumController.OnSongDeletedListener() {
-//            @Override
-//            public void onSongDeleted(Song song) {
-//                Toast.makeText(getContext(), "Đã xóa bài hát khỏi playlist", Toast.LENGTH_SHORT).show();
-//                loadSongsInAlbum(albumId);
-//            }
-//
-//            @Override
-//            public void onFailure(String error) {
-//                Toast.makeText(getContext(), "Lỗi khi xóa bài hát: " + error, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     public void setOnAlbumEditedListener(OnAlbumEditedListener listener) {
         this.onAlbumEditedListener = listener;

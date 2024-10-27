@@ -85,7 +85,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             tvAlbumTitle = itemView.findViewById(R.id.tv_album_title);
             tvAlbumArtist = itemView.findViewById(R.id.tv_album_artist);
             tvAlbumReleaseDate = itemView.findViewById(R.id.tv_album_release_date);
-            imgAlbumCover = itemView.findViewById(R.id.img_album_cover);
+            imgAlbumCover = itemView.findViewById(R.id.img_album_square_cover);
         }
         public void bind(Album album, OnAlbumClickListener listener, OnAlbumLongClickListener longClickListener){
             Log.d("AlbumAdapter", "Album Title: " + album.getTitle());

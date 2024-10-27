@@ -1,0 +1,108 @@
+<!-- edit_artist.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Avatar Section -->
+    <ImageView
+        android:id="@+id/image_artist_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/artist_avatar"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:background="?attr/selectableItemBackground" />
+
+    <!-- Artist Name -->
+    <EditText
+        android:id="@+id/et_artist_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:hint="Tên ca sĩ"
+        android:inputType="text"
+        android:padding="8dp" />
+
+    <!-- Date of Birth with Date Picker Icon -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_artist_dob"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="Ngày sinh"
+            android:inputType="date"
+            android:padding="8dp" />
+
+        <ImageButton
+            android:id="@+id/btn_artist_date"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Chọn ngày"
+            android:src="@android:drawable/ic_menu_today" />
+    </LinearLayout>
+
+    <!-- Bio Section in a Compact Style -->
+    <EditText
+        android:id="@+id/et_artist_bio"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@android:color/transparent"
+        android:gravity="top|start"
+        android:hint="Tiểu sử"
+        android:inputType="textMultiLine"
+        android:padding="8dp" />
+
+    <!-- Button Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_artist_delete"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#E91A0B"
+            android:text="Xóa"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_artist_save"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#1DB954"
+            android:text="Lưu"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_artist_cancel"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#7A7A7A"
+            android:text="Hủy"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

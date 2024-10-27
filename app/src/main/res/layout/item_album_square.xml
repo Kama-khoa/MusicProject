@@ -6,11 +6,41 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/img_album_square_cover"
         android:layout_width="185dp"
         android:layout_height="185dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/default_album_art"
-        tools:layout_editor_absoluteX="3dp" />
+        app:srcCompat="@drawable/default_album_art" />
+
+    <TextView
+        android:id="@+id/tv_album_square_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingLeft="10dp"
+        android:text="Artist"
+        android:textColor="#A2A2A2"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/img_album_square_cover"
+        app:layout_constraintTop_toBottomOf="@+id/tv_album_square_title" />
+
+    <TextView
+        android:id="@+id/tv_album_square_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="32dp"
+        android:paddingLeft="10dp"
+        android:text="Album Title"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/img_album_square_cover"
+        app:layout_constraintEnd_toEndOf="@+id/img_album_square_cover" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

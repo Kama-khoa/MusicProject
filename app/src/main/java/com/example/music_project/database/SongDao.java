@@ -22,7 +22,7 @@ public interface SongDao {
     @Query("SELECT * FROM Song WHERE song_id = :songId")
     Song getSongById(int songId);
 
-    @Query("SELECT s.*, a.artist_name as artistName FROM Song s " +
+    @Query("SELECT s.* FROM Song s " +
             "JOIN Artist a ON s.artist_id = a.artist_id " +
             "WHERE s.artist_id = :artist")
     List<Song> getSongsByArtist(int artist);

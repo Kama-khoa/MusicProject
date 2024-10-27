@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Artist;
@@ -87,18 +88,19 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         }
 
         public void bind(Artist artist, OnArtistClickListener listener) {
-            Log.d("ArtistAdapter", "Artist Name: " + artist.getArtist_name());
             tvArtistName.setText(artist.getArtist_name());
             // Lấy chỉ câu đầu tiên từ bio
             String bio = artist.getBio();
             String[] sentences = bio.split("\\. "); // Tách các câu bằng dấu chấm và khoảng trắng
             String firstSentence = sentences.length > 0 ? sentences[0] : ""; // Lấy câu đầu tiên
-
             tvArtistBio.setText(firstSentence); // Hiển thị câu đầu tiên
-
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDob = dateFormat.format(artist.getDate_of_birth()); // Chắc chắn rằng artist có phương thức getDateOfBirth()
             tvArtistDob.setText(formattedDob);
+            Glide.with(itemView.getContext())
+                    .load(artist.getAvatar())
+                    .error(R.drawable.artist_avatar)
+                    .into(imgArtistAvatar);
 
             // Xử lý sự kiện nhấn vào một nghệ sĩ
             itemView.setOnClickListener(v -> listener.onArtistClick(artist));

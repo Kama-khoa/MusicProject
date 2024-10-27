@@ -82,7 +82,7 @@ public class AlbumController {
                 if (songs != null && !songs.isEmpty()) {
                     listener.onSongsLoaded(songs);
                 } else {
-                    listener.onFailure("No songs found in this album.");
+                    listener.onFailure("Album chưa có bài hát!");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -101,7 +101,7 @@ public class AlbumController {
                 new Handler(Looper.getMainLooper()).post(() -> listener.onAlbumLoaded(album));
             } else {
                 // Trả về thông báo lỗi nếu không tìm thấy
-                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album not found"));
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album không thể tìm thấy!"));
             }
         });
     }

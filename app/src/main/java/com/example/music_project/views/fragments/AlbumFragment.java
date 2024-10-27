@@ -1,12 +1,7 @@
 package com.example.music_project.views.fragments;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +22,6 @@ import com.example.music_project.R;
 import com.example.music_project.controllers.AlbumController;
 import com.example.music_project.controllers.ArtistController;
 import com.example.music_project.controllers.GenreController;
-import com.example.music_project.controllers.PlaylistController;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
@@ -51,6 +45,7 @@ public class AlbumFragment extends Fragment {
     private RecyclerView rvSongs;
     private SongAdapter songAdapter;
     private List<Song> songList = new ArrayList<>();
+    private List<Song> fullSongList = new ArrayList<>();
     private DialogEditAlbumFragment dialogEditAlbumFragment;
     private TextView tvAlbumName;
     private ImageView imgAlbumCover;
@@ -78,71 +73,82 @@ public class AlbumFragment extends Fragment {
         rvSongs = view.findViewById(R.id.rv_album_songs);
         rvSongs.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Lấy albumId, albumName, artistName và genreName từ arguments và hiển thị
-        int albumId = getArguments().getInt(ARG_ALBUM_ID);
-        String albumName = getArguments().getString(ARG_ALBUM_NAME);
-        int artistId = getArguments().getInt(ARG_ARTIST_ID);
-        int genreId = getArguments().getInt(ARG_GENRE_ID);
+        if(getArguments() != null) {
+            // Lấy albumId, albumName, artistName và genreName từ arguments và hiển thị
+            int albumId = getArguments().getInt(ARG_ALBUM_ID);
+            String albumName = getArguments().getString(ARG_ALBUM_NAME);
+            int artistId = getArguments().getInt(ARG_ARTIST_ID);
+            int genreId = getArguments().getInt(ARG_GENRE_ID);
 
-        imgAlbumCover = view.findViewById(R.id.img_album_cover);
-        // Hiển thị tên album, nghệ sĩ và thể loại trong TextView
-        tvAlbumName = view.findViewById(R.id.tv_album_title);
-        tvAlbumName.setText(albumName);
-        // Tải tên nghệ sĩ và thể loại
-        loadArtistName(artistId, view);
-        loadGenreName(genreId, view);
+            imgAlbumCover = view.findViewById(R.id.img_album_square_cover);
+            // Hiển thị tên album, nghệ sĩ và thể loại trong TextView
+            tvAlbumName = view.findViewById(R.id.tv_album_square_title);
+            tvAlbumName.setText(albumName);
+            // Tải tên nghệ sĩ và thể loại
+            loadArtistName(artistId, view);
+            loadGenreName(genreId, view);
 
-        loadAlbumDetails(albumId);
-        ImageButton btn_setting = view.findViewById(R.id.btn_setting);
-        btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
+            loadAlbumDetails(albumId);
+            loadSongsInAlbum(albumId);
+            ImageButton btn_setting = view.findViewById(R.id.btn_setting);
+            btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
 
-        songAdapter = new SongAdapter(songList, song ->
-                Toast.makeText(getContext(), "Đã chọn: " + song.getTitle(), Toast.LENGTH_SHORT).show()
-        );
+            songAdapter = new SongAdapter(songList, song ->
+                    Toast.makeText(getContext(), "Đã chọn: " + song.getTitle(), Toast.LENGTH_SHORT).show()
+            );
 
-        songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
-            @Override
-            public void onSongLongClick(Song song) {
-                // Hiển thị hộp thoại xác nhận khi nhấn lâu
-                showDeleteSongConfirmationDialog(song);
-            }
-        });
+            songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
+                @Override
+                public void onSongLongClick(Song song) {
+                    // Hiển thị hộp thoại xác nhận khi nhấn lâu
+                    showDeleteSongConfirmationDialog(song);
+                }
+            });
 
-        rvSongs.setAdapter(songAdapter);
+            rvSongs.setAdapter(songAdapter);
 
-        FloatingActionButton btn_play = view.findViewById(R.id.btn_album_play);
-        Button btn_add_song = view.findViewById(R.id.btn_add_song);
+            FloatingActionButton btn_play = view.findViewById(R.id.btn_album_play);
+            Button btn_add_song = view.findViewById(R.id.btn_add_song);
 
-        btn_add_song.setOnClickListener(v -> {
+            btn_add_song.setOnClickListener(v -> {
 //          Create an instance of AddSongToAlbumFragment
-            AddSongToAlbumFragment addSongToAlbumFragment = AddSongToAlbumFragment.newInstance(albumId);
+                AddSongToAlbumFragment addSongToAlbumFragment = AddSongToAlbumFragment.newInstance(albumId);
 
 //          Replace the current fragment with AddSongToAlbumFragment
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, addSongToAlbumFragment) // Replace with your container ID
-                    .addToBackStack(null) // Add to back stack so the user can navigate back
-                    .commit();
-        });
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, addSongToAlbumFragment) // Replace with your container ID
+                        .addToBackStack(null) // Add to back stack so the user can navigate back
+                        .commit();
+            });
 
-        // Khởi tạo SearchView
-        SearchView searchView = view.findViewById(R.id.sv_album_search); // Thay đổi ID nếu cần
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+            // Khởi tạo SearchView
+            SearchView searchView = view.findViewById(R.id.sv_album_search); // Thay đổi ID nếu cần
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                songAdapter.filter(newText); // Gọi phương thức filter từ adapter
-                return true;
-            }
-        });
-
-        // Tải danh sách bài hát
-        loadSongsInAlbum(albumId);
-
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    filterSongs(newText); // Gọi phương thức filter từ adapter
+                    return true;
+                }
+            });
+        }
         return view;
+    }
+
+    private void filterSongs(String query) {
+        List<Song> filteredList = new ArrayList<>();
+        for (Song song : fullSongList) {
+            if (song.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(song);
+            }
+        }
+        songList.clear();
+        songList.addAll(filteredList);
+        songAdapter.notifyDataSetChanged();
     }
 
     private void loadAlbumDetails(int albumId) {
@@ -161,14 +167,12 @@ public class AlbumFragment extends Fragment {
                     } else {
                         imgAlbumCover.setImageResource(R.drawable.default_album_art);
                     }
-
-                    loadSongsInAlbum(albumId);
                 }
             }
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(getContext(), "Failed to load album: " + error,
+                Toast.makeText(getContext(), error,
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -180,6 +184,8 @@ public class AlbumFragment extends Fragment {
             @Override
             public void onSongsLoaded(List<Song> songs) {
                 if (songs != null && !songs.isEmpty()) {
+                    fullSongList.clear();
+                    fullSongList.addAll(songs);
                     songList.clear();
                     songList.addAll(songs);
                     songAdapter.notifyDataSetChanged(); // Cập nhật adapter
@@ -193,7 +199,7 @@ public class AlbumFragment extends Fragment {
                 // Switch to the main thread to show the Toast
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
-                        Toast.makeText(getContext(), "Failed to load album: " + error, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),  error, Toast.LENGTH_SHORT).show();
                     });
                 }
             }
@@ -222,7 +228,7 @@ public class AlbumFragment extends Fragment {
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(getContext(), "Failed to load artist: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),  error, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -21,13 +21,13 @@
         </SearchView>
 
         <ImageButton
-            android:id="@+id/btn_setting"
+            android:id="@+id/btn_artist_setting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#000000"
             android:contentDescription="@string/settings"
-            android:tint="#1B1B1B"
+            app:tint="#1B1B1B"
             app:srcCompat="@drawable/ic_setting" />
 
     </LinearLayout>
@@ -42,10 +42,8 @@
             android:id="@+id/ivArtistAvatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:backgroundTint="#FFFFFF"
             android:scaleType="centerCrop"
-            android:src="@drawable/artist_avatar"
-            android:tint="#FFFFFF" />
+            android:src="@drawable/artist_avatar" />
 
         <TextView
             android:id="@+id/tvArtistName"

@@ -10,6 +10,7 @@ import com.example.music_project.models.Album;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Song;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -85,6 +86,52 @@ public class ArtistController {
                 listener.onFailure("Không tìm thấy nghệ sĩ với ID: " + artistId);
             }
         });
+    }
+
+    // Method to update an artist's information
+    public void updateArtist(int artistId, String name, Date dob, String bio, String avatarPath, OnArtistUpdatedListener listener) {
+        executorService.execute(() -> {
+            Artist artist = database.artistDao().getArtistById(artistId); // Tìm ca sĩ theo ID
+            if (artist != null) {
+                artist.setArtist_name(name);
+                artist.setDate_of_birth(dob);
+                artist.setBio(bio);
+                artist.setAvatar(avatarPath);
+                database.artistDao().update(artist); // Cập nhật ca sĩ trong cơ sở dữ liệu
+
+                // Gọi lại listener khi cập nhật thành công
+                new Handler(Looper.getMainLooper()).post(listener::onSuccess);
+            } else {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Không tìm thấy ca sĩ"));
+            }
+        });
+    }
+
+
+    // Method to delete an artist
+    public void deleteArtist(int artistId, OnArtistDeletedListener listener) {
+        executorService.execute(() -> {
+            Artist artist = database.artistDao().getArtistById(artistId); // Tìm ca sĩ theo ID
+            if (artist != null) {
+                database.artistDao().delete(artist); // Xóa ca sĩ trong cơ sở dữ liệu
+
+                // Gọi lại listener khi xóa thành công
+                new Handler(Looper.getMainLooper()).post(listener::onSuccess);
+            } else {
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Không tìm thấy ca sĩ"));
+            }
+        });
+    }
+
+    // Listener interfaces for update and delete operations
+    public interface OnArtistUpdatedListener {
+        void onSuccess();
+        void onFailure(String error);
+    }
+
+    public interface OnArtistDeletedListener {
+        void onSuccess();
+        void onFailure(String error);
     }
 
     // Listener interfaces
