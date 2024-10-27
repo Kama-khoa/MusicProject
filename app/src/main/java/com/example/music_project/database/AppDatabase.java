@@ -10,10 +10,10 @@ import androidx.room.TypeConverters;
 
 import com.example.music_project.models.*;
 
-@Database(entities = {User.class, Artist.class, Album.class, Genre.class, Song.class, Playlist.class, PlaylistSong.class, Favourite.class, History.class, AlbumSong.class, PlayHistory.class}, version = 12)
+@Database(entities = {User.class, Artist.class, Album.class, Genre.class, Song.class, Playlist.class, PlaylistSong.class, Favourite.class,  AlbumSong.class, PlayHistory.class}, version = 14)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME = "music_app_database_13";
+    private static final String DATABASE_NAME = "music_app_database_14";
 
     private static volatile AppDatabase instance;
 
@@ -25,7 +25,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaylistDao playlistDao();
     public abstract PlaylistSongDao playlistSongDao();
     public abstract FavouriteDao favouriteDao();
-    public abstract HistoryDao historyDao();
     public abstract AlbumSongDao albumSongDao();
     public abstract PlayHistoryDao playHistoryDao();
 
