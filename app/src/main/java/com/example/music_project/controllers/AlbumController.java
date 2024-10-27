@@ -30,7 +30,7 @@ public class AlbumController {
         executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void createAlbum(int userId, Album album, final OnAlbumCreatedListener listener) {
+    public void createAlbum( Album album, final OnAlbumCreatedListener listener) {
         executorService.execute(() -> {
             // Chèn album vào database
             long albumId = database.albumDao().insert(album);

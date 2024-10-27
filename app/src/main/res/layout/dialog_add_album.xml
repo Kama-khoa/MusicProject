@@ -19,22 +19,28 @@
     <EditText
         android:id="@+id/edt_album_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Tên album mới"
         android:inputType="text" />
 
     <!-- Thể loại (Spinner) -->
     <Spinner
+        android:id="@+id/spinner_artist"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
         android:id="@+id/spinner_genre"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"/>
+        android:layout_height="50dp"
+        android:spinnerMode="dropdown" />
 
     <!-- Ngày phát hành (cho phép tự động nhập hoặc người dùng tự chọn) -->
     <EditText
         android:id="@+id/edt_release_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Ngày phát hành (dd-MM-yyyy)"
         android:inputType="date"
         android:paddingTop="8dp"

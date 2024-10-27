@@ -14,25 +14,6 @@
         android:queryHint="Tìm kiếm bài hát, nghệ sĩ, thể loại" />
 
     <!-- Filter buttons for Artist and Genre -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingVertical="8dp">
-
-        <Spinner
-            android:id="@+id/spinner_artist"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-
-        <Spinner
-            android:id="@+id/spinner_genre"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
-    </LinearLayout>
 
     <!-- RecyclerView for displaying songs -->
     <androidx.recyclerview.widget.RecyclerView
@@ -42,11 +23,6 @@
         android:layout_weight="1" />
 
     <!-- Button for adding a new song -->
-    <Button
-        android:id="@+id/btn_add_new_song"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thêm bài hát mới" />
 
     <!-- Button for adding selected songs to album -->
     <Button

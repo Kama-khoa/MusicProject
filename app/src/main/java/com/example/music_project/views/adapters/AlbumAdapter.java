@@ -96,8 +96,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             tvAlbumReleaseDate.setText(formattedDate);
             Glide.with(itemView.getContext())
                     .load(album.getCover_image_path())
-                    .placeholder(R.drawable.sample_album_cover)
-                    .error(R.drawable.default_album_art)
+                    .placeholder(R.drawable.default_album_art)
+                    .error(R.drawable.sample_album_cover)
                     .into(imgAlbumCover);
 
             // Xử lý sự kiện nhấn vào một album

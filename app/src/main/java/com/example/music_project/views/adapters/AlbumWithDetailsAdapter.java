@@ -77,7 +77,7 @@ public class AlbumWithDetailsAdapter extends RecyclerView.Adapter<AlbumWithDetai
             tvAlbumReleaseDate.setText(formattedDate);
             Glide.with(itemView.getContext())
                     .load(albumWithDetails.getAlbum().getCover_image_path())
-                    .error(R.drawable.default_album_art)
+                    .error(R.drawable.artist_avatar)
                     .into(imgAlbumCover);
 
             itemView.setOnClickListener(v -> listener.onAlbumWithDetailsClick(albumWithDetails));

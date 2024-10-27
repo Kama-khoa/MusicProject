@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,7 +109,7 @@ public class ArtistDetailFragment extends Fragment {
                                     .error(R.drawable.artist_avatar)
                                     .into(ivArtistAvatar);
                         } else {
-                            ivArtistAvatar.setImageResource(R.drawable.default_album_art);
+                            ivArtistAvatar.setImageResource(R.drawable.artist_avatar);
                         }
                     });
                 }
@@ -133,7 +134,13 @@ public class ArtistDetailFragment extends Fragment {
                 SongAdapter songAdapter = new SongAdapter(songs, new SongAdapter.OnSongClickListener() {
                     @Override
                     public void onSongClick(Song song) {
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), "Bạn đã chọn song " , Toast.LENGTH_SHORT).show());
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        PlaybackDialogFragment playbackFragment =
+                                (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+                        if (playbackFragment != null) {
+                            playbackFragment.updateSong(song.getSong_id());
+                        }
                     }
                 });
                 rvSongs.setAdapter(songAdapter);
@@ -219,11 +226,12 @@ public class ArtistDetailFragment extends Fragment {
     }
 
     // Method to show the Edit Album dialog
-    private void showEditArtistDialog(int albumId) {
-        dialogEditArtistFragment = DialogEditArtistFragment.newInstance(albumId);
+    private void showEditArtistDialog(int artistId) {
+        dialogEditArtistFragment = DialogEditArtistFragment.newInstance(artistId);
         dialogEditArtistFragment.setOnArtistEditedListener(() -> {
             // Tải lại danh sách bài hát sau khi chỉnh sửa album
-//            loadArtistDetails(albumId);
+            loadSongsAndAlbums(artistId);
+            loadArtist(artistId);
             Toast.makeText(getContext(), "Album đã được chỉnh sửa", Toast.LENGTH_SHORT).show();
         });
         dialogEditArtistFragment.show(getFragmentManager(), "edit_album");

@@ -120,6 +120,8 @@ public class LibraryFragment extends Fragment {
         // Lấy User ID hiện tại và lưu vào SharedPreferences
         getCurrentUserId();
         loadPlaylists();
+        loadAlbums();
+        loadArtists();
 
         return view;
     }
@@ -453,6 +455,7 @@ public class LibraryFragment extends Fragment {
         builder.setView(dialogView);
 
         EditText edtAlbumName = dialogView.findViewById(R.id.edt_album_name);
+        Spinner spinnerArtist = dialogView.findViewById(R.id.spinner_artist);
         Spinner spinnerGenre = dialogView.findViewById(R.id.spinner_genre);
         EditText edtReleaseDate = dialogView.findViewById(R.id.edt_release_date);
         ImageView imgAlbumCover = dialogView.findViewById(R.id.img_album_square_cover);
@@ -494,21 +497,37 @@ public class LibraryFragment extends Fragment {
                 Toast.makeText(getContext(), "Không thể tải danh sách thể loại", Toast.LENGTH_SHORT).show();
             }
         });
+        artistController.getArtists(new ArtistController.OnArtistsLoadedListener() {
+            @Override
+            public void onArtistLoaded(List<Artist> artists) {
+                getActivity().runOnUiThread(() -> {
+                    if (spinnerArtist != null) {
+                        ArrayAdapter<Artist> adapter = new ArrayAdapter<>(getContext(),
+                                android.R.layout.simple_spinner_item, artists);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerArtist.setAdapter(adapter);
+                    } else {
+                        Log.e("LibraryFragment", "Spinner is null");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Toast.makeText(getContext(), "Không thể tải danh sách tác giả", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         builder.setTitle("Thêm Album Mới")
                 .setPositiveButton("Tạo", (dialog, id) -> {
                     String albumName = edtAlbumName.getText().toString().trim();
+                    Artist selectedArtist = (Artist) spinnerArtist.getSelectedItem();
                     Genre selectedGenre = (Genre) spinnerGenre.getSelectedItem();
                     String releaseDateStr = edtReleaseDate.getText().toString().trim(); // Get the user-entered or pre-filled date
 
-                    if (!albumName.isEmpty() && selectedGenre != null) { // Kiểm tra selectedGenre không null
-
+                    if (!albumName.isEmpty() && selectedGenre != null && selectedArtist != null) { // Kiểm tra selectedGenre không null
+                        int artistId = selectedArtist.getArtist_id();
                         int genreId = selectedGenre.getGenre_id(); // Lấy genreId từ đối tượng Genre
-
-                        // Lấy userId từ SharedPreferences làm artistId
-                        SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                        long userIdLong = preferences.getLong("userId", -1);
-                        int userId = (int) userIdLong;
 
                         Date releaseDate;
                         try {
@@ -517,7 +536,7 @@ public class LibraryFragment extends Fragment {
                             releaseDate = new Date();
                         }
 
-                        Album album = new Album(albumName, userId, genreId, releaseDate);
+                        Album album = new Album(albumName, artistId, genreId, releaseDate);
 
                         // Nếu selectedImageUri không phải là null, thì lưu ảnh
                         if (selectedImageUri != null) {
@@ -532,7 +551,7 @@ public class LibraryFragment extends Fragment {
                         }
 
                         // Call AlbumController to create the album
-                        albumController.createAlbum(userId, album, new AlbumController.OnAlbumCreatedListener() {
+                        albumController.createAlbum(album, new AlbumController.OnAlbumCreatedListener() {
                             @Override
                             public void onSuccess() {
                                 new Handler(Looper.getMainLooper()).post(() -> {

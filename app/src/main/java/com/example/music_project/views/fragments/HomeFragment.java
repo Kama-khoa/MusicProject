@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
     private SongAdapter popularSongAdapter;
     private List<Song> recentSongs = new ArrayList<>();
     private List<Song> popularSongs = new ArrayList<>();
+    private long userId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,7 +78,6 @@ public class HomeFragment extends Fragment {
         String authToken = "YOUR_SPOTIFY_ACCESS_TOKEN";
         spotifyApiService = SpotifyApiClient.getClient(authToken).create(SpotifyApiService.class);
 
-
         rvRecentSongs = view.findViewById(R.id.rv_recent_songs);
         rvPopularSongs = view.findViewById(R.id.rv_popular_songs);
         ivUserIcon = view.findViewById(R.id.iv_user_icon);
@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment {
         rvPopularSongs.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         updateUserInterface();
+        getCurrentUserId();
 
         // Adapter cho danh sách nhạc gần đây
         recentSongAdapter = new SongAdapter(recentSongs, song -> {
@@ -96,6 +97,7 @@ public class HomeFragment extends Fragment {
 
             if (playbackFragment != null) {
                 playbackFragment.updateSong(song.getSong_id());
+//                addSongtoPlayHistory(song.getSong_id());
             }
         });
 
@@ -112,12 +114,26 @@ public class HomeFragment extends Fragment {
         rvRecentSongs.setAdapter(recentSongAdapter);
         rvPopularSongs.setAdapter(popularSongAdapter);
 
-        getCurrentUserId();
+
         // Load dữ liệu bài hát gần đây và phổ biến
         loadSongs();
 
         return view;
     }
+
+//    private void addSongtoPlayHistory(int songId){
+//        songController.addPlayHistory(userIdInt, songId, new SongController.Callback<Void>() {
+//            @Override
+//            public void onSuccess(Void result) {
+//                Log.d("HomeFragment", "Play history added successfully");
+//            }
+//
+//            @Override
+//            public void onError(String error) {
+//                Log.e("HomeFragment", "Failed to add play history: " + error);
+//            }
+//        });
+//    }
 
     private void updateUserInterface() {
         if (userController.isUserLoggedIn()) {

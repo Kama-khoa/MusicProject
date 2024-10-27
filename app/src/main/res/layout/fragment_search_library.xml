@@ -23,9 +23,46 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#1DB954"
             android:fontFamily="sans-serif"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:text="Hủy" />
+            android:text="Hủy"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_search_playlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:backgroundTint="#1DB954"
+            android:fontFamily="sans-serif"
+            android:text="Danh sách phát"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_search_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#1DB954"
+            android:fontFamily="sans-serif"
+            android:text="Album"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_search_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#1DB954"
+            android:fontFamily="sans-serif"
+            android:text="Nghệ sĩ"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

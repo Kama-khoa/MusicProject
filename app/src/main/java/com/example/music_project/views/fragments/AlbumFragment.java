@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -93,9 +94,15 @@ public class AlbumFragment extends Fragment {
             ImageButton btn_setting = view.findViewById(R.id.btn_setting);
             btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
 
-            songAdapter = new SongAdapter(songList, song ->
-                    Toast.makeText(getContext(), "Đã chọn: " + song.getTitle(), Toast.LENGTH_SHORT).show()
-            );
+            songAdapter = new SongAdapter(songList, song -> {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                PlaybackDialogFragment playbackFragment =
+                        (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+                if (playbackFragment != null) {
+                    playbackFragment.updateSong(song.getSong_id());
+                }
+            });
 
             songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
                 @Override
@@ -165,7 +172,7 @@ public class AlbumFragment extends Fragment {
                                 .error(R.drawable.default_album_art)
                                 .into(imgAlbumCover);
                     } else {
-                        imgAlbumCover.setImageResource(R.drawable.default_album_art);
+                        imgAlbumCover.setImageResource(R.drawable.sample_album_cover);
                     }
                 }
             }

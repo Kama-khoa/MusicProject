@@ -4,11 +4,13 @@ import com.example.music_project.database.AlbumDao;
 import com.example.music_project.database.ArtistDao;
 import com.example.music_project.database.GenreDao;
 import com.example.music_project.database.AlbumSongDao;
+import com.example.music_project.database.PlayHistoryDao;
 import com.example.music_project.database.SongDao;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumSong;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Genre;
+import com.example.music_project.models.PlayHistory;
 import com.example.music_project.models.PlaylistSong;
 import com.example.music_project.models.Song;
 import java.util.List;
@@ -27,6 +29,7 @@ public class SongController {
     private ArtistDao artistDao;
     private AlbumDao albumDao;
     private GenreDao genreDao;
+    private PlayHistoryDao playHistoryDao;
     private ExecutorService executorService;
 
     public SongController(SongDao songDao, ArtistDao artistDao, AlbumDao albumDao, GenreDao genreDao) {
@@ -240,6 +243,18 @@ public class SongController {
             } catch (Exception e) {
                 // Notify failure
                 callback.onError(e.getMessage());
+            }
+        });
+    }
+
+    public void addPlayHistory(int userId, int songId, Callback<Void> callback) {
+        PlayHistory playHistory = new PlayHistory(userId, songId);
+        executorService.execute(() -> {
+            try {
+                playHistoryDao.insert(playHistory);
+                callback.onSuccess(null);
+            } catch (Exception e) {
+                callback.onError("Không thể thêm lịch sử phát: " + e.getMessage());
             }
         });
     }
