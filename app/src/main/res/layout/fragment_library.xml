@@ -33,7 +33,7 @@
             android:layout_marginStart="16dp"
             android:fontFamily="sans-serif"
             android:text="Thư viện"
-            android:textColor="#000000"
+            android:textColor="#FBFBFB"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -46,8 +46,9 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif"
+            android:foregroundTint="#FFFFFF"
             android:src="@drawable/ic_search"
-            app:tint="#000000" />
+            app:tint="#FBFBFB" />
 
         <ImageView
             android:id="@+id/iv_add"
@@ -55,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_add"
-            app:tint="#000000" />
+            app:tint="#FFFFFF" />
     </LinearLayout>
 
     <!-- Filters: Playlist, Album, Artist -->
@@ -73,35 +74,31 @@
                 android:id="@+id/btn_playlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/black"
-                android:text="Danh sách phát"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif"
+                android:layout_marginLeft="15dp"
                 android:backgroundTint="#1DB954"
-                android:textColor="@color/black"
-                android:layout_marginLeft="15dp"/>
+                android:fontFamily="sans-serif"
+                android:text="Danh sách phát"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_album"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:text="Album"
                 android:backgroundTint="#1DB954"
-                android:textColor="@color/black"/>
+                android:fontFamily="sans-serif"
+                android:text="Album"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:text="Nghệ sĩ"
                 android:backgroundTint="#1DB954"
-                android:textColor="@color/black"/>
+                android:fontFamily="sans-serif"
+                android:text="Nghệ sĩ"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </HorizontalScrollView>

@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.controllers.AlbumController;
 import com.example.music_project.controllers.ArtistController;
@@ -48,6 +51,7 @@ public class AlbumFragment extends Fragment {
     private List<Song> songList = new ArrayList<>();
     private DialogEditAlbumFragment dialogEditAlbumFragment;
     private TextView tvAlbumName;
+    private ImageView imgAlbumCover;
 
     // Hàm newInstance để tạo Fragment và truyền tham số (albumId, albumName, artistId, genreId)
     public static AlbumFragment newInstance(int albumId, String albumName, int artistId, int genreId) {
@@ -78,6 +82,7 @@ public class AlbumFragment extends Fragment {
         int artistId = getArguments().getInt(ARG_ARTIST_ID);
         int genreId = getArguments().getInt(ARG_GENRE_ID);
 
+        imgAlbumCover = view.findViewById(R.id.img_album_cover);
         // Hiển thị tên album, nghệ sĩ và thể loại trong TextView
         tvAlbumName = view.findViewById(R.id.tv_album_title);
         tvAlbumName.setText(albumName);
@@ -142,21 +147,39 @@ public class AlbumFragment extends Fragment {
             @Override
             public void onAlbumLoaded(Album album) {
                 if (album != null) {
-                    // Hiển thị ảnh cover và album title
                     tvAlbumName.setText(album.getTitle());
-//                    currentCoverImagePath = album.getCover_image_path();
-//                    if (currentCoverImagePath != null && !currentCoverImagePath.isEmpty()) {
-//                        // Hiển thị ảnh cover (bạn cần thêm logic load ảnh từ file/URI)
-//                        imgAlbumCover.setImageURI(Uri.parse(currentCoverImagePath));
-//                    }
-//                    // Tải danh sách bài hát
+                    String coverImagePath = album.getCover_image_path();
+                    Log.d("AlbumFragment", "Cover image path: " + coverImagePath);
+                    if (coverImagePath != null && !coverImagePath.isEmpty()) {
+                        try {
+                            // Chuyển đổi đường dẫn thành Uri
+                            Uri imageUri = Uri.parse(coverImagePath);
+
+                            // Sử dụng Glide với Uri
+                            Glide.with(AlbumFragment.this)
+                                    .load(coverImagePath)
+                                    .placeholder(R.drawable.sample_album_cover)
+                                    .error(R.drawable.default_album_art)
+                                    .into(imgAlbumCover);
+
+                        } catch (Exception e) {
+                            // Xử lý lỗi khi parse Uri
+                            imgAlbumCover.setImageResource(R.drawable.default_album_art);
+                            Toast.makeText(getContext(), "Lỗi tải ảnh: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        imgAlbumCover.setImageResource(R.drawable.default_album_art);
+                    }
+
                     loadSongsInAlbum(albumId);
                 }
             }
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(getContext(), "Failed to load album: " + error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load album: " + error,
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -234,7 +257,7 @@ public class AlbumFragment extends Fragment {
         int albumId = getArguments().getInt(ARG_ALBUM_ID);
         new AlertDialog.Builder(requireContext())
                 .setTitle("Xóa Bài Hát")
-                .setMessage("Bạn có chắc chắn muốn xóa bài hát \"" + song.getTitle() + "\" khỏi album không?")
+                .setMessage("Bạn có chắc chắn muốn xóa bài hát \n \n \"" + song.getTitle() + "\" \n \nkhỏi album không?")
                 .setPositiveButton("Có", (dialog, which) -> {
                     deleteSongFromAlbum(song);
                     loadSongsInAlbum(albumId);
@@ -248,7 +271,7 @@ public class AlbumFragment extends Fragment {
         albumController.deleteSongFromAlbum(albumId, song.getSong_id(), new AlbumController.OnSongDeletedListener() {
             @Override
             public void onSongDeleted(Song song) {
-                Toast.makeText(getContext(), "Đã xóa bài hát khỏi playlist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Đã xóa bài hát khỏi album!", Toast.LENGTH_SHORT).show();
                 loadSongsInAlbum(albumId);
             }
 

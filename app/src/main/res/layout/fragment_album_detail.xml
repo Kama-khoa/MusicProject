@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -17,7 +16,9 @@
         <SearchView
             android:id="@+id/sv_album_search"
             android:layout_width="330dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#1B1B1B"
+            android:backgroundTint="#1B1B1B">
 
         </SearchView>
 
@@ -26,9 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            app:srcCompat="@drawable/ic_setting"
-            android:contentDescription="@string/settings" />
+            android:backgroundTint="#000000"
+            android:contentDescription="@string/settings"
+            android:tint="#1B1B1B"
+            app:srcCompat="@drawable/ic_setting" />
 
     </LinearLayout>
 
@@ -38,7 +40,8 @@
         android:layout_height="300dp"
         android:contentDescription="@string/album_cover"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_album_cover" />
+        android:src="@drawable/sample_album_cover"
+        android:tint="#FFFFFF" />
 
     <!-- Album Title -->
     <TextView
@@ -47,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Album Title"
-        android:textColor="#A41A1919"
+        android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -63,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Artist"
-            android:textColor="#B0B0B0"
+            android:textColor="#A2A2A2"
             android:textSize="16sp"
             android:textStyle="normal" />
 
@@ -71,10 +74,11 @@
             android:id="@+id/tv_album_genre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="80dp"
             android:layout_weight="1"
             android:gravity="end"
             android:text="Genre"
-            android:textColor="#B0B0B0"
+            android:textColor="#A2A2A2"
             android:textSize="16sp"
             android:textStyle="normal" />
     </LinearLayout>
@@ -92,7 +96,6 @@
             android:layout_marginTop="16dp"
             android:backgroundTint="#1DB954"
             android:text="Thêm nhạc"
-            android:textColor="#000000"
             android:textStyle="bold" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,10 +106,10 @@
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:contentDescription="Play album"
+            android:foregroundTint="#FFFFFF"
             app:backgroundTint="#1DB954"
             app:elevation="0dp"
             app:fabSize="normal"
-            app:rippleColor="#FFFFFF"
             app:srcCompat="@drawable/ic_play" />
     </LinearLayout>
 

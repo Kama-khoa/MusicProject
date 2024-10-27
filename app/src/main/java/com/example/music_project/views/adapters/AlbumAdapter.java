@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.models.Album;
 
@@ -93,6 +94,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDate = dateFormat.format(album.getRelease_date());
             tvAlbumReleaseDate.setText(formattedDate);
+            // Sử dụng Glide để tải ảnh lên imgAlbumCover
+            Glide.with(itemView.getContext())
+                    .load(album.getCover_image_path()) // Thay đổi thành phương thức lấy URL của ảnh
+                    .placeholder(R.drawable.sample_album_cover) // Ảnh mặc định khi đang tải
+                    .error(R.drawable.default_album_art) // Ảnh lỗi nếu tải thất bại
+                    .into(imgAlbumCover);
 
             // Xử lý sự kiện nhấn vào một album
             itemView.setOnClickListener(v -> listener.onAlbumClick(album));

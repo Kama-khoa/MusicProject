@@ -12,11 +12,12 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="5dp"
-        app:srcCompat="@drawable/artist_avatar"
+        android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/artist_avatar" />
 
     <!-- Thông tin nghệ sĩ -->
     <LinearLayout
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Artist Name"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -45,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Date of Birth"
+            android:textColor="#A2A2A2"
             android:textSize="14sp" />
 
         <!-- Tiểu sử nghệ sĩ -->
@@ -53,10 +56,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Bio"
-            android:textSize="14sp"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:ellipsize="end" /> <!-- Thêm dấu "..." nếu có nội dung quá dài -->
+            android:text="Bio"
+            android:textColor="#A2A2A2"
+            android:textSize="14sp" /> <!-- Thêm dấu "..." nếu có nội dung quá dài -->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

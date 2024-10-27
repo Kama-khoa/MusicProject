@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#000000"
+    android:backgroundTint="#000000"
     android:padding="8dp">
 
     <ImageView
@@ -11,6 +13,8 @@
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/default_song_cover"
+        android:tint="#FDFDFD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,15 +22,15 @@
     <TextView
         android:id="@+id/tv_song_title"
         android:layout_width="0dp"
-        android:paddingTop="7dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:paddingTop="7dp"
+        android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_song_cover"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Song Title" />
 
     <TextView
@@ -35,9 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:textSize="15sp"
         android:paddingTop="3dp"
         android:textColor="@android:color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/iv_song_cover"

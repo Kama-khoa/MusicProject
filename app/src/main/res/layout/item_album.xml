@@ -12,6 +12,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="5dp"
         android:contentDescription="@string/album_cover"
+        android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,6 +35,7 @@
             android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
             android:text="Album Title"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -44,6 +46,7 @@
             android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
             android:text="Artist"
+            android:textColor="#A2A2A2"
             android:textSize="14sp" />
 
         <TextView
@@ -53,6 +56,7 @@
             android:layout_marginTop="4dp"
             android:paddingLeft="10dp"
             android:text="Release Date"
+            android:textColor="#A2A2A2"
             android:textSize="14sp" />
     </LinearLayout>
 
