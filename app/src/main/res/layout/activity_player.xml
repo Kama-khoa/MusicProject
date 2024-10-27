@@ -4,110 +4,191 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@drawable/gradient_background"
     tools:context=".views.activities.PlayerActivity">
 
-    <ImageView
-        android:id="@+id/albumCoverImageView"
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Menu Button -->
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Title at the top -->
+    <TextView
+        android:id="@+id/playlistTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="ĐANG PHÁT TỪ DANH SÁCH PHÁT"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/menuButton"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toTopOf="@id/backButton" />
+
+    <TextView
+        android:id="@+id/playlistNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/menuButton"
+        app:layout_constraintStart_toEndOf="@id/backButton"
+        app:layout_constraintTop_toBottomOf="@id/playlistTitleTextView" />
+
+    <!-- Album Cover with Card Background -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/albumCoverCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="32dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="16dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.8"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@id/playlistNameTextView"
+        app:layout_constraintWidth_percent="0.85">
 
+        <ImageView
+            android:id="@+id/albumCoverImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Track Info -->
     <TextView
         android:id="@+id/trackInfoTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="2"
-        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:gravity="start"
+        android:paddingHorizontal="24dp"
+        android:text="Đi Qua Thương Nhớ"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/albumCoverImageView"
-        tools:text="Song Title - Artist Name" />
+        app:layout_constraintTop_toBottomOf="@id/albumCoverCard" />
 
+    <TextView
+        android:id="@+id/artistTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingHorizontal="24dp"
+        android:text="Hà Nhi"
+        android:textColor="#CCFFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trackInfoTextView" />
+
+    <!-- Seekbar and Time -->
     <SeekBar
         android:id="@+id/playbackSeekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:progressTint="#FFFFFF"
+        android:thumbTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/controlsLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/trackInfoTextView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/currentTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:text="0:02"
+        android:textColor="#CCFFFFFF"
         app:layout_constraintStart_toStartOf="@id/playbackSeekBar"
-        app:layout_constraintTop_toBottomOf="@id/playbackSeekBar"
-        tools:text="0:00" />
+        app:layout_constraintTop_toBottomOf="@id/playbackSeekBar" />
 
     <TextView
         android:id="@+id/totalTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:text="4:34"
+        android:textColor="#CCFFFFFF"
         app:layout_constraintEnd_toEndOf="@id/playbackSeekBar"
-        app:layout_constraintTop_toBottomOf="@id/playbackSeekBar"
-        tools:text="3:30" />
+        app:layout_constraintTop_toBottomOf="@id/playbackSeekBar" />
 
+    <!-- Control Buttons -->
     <LinearLayout
         android:id="@+id/controlsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/currentTimeTextView">
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/shuffleButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_shuffle"
+            app:tint="#4CAF50" />
 
         <ImageButton
             android:id="@+id/previousButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginHorizontal="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/previous_button"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_previous" />
+            android:src="@drawable/ic_previous"
+            app:tint="#FFFFFF" />
 
         <ImageButton
             android:id="@+id/playPauseButton"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_marginHorizontal="24dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/play_pause_button"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_pause" />
+            android:background="@drawable/circular_button_background"
+            android:src="@drawable/ic_play"
+            app:tint="@android:color/black" />
 
         <ImageButton
             android:id="@+id/nextButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginHorizontal="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/next_button"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_next" />
+            android:src="@drawable/ic_next"
+            app:tint="#FFFFFF" />
 
+        <ImageButton
+            android:id="@+id/timerButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_timer"
+            app:tint="#FFFFFF" />
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/player_control_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

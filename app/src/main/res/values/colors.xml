@@ -7,7 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#6200EE</color>
     <color name="primary">#6200EE</color>
     <color name="colorPrimaryVariant">#3700B3</color>
     <color name="colorOnPrimary">#FFFFFF</color>
@@ -19,5 +18,14 @@
     <color name="colorAccent">#FF4081</color>
     <color name="accent">#FF4081</color>
     <color name="player_background">#FFFFFF</color>
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent2">#4CAF50</color>
 
+    <color name="backgroundColor">#000000</color>
+    <color name="cardBackground">#1E1E1E</color>
+    <color name="editTextBackground">#2A2A2A</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#CCCCCC</color>
+    <color name="hintColor">#808080</color>
 </resources>

@@ -42,8 +42,9 @@ public class PlayerActivity extends AppCompatActivity {
     private TextView currentTimeTextView;
     private TextView totalTimeTextView;
     private TextView trackInfoTextView;
+    private TextView artistNameTextView;
     private ImageView albumCoverImageView;
-
+    private ImageButton backButton;
     // Database and playlist
     private AppDatabase database;
     private List<Song> playList;
@@ -98,13 +99,17 @@ public class PlayerActivity extends AppCompatActivity {
         totalTimeTextView = findViewById(R.id.totalTimeTextView);
         trackInfoTextView = findViewById(R.id.trackInfoTextView);
         albumCoverImageView = findViewById(R.id.albumCoverImageView);
+        backButton = findViewById(R.id.backButton);
+        artistNameTextView=findViewById(R.id.artistTextView);
     }
 
     private void setupListeners() {
         playPauseButton.setOnClickListener(v -> togglePlayPause());
         nextButton.setOnClickListener(v -> playNextSong());
         previousButton.setOnClickListener(v -> playPreviousSong());
-
+        backButton.setOnClickListener(v -> {
+            finish();
+        });
         playbackSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -174,6 +179,12 @@ public class PlayerActivity extends AppCompatActivity {
                             // Update the file path with the content URI for the resource
                             song.setFile_path("android.resource://" + getPackageName() + "/" + resourceId);
                             playSong(song);
+
+                            // Gửi broadcast để cập nhật PlaybackDialogFragment
+                            Intent intent = new Intent("UPDATE_SONG_INFO");
+                            intent.putExtra("SONG_ID", song.getSong_id());
+                            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
                         } else {
                             Toast.makeText(this, "Không tìm thấy tài nguyên nhạc", Toast.LENGTH_SHORT).show();
                             Log.e(TAG, "Resource not found: " + resourceName);
@@ -205,12 +216,31 @@ public class PlayerActivity extends AppCompatActivity {
         }
     }
 
-    private void updateSongInfo(Song song) {
-        trackInfoTextView.setText(String.format("%s - %s", song.getTitle(), song.getArtistName()));
-        // Cập nhật album art nếu có
-        albumCoverImageView.setImageResource(R.drawable.default_album_art);
-    }
+    public void updateSongInfo(Song song) {
+        try {
+            if (trackInfoTextView != null) {
+                trackInfoTextView.setText(song.getTitle());
+            }
 
+            // Sửa lại phần này
+            if (artistNameTextView != null) {
+                String artistName = song.getArtistName();
+                if (artistName == null || artistName.isEmpty()) {
+                    artistNameTextView.setText("test");
+                } else {
+                    artistNameTextView.setText(artistName);
+                }
+            }
+
+            if (albumCoverImageView != null) {
+                albumCoverImageView.setImageResource(R.drawable.default_album_art);
+            }
+
+            currentSongIndex = findSongIndexById(song.getSong_id());
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating song info: ", e);
+        }
+    }
     private void togglePlayPause() {
         if (isBound && musicService != null) {
             if (musicService.isPlaying()) {

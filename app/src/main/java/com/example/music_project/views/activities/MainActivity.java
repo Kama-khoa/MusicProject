@@ -105,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void updatePlaybackFragmentSong(Song song) {
+        if (playbackFragment != null) {
+            playbackFragment.updateCurrentSong(song);
+        }
+    }
     /**
      * Method to be called by other fragments to play a song
      */

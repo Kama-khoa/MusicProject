@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +27,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private UserController userController;
     private TextView tvUsername, tvEmail,tvRole;
-    private EditText etNewUsername, etNewPassword, etConfirmPassword;
+    private EditText etNewPassword, etConfirmPassword;
     private ImageView ivProfilePicture,btnBack;
-    private Button btnChangeUsername, btnChangePassword, btnChangeProfilePicture;
+    private ImageButton btnChangeProfilePicture;
+    private Button btnChangePassword;
 
     private User currentUser;
 
@@ -48,20 +50,16 @@ public class ProfileActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tv_username);
         tvRole = findViewById(R.id.tv_role);
         tvEmail = findViewById(R.id.tv_email);
-        etNewUsername = findViewById(R.id.et_new_username);
+        btnChangePassword= findViewById(R.id.btn_change_password);
         etNewPassword = findViewById(R.id.et_new_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         ivProfilePicture = findViewById(R.id.iv_profile_picture);
         btnBack = findViewById(R.id.btn_back);
-        btnChangeUsername = findViewById(R.id.btn_change_username);
-        btnChangePassword = findViewById(R.id.btn_change_password);
         btnChangeProfilePicture = findViewById(R.id.btn_change_profile_picture);
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
-
-        btnChangeUsername.setOnClickListener(v -> changeUsername());
+        btnBack.setOnClickListener(v -> onBackPressed());
         btnChangePassword.setOnClickListener(v -> changePassword());
         btnChangeProfilePicture.setOnClickListener(v -> openImageChooser());
     }
@@ -91,17 +89,6 @@ public class ProfileActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private void changeUsername() {
-        String newUsername = etNewUsername.getText().toString().trim();
-        if (newUsername.isEmpty()) {
-            Toast.makeText(this, "Please enter a new username", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        currentUser.setUsername(newUsername);
-        updateUserProfile();
     }
 
     private void changePassword() {

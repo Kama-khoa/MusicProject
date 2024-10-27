@@ -163,12 +163,6 @@ public class HomeFragment extends Fragment {
             if (itemId == R.id.menu_profile) {
                 openProfileScreen();
                 return true;
-            } else if (itemId == R.id.menu_settings) {
-                openSettingsScreen();
-                return true;
-            } else if (itemId == R.id.menu_songs) {
-                openSongScreen();
-                return true;
             } else if (itemId == R.id.menu_logout) {
                 performLogout();
                 return true;
