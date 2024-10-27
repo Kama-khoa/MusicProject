@@ -1,8 +1,28 @@
 package com.example.music_project.models;
 
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
+import androidx.room.ColumnInfo;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "SongImage",  // Tên bảng
+        foreignKeys = {
+                @ForeignKey(
+                        entity = Song.class,
+                        parentColumns = "song_id",
+                        childColumns = "song_id",
+                        onDelete = ForeignKey.CASCADE
+                )
+        },
+        indices = {@Index("song_id")})
 public class SongImage {
-    private int songId; // ID của bài hát
-    private String imagePath; // Đường dẫn ảnh
+    @PrimaryKey
+    @ColumnInfo(name = "song_id")
+    private int songId;
+
+    @ColumnInfo(name = "image_path")
+    private String imagePath;
 
     // Constructor
     public SongImage(int songId, String imagePath) {

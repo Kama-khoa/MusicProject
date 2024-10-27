@@ -257,14 +257,28 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
                     String imagePath = playlist.getImageResource();
 
                     if (imagePath != null && !imagePath.isEmpty()) {
-                        // Sử dụng Glide để hiển thị ảnh bìa playlist
-                        Glide.with(getContext())
-                                .load(imagePath)
-                                .into(imgPlaylistCover);
+                        // Kiểm tra nếu ảnh nằm trong thư mục res/raw
+                        if (imagePath.startsWith("res/")) {
+                            int resourceId = getResources().getIdentifier(
+                                    imagePath.replace("res/raw/", "").replace(".png", ""),
+                                    "raw",
+                                    getContext().getPackageName());
+
+                            Glide.with(getContext())
+                                    .load(resourceId)
+                                    .into(imgPlaylistCover);
+
+                        } else {
+                            // Trường hợp ảnh là URI từ bộ nhớ thiết bị
+                            Glide.with(getContext())
+                                    .load(imagePath)
+                                    .into(imgPlaylistCover);
+                        }
                     } else {
-                        // Nếu không có ảnh, bạn có thể đặt ảnh mặc định
+                        // Nếu không có ảnh, sử dụng ảnh mặc định
                         imgPlaylistCover.setImageResource(R.drawable.ic_image_playlist); // Thay bằng ảnh mặc định của bạn
                     }
+
                 }
             }
 

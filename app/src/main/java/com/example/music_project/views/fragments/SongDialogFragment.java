@@ -273,9 +273,11 @@ public class SongDialogFragment extends DialogFragment {
         }
 
         if (coverImagePath != null) {
-            //  song.setImage_path(coverImagePath); // Lưu đường dẫn hình ảnh vào bài hát
+             song.setImg_path(coverImagePath); // Lưu đường dẫn hình ảnh vào bài hát
 
         }
+
+        Log.d("SongDialogFragment", "Song ID: " + song.getSong_id());
 
         if (listener != null) {
             listener.onSongSaved(song);

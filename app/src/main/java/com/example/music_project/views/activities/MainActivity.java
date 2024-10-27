@@ -20,8 +20,8 @@ import com.example.music_project.views.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static final String PREF_NAME = "MyAppPreferences123";
-    private static final String KEY_IS_FIRST_RUN = "isFirstRun123";
+    private static final String PREF_NAME = "MyAppPreferences127";
+    private static final String KEY_IS_FIRST_RUN = "isFirstRun127";
 
     private BottomNavigationView bottomNav;
     private PlaybackDialogFragment playbackFragment;

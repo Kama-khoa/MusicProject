@@ -59,6 +59,20 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         btnAdd.setOnClickListener(v -> showAddSongDialog());
     }
 
+    @Override
+    public void onSongSavedtoUpdate(Song song) {
+        Log.d("SongActivityUPDATE", "Updating song: " + song.getTitle());
+        Log.d("SongActivityUPDATE", "Song ID: " + song.getSong_id()); // Kiểm tra ID
+        updateSong(song);
+    }
+
+    @Override
+    public void onSongSaved(Song song) {
+        if (song.getSong_id() == 0) {
+            addSong(song);
+        }
+    }
+
     private void initViews() {
         btnAdd = findViewById(R.id.btn_add);
         rvSongs = findViewById(R.id.rv_songs);
@@ -196,20 +210,6 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         dialog.show(getSupportFragmentManager(), "SongDialog");
     }
 
-    @Override
-    public void onSongSaved(Song song) {
-        if (song.getSong_id() == 0) {
-            addSong(song);
-        }
-    }
-
-    @Override
-    public void onSongSavedtoUpdate(Song song) {
-
-        Log.d(" SongActivityUPDATE", "Updating song: " + song.getTitle());
-        updateSong(song);
-        loadSongs();
-    }
 
     private void addSong(Song song) {
         songController.addSong(song, new SongController.Callback<Void>() {
@@ -417,9 +417,9 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
                                 bundle.putString("genre", String.valueOf(song.getGenre_id()));
                                 bundle.putString("duration", String.valueOf(song.getDuration()));
                                 bundle.putString("filepath", song.getFile_path());
-                                //bundle.putString("imagepath", song.getImage_path());
+                                bundle.putString("imagepath", song.getImg_path());
 
-                                // Log.d("UpdateSongDialog", "Link ảnh " + song.getImage_path());
+                                 Log.d("UpdateSongDialog", "Link ảnh " + song.getImg_path());
                                 Log.d("UpdateSongDialog", "Link nhạc " + song.getFile_path());
 
                                 dialog.setArguments(bundle);

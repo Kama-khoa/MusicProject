@@ -68,6 +68,8 @@ public class SongDialogUpdateFragment extends DialogFragment {
     private ActivityResultLauncher<Intent> audioFileLauncher;
     private ActivityResultLauncher <Intent> pickImageLauncher;
 
+    private static final int REQUEST_CODE_PICK_IMAGE = 1;
+
     public interface SongDialogUpdateListener {
         void onSongSavedtoUpdate(Song song);
         void onSongDeleted(Song song);
@@ -138,12 +140,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
 
         img_path.setOnClickListener(v -> pickImage());
 
-        if (image_path != null && !image_path.isEmpty()) {
-            Glide.with(getContext()).load(image_path).into(img_path);
-        } else {
-            img_path.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định nếu không có
-        }
-
+         loadCoverImage();
         if (artists != null && genres != null) {
             spArtist.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, artists));
             spGenre.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, genres));
@@ -155,10 +152,12 @@ public class SongDialogUpdateFragment extends DialogFragment {
         tvDuration.setText(String.format("Thời lượng: %d:%02d", duration / 60, duration % 60));
         setSpinnerSelections();
 
+
+
         btnSave.setOnClickListener(v -> saveSongUpdate());
         btnCancel.setOnClickListener(v -> dismiss());
         btnDelete.setOnClickListener(v -> deleteSong());
-        btnUpload.setOnClickListener(v -> requestAudioFile());
+//        btnUpload.setOnClickListener(v -> requestAudioFile());
 
         audioFileLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -188,6 +187,11 @@ public class SongDialogUpdateFragment extends DialogFragment {
         return view;
     }
 
+
+
+
+
+
     private void setAudioDuration(Uri audioUri) {
         try (MediaMetadataRetriever mmr = new MediaMetadataRetriever();
              ParcelFileDescriptor pfd = getContext().getContentResolver().openFileDescriptor(audioUri, "r")) {
@@ -206,6 +210,44 @@ public class SongDialogUpdateFragment extends DialogFragment {
         } catch (IOException e) {
             e.printStackTrace();
             tvDuration.setText("Không thể lấy độ dài bài hát");
+        }
+    }
+
+
+    private void loadCoverImage() {
+        String imagePath = image_path;
+
+        if (imagePath != null && !imagePath.isEmpty()) {
+            // Kiểm tra nếu đường dẫn là kiểu "res/raw/..."
+            if (imagePath.startsWith("res/raw/")) {
+                int resourceId = getResources().getIdentifier(
+                        imagePath.replace("res/raw/", "").replace(".png", ""),
+                        "raw",
+                        getActivity().getPackageName());
+
+                if (resourceId != 0) {
+                    Glide.with(this)
+                            .load(resourceId)
+                            .into(img_path);
+                } else {
+                    img_path.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định nếu không tìm thấy
+                }
+            }
+            // Kiểm tra nếu đường dẫn là kiểu "content://..."
+            else if (imagePath.startsWith("content://")) {
+                Uri imageUri = Uri.parse(imagePath);
+                Glide.with(this)
+                        .load(imageUri)
+                        .into(img_path);
+            }
+            // Nếu đường dẫn là loại khác (có thể là đường dẫn file hoặc URL)
+            else {
+                Glide.with(this)
+                        .load(imagePath)
+                        .into(img_path);
+            }
+        } else {
+            img_path.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
         }
     }
 
@@ -230,9 +272,10 @@ public class SongDialogUpdateFragment extends DialogFragment {
         }
     }
     private void pickImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        pickImageLauncher.launch(intent); // Sử dụng pickImageLauncher để chọn hình ảnh
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("image/*"); // Chỉ định loại tệp
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        pickImageLauncher.launch(intent); // Sử dụng pickImageLauncher để mở trình chọn hình ảnh
     }
 
 
@@ -288,7 +331,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
 
         Genre selectedGenre = (Genre) spGenre.getSelectedItem();
 
-        
+
 
         // Kiểm tra thông tin nhập vào không được để trống
         if (title.isEmpty() || selectedArtist == null || selectedGenre == null) {

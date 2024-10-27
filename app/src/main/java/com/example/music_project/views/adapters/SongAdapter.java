@@ -1,6 +1,7 @@
 package com.example.music_project.views.adapters;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 //import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
+import com.example.music_project.controllers.SongController;
+import com.example.music_project.database.AppDatabase;
+import com.example.music_project.database.SongImageDao;
 import com.example.music_project.models.Song;
+import com.example.music_project.models.SongImage;
+import com.example.music_project.views.fragments.LoadSongImage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +29,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
     private List<Song> songsFull; // Danh sách đầy đủ để tìm kiếm
     private OnSongClickListener listener; // Listener cho sự kiện nhấp chuột
     private OnSongLongClickListener longClickListener; // Listener cho sự kiện nhấn giữ
-    private Set<Integer> selectedSongIds = new HashSet<>(); // Set để theo dõi trạng thái chọn của từng bài hát dựa trên ID
+    private Set<Integer> selectedSongIds = new HashSet<>();
+
+    private SongImageDao songImageDao;
+
+    private AppDatabase appDatabase;
 
     // Giao diện cho sự kiện nhấn vào bài hát
     public interface OnSongClickListener {
@@ -60,7 +71,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         }
     }
 
-    // Phương thức để thiết lập OnSongLongClickListener
     public void setOnSongLongClickListener(OnSongLongClickListener listener) {
         this.longClickListener = listener;
     }
@@ -87,16 +97,18 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             ivCover = itemView.findViewById(R.id.iv_song_cover);
             ivOptions = itemView.findViewById(R.id.img_song_edit_or_del);
 
+            songImageDao = AppDatabase.getInstance(itemView.getContext()).songImageDao();
+
             itemView.setOnClickListener(v -> {
                 int position =  getBindingAdapterPosition();;
                 if (position != RecyclerView.NO_POSITION) {
                     Song clickedSong = songs.get(position);
                     if (selectedSongIds.contains(clickedSong.getSong_id())) {
-                        selectedSongIds.remove(clickedSong.getSong_id()); // Bỏ chọn
-                        itemView.setBackgroundColor(Color.WHITE); // Trạng thái không chọn
+                        selectedSongIds.remove(clickedSong.getSong_id());
+                        itemView.setBackgroundColor(Color.WHITE);
                     } else {
-                        selectedSongIds.add(clickedSong.getSong_id()); // Thêm vào danh sách đã chọn
-                        itemView.setBackgroundColor(Color.LTGRAY); // Trạng thái đã chọn
+                        selectedSongIds.add(clickedSong.getSong_id());
+                        itemView.setBackgroundColor(Color.LTGRAY);
                     }
                     listener.onSongClick(clickedSong);
                 }
@@ -115,8 +127,31 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         void bind(Song song) {
             tvTitle.setText(song.getTitle());
             tvArtist.setText(song.getArtistName());
-            ivCover.setImageResource(R.drawable.default_song_cover);
+
+            String imagePath = song.getImg_path();
+
+            if (imagePath != null) {
+                // Xử lý việc tải ảnh từ imagePath ở đây
+                if (imagePath.startsWith("res/")) {
+                    int resourceId = ivCover.getResources().getIdentifier(
+                            imagePath.replace("res/raw/", "").replace(".png", ""),
+                            "raw",
+                            ivCover.getContext().getPackageName());
+
+                    Glide.with( ivCover.getContext())
+                            .load(resourceId)
+                            .into(ivCover);
+                } else {
+                    Glide.with( ivCover.getContext())
+                            .load(imagePath)
+                            .into(ivCover);
+                }
+            } else {
+                ivCover.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
+            }
+
         }
+
     }
 
     @Override
