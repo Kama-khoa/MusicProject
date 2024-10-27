@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Background gradient -->
+    <path
+        android:fillColor="#1DB954"
+        android:pathData="M100,0 A100,100 0 1,1 100,200 A100,100 0 1,1 100,0"/>
+
+    <!-- First Music Note (Larger) -->
+    <group
+        android:pivotX="100"
+        android:pivotY="100"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:translateX="50"
+        android:translateY="45">
+        <!-- Note head -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M85,85 A12,10 0 1,1 85,105 A12,10 0 1,1 85,85"/>
+        <!-- Note stem -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M95,40 L99,40 L99,95 L95,95 Z"/>
+        <!-- Flag -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="4"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M99,40 Q120,50 99,75"/>
+    </group>
+
+    <!-- Second Music Note (Smaller) -->
+    <group
+        android:pivotX="100"
+        android:pivotY="100"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:translateX="15"
+        android:translateY="65">
+        <!-- Note head -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M85,85 A12,10 0 1,1 85,105 A12,10 0 1,1 85,85"/>
+        <!-- Note stem -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M95,40 L99,40 L99,95 L95,95 Z"/>
+        <!-- Flag -->
+        <path
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="4"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:pathData="M99,40 Q120,50 99,75"/>
+    </group>
+
+    <!-- Decorative wave lines -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.8"
+        android:pathData="M110,130 Q130,120 150,130 T170,130"/>
+
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0.6"
+        android:pathData="M100,140 Q120,130 140,140 T160,140"/>
+
+</vector>

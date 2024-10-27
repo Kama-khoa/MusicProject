@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import com.example.music_project.R;
 import com.example.music_project.controllers.UserController;
@@ -13,6 +14,7 @@ import com.example.music_project.models.User;
 public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
     private Button btnLogin, btnRegister;
+    private ImageButton btnBack;
     private UserController userController;
 
     @Override
@@ -26,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_register);
-
+        btnBack=findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v->onBackPressed());
         btnLogin.setOnClickListener(v -> login());
         btnRegister.setOnClickListener(v -> openRegisterActivity());
     }
@@ -52,4 +55,5 @@ public class LoginActivity extends AppCompatActivity {
     private void openRegisterActivity() {
         startActivity(new Intent(this, RegisterActivity.class));
     }
+
 }

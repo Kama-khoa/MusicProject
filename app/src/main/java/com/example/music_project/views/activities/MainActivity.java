@@ -20,8 +20,8 @@ import com.example.music_project.views.fragments.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static final String PREF_NAME = "MyAppPreferences17";
-    private static final String KEY_IS_FIRST_RUN = "isFirstRun17";
+    private static final String PREF_NAME = "MyAppPreferences18";
+    private static final String KEY_IS_FIRST_RUN = "isFirstRun18";
 
     private BottomNavigationView bottomNav;
     private PlaybackDialogFragment playbackFragment;
@@ -106,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void updatePlaybackFragmentSong(Song song) {
+        if (playbackFragment != null) {
+            playbackFragment.updateCurrentSong(song);
+        }
+    }
     /**
      * Method to be called by other fragments to play a song
      */

@@ -52,7 +52,8 @@
         <activity android:name=".views.activities.RegisterActivity" />
         <activity
             android:name=".views.activities.ProfileActivity"
-            android:label="@string/profile_activity_title" />
+            android:label="@string/profile_activity_title"
+            android:theme="@style/AppTheme2"/>
 
 
         <service android:name=".services.MusicPlaybackService" />
