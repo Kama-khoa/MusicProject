@@ -78,17 +78,17 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     class SongViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvArtist;
-        ImageView ivCover;
+        ImageView ivCover, ivOptions;
 
         SongViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_song_title);
             tvArtist = itemView.findViewById(R.id.tv_artist);
             ivCover = itemView.findViewById(R.id.iv_song_cover);
+            ivOptions = itemView.findViewById(R.id.img_song_edit_or_del);
 
-            // Sự kiện nhấn vào bài hát
             itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position =  getBindingAdapterPosition();;
                 if (position != RecyclerView.NO_POSITION) {
                     Song clickedSong = songs.get(position);
                     if (selectedSongIds.contains(clickedSong.getSong_id())) {
@@ -102,9 +102,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                 }
             });
 
-            // Sự kiện nhấn giữ vào bài hát
             itemView.setOnLongClickListener(v -> {
-                int position = getAdapterPosition();
+                int position =  getBindingAdapterPosition();;
                 if (position != RecyclerView.NO_POSITION && longClickListener != null) {
                     Song longClickedSong = songs.get(position);
                     longClickListener.onSongLongClick(longClickedSong);

@@ -7,29 +7,27 @@
 
     <!-- Title EditText -->
     <EditText
-        android:id="@+id/et_title"
+        android:id="@+id/et_ud_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tiêu đề bài hát"
+        android:hint="Tiêu đề Update bài hát"
         android:inputType="text"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_edittext_background"
-        android:padding="12dp" />
+    android:padding="12dp" />
 
     <!-- Artist Spinner -->
     <Spinner
-        android:id="@+id/sp_artist"
+        android:id="@+id/sp_ud_artist"
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_spinner_background" /> <!-- Thay đổi nền -->
 
     <!-- Album Spinner -->
-
-
     <!-- Genre Spinner -->
     <Spinner
-        android:id="@+id/sp_genre"
+        android:id="@+id/sp_ud_genre"
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_marginBottom="12dp"
@@ -37,7 +35,7 @@
 
     <!-- Duration TextView -->
     <TextView
-        android:id="@+id/tv_duration"
+        android:id="@+id/tv_ud_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -45,20 +43,20 @@
         android:textColor="#333333"
         android:textSize="16sp" />
 
-    <!-- Upload Audio Button -->
-    <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tải lên file âm thanh"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#1DB954"
-        android:textColor="#040404" />
+<!--    &lt;!&ndash; Upload Audio Button &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/btn_ud_upload"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Tải lên file âm thanh"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:backgroundTint="#1DB954"-->
+<!--    android:textColor="#040404" />-->
 
     <!-- Action Buttons Layout -->
 
     <ImageView
-        android:id="@+id/iv_cover"
+        android:id="@+id/iv_ud_cover"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="5dp"
@@ -73,36 +71,36 @@
 
         <!-- Save Button -->
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btn_ud_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Lưu"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#1D56B9"
-            android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF" />
 
         <!-- Cancel Button -->
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_ud_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Hủy"
             android:layout_marginStart="8dp"
             android:backgroundTint="#FF4444"
-            android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Delete Button -->
     <Button
-        android:id="@+id/btn_delete"
+        android:id="@+id/btn_ud_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Xóa"
         android:layout_marginTop="16dp"
         android:visibility="gone"
         android:backgroundTint="#FF4444"
-        android:textColor="#FFFFFF" />
+    android:textColor="#FFFFFF" />
 
 </LinearLayout>

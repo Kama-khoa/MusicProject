@@ -1,17 +1,20 @@
 package com.example.music_project.views.fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,6 +29,8 @@ import com.example.music_project.models.Artist;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Genre;
 import android.media.MediaMetadataRetriever;
+import android.widget.Toast;
+
 import com.example.music_project.views.activities.SongActivity;
 
 import java.io.IOException;
@@ -33,7 +38,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SongDialogFragment extends DialogFragment {
-    private static final int PICK_AUDIO_REQUEST = 1; // Mã yêu cầu cho tệp âm thanh
+    private static final int PICK_AUDIO_REQUEST = 1;
+    private static final int PICK_IMAGE_REQUEST = 2;// Mã yêu cầu cho tệp âm thanh
 
     private EditText etTitle;
     private Spinner spArtist, spAlbum, spGenre;
@@ -43,10 +49,26 @@ public class SongDialogFragment extends DialogFragment {
     private SongDialogListener listener;
     private Song song;
     private String audioFilePath;
+    private ImageView img_path;
+    private String coverImagePath;
 
     private List<Artist> artists;
     private List<Album> albums;
     private List<Genre> genres;
+    private ActivityResultLauncher<Intent> pickImageLauncher;
+
+    private long songDuration;
+
+
+    private int songId; // Đổi sang kiểu int
+    private String songName;
+    private int artistId;
+    private int albumId;
+    private int genreId;
+
+
+    private String file_path;
+    private String image_path;
 
     private ActivityResultLauncher<Intent> audioFileLauncher;
 
@@ -68,7 +90,12 @@ public class SongDialogFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            song = (Song) getArguments().getSerializable("song");
+            songId = Integer.parseInt(getArguments().getString("songId")); // Chuyển String thành int
+            songName = getArguments().getString("songName");
+            artistId =  Integer.parseInt(getArguments().getString("artist"));
+            genreId =  Integer.parseInt(getArguments().getString("genre"));
+            file_path = getArguments().getString("filepath");
+            image_path = getArguments().getString("imagepath");
         }
     }
 
@@ -85,21 +112,26 @@ public class SongDialogFragment extends DialogFragment {
 
         etTitle = view.findViewById(R.id.et_title);
         spArtist = view.findViewById(R.id.sp_artist);
-        spAlbum = view.findViewById(R.id.sp_album);
         spGenre = view.findViewById(R.id.sp_genre);
         tvDuration = view.findViewById(R.id.tv_duration);
         btnSave = view.findViewById(R.id.btn_save);
         btnCancel = view.findViewById(R.id.btn_cancel);
         btnDelete = view.findViewById(R.id.btn_delete);
         btnUpload = view.findViewById(R.id.btn_upload);
+        img_path = view.findViewById(R.id.iv_cover);
 
-        populateSpinners();
+        img_path.setOnClickListener(v -> pickImage());
+
+        if (artists != null && genres != null) {
+            spArtist.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, artists));
+            spGenre.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, genres));
+        } else {
+            Log.e("SongDialogFragment", "Danh sách nghệ sĩ, album hoặc thể loại không được khởi tạo!");
+        }
 
         if (song != null) {
             etTitle.setText(song.getTitle());
             tvDuration.setText(String.valueOf(song.getDuration()));
-            // Set selected items for spinners
-            // You'll need to find the correct position for each spinner based on the song's data
         }
 
         btnSave.setOnClickListener(v -> saveSong());
@@ -125,6 +157,7 @@ public class SongDialogFragment extends DialogFragment {
                                     // Lấy độ dài bài hát (đơn vị là microsecond)
                                     String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
                                     if (durationStr != null) {
+                                        songDuration = Long.parseLong(durationStr); // Lưu độ dài bài hát vào biến
                                         long durationInMillis = Long.parseLong(durationStr);
                                         long durationInSeconds = durationInMillis / 1000;
                                         tvDuration.setText("Thời lượng: "+ String.format("%d:%02d", durationInSeconds / 60, durationInSeconds % 60));
@@ -144,22 +177,39 @@ public class SongDialogFragment extends DialogFragment {
                 }
         );
 
+        pickImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        if (imageUri != null) {
+                            coverImagePath = imageUri.toString();
+                            img_path.setImageURI(imageUri); // Cập nhật hình ảnh hiển thị
+                        }
+                    }
+                }
+        );
+
 
 
         return view;
+    }
+
+    private void pickImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        pickImageLauncher.launch(intent);
     }
 
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
     }
 
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
-    }
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
+
 
     private void populateSpinners() {
         if (this.artists != null) {
@@ -167,37 +217,10 @@ public class SongDialogFragment extends DialogFragment {
             spArtist.setAdapter(artistAdapter);
         }
 
-        if (this.albums != null) {
-            ArrayAdapter<Album> albumAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, albums);
-            spAlbum.setAdapter(albumAdapter);
-        }
         if(this.genres != null) {
             ArrayAdapter<Genre> genreAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, genres);
             spGenre.setAdapter(genreAdapter);
         }
-    }
-
-    private void saveSong() {
-        String title = etTitle.getText().toString();
-        Artist selectedArtist = (Artist) spArtist.getSelectedItem();
-        Genre selectedGenre = (Genre) spGenre.getSelectedItem();
-
-        if (song == null) {
-            song = new Song();
-        }
-
-        song.setTitle(title);
-        song.setArtist_id(selectedArtist.getArtist_id());
-        song.setGenre_id(selectedGenre.getGenre_id());
-        if (audioFilePath != null) {
-            song.setFile_path(audioFilePath);
-        }
-
-        if (listener != null) {
-            listener.onSongSaved(song);
-        }
-
-        dismiss();
     }
 
     private void deleteSong() {
@@ -219,26 +242,48 @@ public class SongDialogFragment extends DialogFragment {
 
     public void setAudioFilePath(String filePath) {
         this.audioFilePath = filePath;
-        // Update UI to show that an audio file has been selected
         if (btnUpload != null) {
             btnUpload.setText("Audio đã chọn");
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_AUDIO_REQUEST && resultCode == getActivity().RESULT_OK && data != null) {
-//            Uri audioUri = data.getData();
-//            if (audioUri != null) {
-//                audioFilePath = audioUri.toString();
-//                // Cập nhật UI để hiển thị rằng một tệp âm thanh đã được chọn
-//                if (btnUpload != null) {
-//                    btnUpload.setText("Audio đã chọn");
-//                }
-//            }
-//        }
-//    }
+    private void saveSong() {
+        String title = etTitle.getText().toString().trim();
+        Artist selectedArtist = (Artist) spArtist.getSelectedItem();
+        Genre selectedGenre = (Genre) spGenre.getSelectedItem();
+
+        // Kiểm tra thông tin nhập vào không được để trống
+        if (title.isEmpty() || selectedArtist == null || selectedGenre == null) {
+            Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (song == null) {
+            song = new Song();
+        }
+
+        song.setTitle(title);
+        song.setArtist_id(selectedArtist.getArtist_id());
+        song.setGenre_id(selectedGenre.getGenre_id());
+        song.setDuration((int) songDuration);
+        if (audioFilePath != null) {
+            song.setFile_path(audioFilePath);
+
+            Log.e("SongDialogFragment", "link ảnh:" + audioFilePath);
+        }
+
+        if (coverImagePath != null) {
+            //  song.setImage_path(coverImagePath); // Lưu đường dẫn hình ảnh vào bài hát
+
+        }
+
+        if (listener != null) {
+            listener.onSongSaved(song);
+        }
+
+        dismiss();
+    }
+
 
 
 }

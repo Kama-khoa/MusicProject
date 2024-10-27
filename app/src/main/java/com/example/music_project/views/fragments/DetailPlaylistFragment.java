@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +54,8 @@ public class DetailPlaylistFragment extends Fragment {
     private TextView tvPlaylistUserName;
     private TextView tvPlaylistDescription;
     private int playlistId;
+
+    private SongAdapter listenSongAdapter;
     private Button btn_add_song_to_playlist;
 
     private ActivityResultLauncher<Intent> songSelectionLauncher ;
@@ -95,7 +98,7 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
             @Override
             public void onSongClick(Song song) {
                 // Xử lý khi nhấn ngắn vào bài hát
-                Toast.makeText(getContext(), "Đã chọn: " + song.getTitle(), Toast.LENGTH_SHORT).show();
+                playSong(song); // Gọi phương thức phát nhạc
             }
         });
 
@@ -205,9 +208,35 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
             popup.show();
         });
 
+        listenSongAdapter = new SongAdapter(songList, song -> {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            PlaybackDialogFragment playbackFragment =
+                    (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+            if (playbackFragment != null) {
+                playbackFragment.updateSong(song.getSong_id());
+            }
+        });
+
         loadSongsInPlaylist(playlistId, getArguments().getString(ARG_PLAYLIST_NAME), getArguments().getString(ARG_USER_NAME));
 
         return view;
+    }
+
+    private void playSong(Song song) {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        PlaybackDialogFragment playbackFragment =
+                (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+        if (playbackFragment != null) {
+            // Cập nhật bài hát trong playbackFragment
+            playbackFragment.updateSong(song.getSong_id());
+        } else {
+            // Nếu không tìm thấy playbackFragment, có thể mở một Activity khác
+            Intent intent = new Intent(getContext(), SongActivity.class);
+            intent.putExtra("song_id", song.getSong_id()); // Truyền ID bài hát
+            startActivity(intent);
+        }
     }
 
 
@@ -298,6 +327,10 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
         EditText edtPlaylistName = dialogView.findViewById(R.id.edt_playlist_name);
         EditText edtPlaylistDescription = dialogView.findViewById(R.id.edt_playlist_description);
         ImageView imgPlaylistCoverDialog = dialogView.findViewById(R.id.img_playlist_cover);
+
+        String playlistName = getArguments().getString(ARG_PLAYLIST_NAME);
+
+        edtPlaylistName.setText(playlistName);
 
         // Cập nhật ảnh bìa nếu có
         if (newImageUri != null) {
@@ -447,6 +480,8 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
             }
         });
     }
+
+
 
 
 }
