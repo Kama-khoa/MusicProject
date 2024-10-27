@@ -145,4 +145,26 @@ public class MusicPlaybackService extends Service {
             isPrepared = false;
         }
     }
+    public void playFromResourceId(int resourceId, Song song) {
+        try {
+            if (mediaPlayer == null) {
+                mediaPlayer = new MediaPlayer();
+            } else {
+                mediaPlayer.reset();
+            }
+
+            // Sử dụng trực tiếp resource ID
+            mediaPlayer.setDataSource(getApplicationContext(),
+                    Uri.parse("android.resource://" + getPackageName() + "/" + resourceId));
+
+            currentSong = song;
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+            isPrepared = true;
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error playing from resource: ", e);
+            isPrepared = false;
+        }
+    }
 }
