@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,7 @@ import com.example.music_project.models.PlayHistory;
 import com.example.music_project.models.Song;
 import com.example.music_project.models.User;
 import com.example.music_project.views.activities.LoginActivity;
-import com.example.music_project.views.activities.PlayerActivity;
+
 import com.example.music_project.views.activities.ProfileActivity;
 import com.example.music_project.views.activities.SettingsActivity;
 import com.example.music_project.views.activities.SongActivity;
@@ -89,17 +90,23 @@ public class HomeFragment extends Fragment {
 
         // Adapter cho danh sách nhạc gần đây
         recentSongAdapter = new SongAdapter(recentSongs, song -> {
-            // Khởi chạy PlayerActivity và truyền song_id
-            Intent intent = new Intent(getActivity(), PlayerActivity.class);
-            intent.putExtra("SONG_ID", song.getSong_id()); // Truyền ID hoặc đường dẫn bài hát
-            startActivity(intent);
+            FragmentManager fragmentManager = getParentFragmentManager();
+            PlaybackDialogFragment playbackFragment =
+                    (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+            if (playbackFragment != null) {
+                playbackFragment.updateSong(song.getSong_id());
+            }
         });
-        // Adapter cho danh sách nhạc phổ biến
+
         popularSongAdapter = new SongAdapter(popularSongs, song -> {
-            // Xử lý khi người dùng nhấn vào bài hát phổ biến
-            Intent intent = new Intent(getActivity(), PlayerActivity.class);
-            intent.putExtra("SONG_ID", song.getSong_id()); // Truyền ID hoặc đường dẫn bài hát
-            startActivity(intent);
+            FragmentManager fragmentManager = getParentFragmentManager();
+            PlaybackDialogFragment playbackFragment =
+                    (PlaybackDialogFragment) fragmentManager.findFragmentById(R.id.player_container);
+
+            if (playbackFragment != null) {
+                playbackFragment.updateSong(song.getSong_id());
+            }
         });
 
         rvRecentSongs.setAdapter(recentSongAdapter);
@@ -237,15 +244,6 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
-    }
-
-
-
-    private void playSong(Song song) {
-        // Implement this method to start playing the song
-        // You might want to use a PlayerController or MusicPlaybackService here
-        Toast.makeText(getContext(), "Playing: " + song.getTitle(), Toast.LENGTH_SHORT).show();
-        // Example: playerController.playSong(song);
     }
 
     private void handleEmptyState(RecyclerView recyclerView, int messageResId) {

@@ -42,9 +42,7 @@
             android:exported="false" />
         <activity android:name=".views.activities.SongActivity"
             android:exported="false" />
-        <activity android:name=".views.activities.PlayerActivity"
-            android:launchMode="singleTop"
-            android:exported="false" />
+
         <activity android:name=".views.activities.SongSelectionActivity" />
 
         <activity android:name=".views.activities.SettingsActivity"
@@ -54,7 +52,9 @@
             android:name=".views.activities.ProfileActivity"
             android:label="@string/profile_activity_title"
             android:theme="@style/AppTheme2"/>
-
+        <activity
+            android:name=".views.activities.FullPlaybackActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <service android:name=".services.MusicPlaybackService" />
         <!-- Receivers -->

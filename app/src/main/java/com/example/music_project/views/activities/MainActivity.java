@@ -105,36 +105,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updatePlaybackFragmentSong(Song song) {
-        if (playbackFragment != null) {
-            playbackFragment.updateCurrentSong(song);
-        }
-    }
-    /**
-     * Method to be called by other fragments to play a song
-     */
-    public void playSong(Song song) {
-        if (playbackFragment != null) {
-            playbackFragment.updateCurrentSong(song);
-        }
-    }
-
-    /**
-     * Get the currently playing status
-     * @return boolean indicating if music is currently playing
-     */
-    public boolean isPlaying() {
-        return playbackFragment != null && playbackFragment.isPlaying();
-    }
-
-//    /**
-//     * Get the currently playing song
-//     * @return Song object that is currently playing, or null if none
-//     */
-//    public Song getCurrentPlayingSong() {
-//        return playbackFragment != null ? playbackFragment.getCurrentSong() : null;
-//    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

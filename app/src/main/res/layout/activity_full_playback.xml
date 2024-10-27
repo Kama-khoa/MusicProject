@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    tools:context=".views.activities.PlayerActivity">
+    android:background="@drawable/gradient_background">
 
     <!-- Back Button -->
     <ImageButton
@@ -85,7 +84,7 @@
         android:layout_marginTop="32dp"
         android:gravity="start"
         android:paddingHorizontal="24dp"
-        android:text="Đi Qua Thương Nhớ"
+        android:text=""
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -99,7 +98,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingHorizontal="24dp"
-        android:text="Hà Nhi"
+        android:text=""
         android:textColor="#CCFFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
