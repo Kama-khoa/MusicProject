@@ -303,54 +303,6 @@ public class PlaybackDialogFragment extends Fragment {
         return 0;
     }
 
-    private void playSongById(int songId) {
-        if (!isPlaylistLoaded) {
-            Toast.makeText(requireContext(), "Đang tải danh sách phát...", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            try {
-                Song song = database.songDao().getSongById(songId);
-                if (getActivity() == null) return;
-
-                getActivity().runOnUiThread(() -> {
-                    if (song != null) {
-                        updateSongInfo(song);
-                        String filePath = song.getFile_path();
-                        if (filePath != null && !filePath.isEmpty()) {
-                            String resourceName = filePath
-                                    .replace("res/raw/", "")
-                                    .replaceAll("\\.mp3$", "")
-                                    .toLowerCase()
-                                    .replaceAll("[^a-z0-9_]", "_");
-
-                            int resourceId = getResources().getIdentifier(
-                                    resourceName,
-                                    "raw",
-                                    requireContext().getPackageName()
-                            );
-
-                            if (resourceId != 0) {
-                                song.setFile_path("android.resource://" + requireContext().getPackageName() + "/" + resourceId);
-                                playSong(song);
-                            } else {
-                                Toast.makeText(requireContext(), "Không tìm thấy tài nguyên nhạc", Toast.LENGTH_SHORT).show();
-                                Log.e(TAG, "Resource not found: " + resourceName);
-                            }
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "Không tìm thấy bài hát", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "Song not found with ID: " + songId);
-                    }
-                });
-            } catch (Exception e) {
-                Log.e(TAG, "Error loading song: ", e);
-            }
-        });
-    }
-
     private void playSong(Song song) {
         if (!isBound || musicService == null || !isViewInitialized) {
             Log.e(TAG, "Service not bound or views not initialized");
@@ -361,9 +313,14 @@ public class PlaybackDialogFragment extends Fragment {
             // Cập nhật UI
             updateSongInfo(song);
 
-            // Xử lý file path
             String filePath = song.getFile_path();
-            if (filePath != null && !filePath.isEmpty()) {
+
+            // Nếu file_path là resource ID
+            if (filePath.matches("\\d+")) {
+                int resourceId = Integer.parseInt(filePath);
+                musicService.playFromResourceId(resourceId, song);
+            } else {
+                // Xử lý file path thông thường
                 String resourceName = filePath
                         .replace("res/raw/", "")
                         .replaceAll("\\.mp3$", "")
@@ -377,12 +334,10 @@ public class PlaybackDialogFragment extends Fragment {
                 );
 
                 if (resourceId != 0) {
-                    song.setFile_path("android.resource://" + requireContext().getPackageName() + "/" + resourceId);
+                    song.setFile_path(String.valueOf(resourceId));
+                    musicService.playFromResourceId(resourceId, song);
 
-                    // Phát nhạc
-                    musicService.playSong(song);
-
-                    // Lưu thông tin bài hát ngay lập tức
+                    // Lưu thông tin bài hát
                     saveLastPlayedSong();
 
                     handler.postDelayed(() -> {
@@ -399,6 +354,7 @@ public class PlaybackDialogFragment extends Fragment {
                 } else {
                     Log.e(TAG, "Resource not found: " + resourceName);
                     Toast.makeText(requireContext(), "Không tìm thấy file nhạc", Toast.LENGTH_SHORT).show();
+                    playNextSong();
                 }
             }
         } catch (Exception e) {
@@ -406,9 +362,11 @@ public class PlaybackDialogFragment extends Fragment {
             if (isAdded()) {
                 Toast.makeText(requireContext(), "Lỗi khi phát nhạc: " + e.getMessage(),
                         Toast.LENGTH_SHORT).show();
+                playNextSong();
             }
         }
     }
+
 
 
     private void setupMediaPlayerUI() {
@@ -455,21 +413,155 @@ public class PlaybackDialogFragment extends Fragment {
         }
     }
     private void playNextSong() {
-        if (playList != null && !playList.isEmpty()) {
+        if (playList == null || playList.isEmpty()) {
+            return;
+        }
+
+        int startIndex = currentSongIndex;
+        boolean foundPlayableSong = false;
+
+        do {
             currentSongIndex = (currentSongIndex + 1) % playList.size();
-            if (currentSongIndex >= 0 && currentSongIndex < playList.size()) {
-                playSongById(playList.get(currentSongIndex).getSong_id());
+            if (isPlayableSong(playList.get(currentSongIndex))) {
+                foundPlayableSong = true;
+                break;
+            }
+            // Nếu đã duyệt hết playlist mà không tìm thấy bài hát nào phát được
+            if (currentSongIndex == startIndex) {
+                break;
+            }
+        } while (!foundPlayableSong);
+
+        if (foundPlayableSong) {
+            playSongById(playList.get(currentSongIndex).getSong_id());
+        } else {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "Không tìm thấy bài hát nào có thể phát",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void playPreviousSong() {
-        if (playList != null && !playList.isEmpty()) {
+        if (playList == null || playList.isEmpty()) {
+            return;
+        }
+
+        int startIndex = currentSongIndex;
+        boolean foundPlayableSong = false;
+
+        do {
             currentSongIndex = (currentSongIndex - 1 + playList.size()) % playList.size();
-            if (currentSongIndex >= 0 && currentSongIndex < playList.size()) {
-                playSongById(playList.get(currentSongIndex).getSong_id());
+            if (isPlayableSong(playList.get(currentSongIndex))) {
+                foundPlayableSong = true;
+                break;
+            }
+            // Nếu đã duyệt hết playlist mà không tìm thấy bài hát nào phát được
+            if (currentSongIndex == startIndex) {
+                break;
+            }
+        } while (!foundPlayableSong);
+
+        if (foundPlayableSong) {
+            playSongById(playList.get(currentSongIndex).getSong_id());
+        } else {
+            if (isAdded()) {
+                Toast.makeText(requireContext(),
+                        "Không tìm thấy bài hát nào có thể phát",
+                        Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private boolean isPlayableSong(Song song) {
+        try {
+            if (song == null || song.getFile_path() == null) {
+                return false;
+            }
+
+            String filePath = song.getFile_path();
+
+            // Nếu file_path đã là resource ID
+            if (filePath.matches("\\d+")) {
+                return true;
+            }
+
+            String resourceName = filePath
+                    .replace("res/raw/", "")
+                    .replaceAll("\\.mp3$", "")
+                    .toLowerCase()
+                    .replaceAll("[^a-z0-9_]", "_");
+
+            int resourceId = getResources().getIdentifier(
+                    resourceName,
+                    "raw",
+                    requireContext().getPackageName()
+            );
+
+            return resourceId != 0;
+        } catch (Exception e) {
+            Log.e(TAG, "Error checking playable song: ", e);
+            return false;
+        }
+    }
+
+    private void playSongById(int songId) {
+        if (!isPlaylistLoaded) {
+            Toast.makeText(requireContext(), "Đang tải danh sách phát...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try {
+                Song song = database.songDao().getSongById(songId);
+                if (getActivity() == null) return;
+
+                getActivity().runOnUiThread(() -> {
+                    if (song != null && isPlayableSong(song)) {
+                        updateSongInfo(song);
+                        try {
+                            String filePath = song.getFile_path();
+                            String resourceName = filePath
+                                    .replace("res/raw/", "")
+                                    .replaceAll("\\.mp3$", "")
+                                    .toLowerCase()
+                                    .replaceAll("[^a-z0-9_]", "_");
+
+                            int resourceId = getResources().getIdentifier(
+                                    resourceName,
+                                    "raw",
+                                    requireContext().getPackageName()
+                            );
+
+                            if (resourceId != 0) {
+                                // Chỉ cần truyền resourceId cho service, không cần chuyển thành URI
+                                song.setFile_path(String.valueOf(resourceId));
+                                playSong(song);
+                            } else {
+                                Log.e(TAG, "Resource not found: " + resourceName);
+                                Toast.makeText(requireContext(),
+                                        "Không tìm thấy file nhạc: " + song.getTitle(),
+                                        Toast.LENGTH_SHORT).show();
+                                playNextSong();
+                            }
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error preparing song: " + e.getMessage());
+                            playNextSong();
+                        }
+                    } else {
+                        Log.e(TAG, "Song not playable, trying next song");
+                        playNextSong();
+                    }
+                });
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading song: ", e);
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(this::playNextSong);
+                }
+            }
+        });
     }
 
     private void startSeekBarUpdate() {
