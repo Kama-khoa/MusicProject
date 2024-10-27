@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -34,6 +35,10 @@ import java.util.concurrent.Executors;
 public class PlaybackDialogFragment extends Fragment {
     private static final String TAG = "PlaybackDialogFragment";
     private static final int UPDATE_INTERVAL = 1000;
+    private static final String PREFS_NAME = "MusicPlayerPrefs";
+    private static final String LAST_PLAYED_SONG_ID = "lastPlayedSongId";
+    private static final String LAST_PLAYED_POSITION = "lastPlayedPosition";
+    private SharedPreferences preferences;
 
     private MusicPlaybackService musicService;
     private boolean isBound = false;
@@ -79,6 +84,8 @@ public class PlaybackDialogFragment extends Fragment {
         super.onCreate(savedInstanceState);
         handler = new Handler();
         database = AppDatabase.getInstance(requireContext());
+        preferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
         loadPlaylist();
     }
 
@@ -127,9 +134,8 @@ public class PlaybackDialogFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser && isBound && musicService != null) {
-                    // Sửa cách tính vị trí mới
                     int duration = musicService.getDuration();
-                    int newPosition = (int) ((duration * progress) / 100); // Đổi 1000 thành 100
+                    int newPosition = (int) ((duration * progress) / 100);
                     musicService.seekTo(newPosition);
                     updateCurrentTimeText(newPosition);
                 }
@@ -226,10 +232,17 @@ public class PlaybackDialogFragment extends Fragment {
 
         try {
             musicService.playSong(song);
+            // Lưu bài hát hiện tại
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(LAST_PLAYED_SONG_ID, song.getSong_id());
+            editor.putInt(LAST_PLAYED_POSITION, 0); // Reset position khi phát bài mới
+            editor.apply();
+
             handler.postDelayed(() -> {
                 if (isAdded() && isViewInitialized) {
                     setupMediaPlayerUI();
-                    startSeekBarUpdate();
+                    // Mặc định sẽ là pause khi load bài hát
+                    musicService.pauseSong();
                     updatePlayPauseButton();
                 }
             }, 200);
@@ -240,13 +253,12 @@ public class PlaybackDialogFragment extends Fragment {
 
     private void setupMediaPlayerUI() {
         if (!isAdded() || totalTimeTextView == null) {
-            Log.e(TAG, "Fragment not attached or views not initialized");
             return;
         }
 
         if (isBound && musicService != null && musicService.isPrepared()) {
             int duration = musicService.getDuration();
-            seekBar.setMax(100); // Đổi từ 1000 thành 100 để dễ tính toán phần trăm
+            seekBar.setMax(100);
             totalTimeTextView.setText(formatTime(duration));
             updatePlayPauseButton();
         }
@@ -273,11 +285,15 @@ public class PlaybackDialogFragment extends Fragment {
 
     private void updatePlayPauseButton() {
         if (!isAdded()) return;
+        boolean isPlaying = isPlaying();
         playPauseButton.setImageResource(
-                isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play
+                isPlaying ? R.drawable.ic_pause : R.drawable.ic_play
         );
-    }
 
+        if (!isPlaying) {
+            stopSeekBarUpdate();
+        }
+    }
     private void playNextSong() {
         if (playList != null && !playList.isEmpty()) {
             currentSongIndex = (currentSongIndex + 1) % playList.size();
@@ -357,15 +373,74 @@ public class PlaybackDialogFragment extends Fragment {
         if (musicService != null) {
             Song currentSong = musicService.getCurrentSong();
             if (currentSong != null) {
+                // Nếu service đã có bài hát đang phát
                 updateSongInfo(currentSong);
                 setupMediaPlayerUI();
-                if (musicService.isPlaying()) {
-                    startSeekBarUpdate();
+                // Đảm bảo ở trạng thái pause
+                musicService.pauseSong();
+                updatePlayPauseButton();
+            } else {
+                // Nếu service chưa có bài hát, load bài hát cuối cùng từ SharedPreferences
+                int lastPlayedSongId = preferences.getInt(LAST_PLAYED_SONG_ID, -1);
+                int lastPosition = preferences.getInt(LAST_PLAYED_POSITION, 0);
+                if (lastPlayedSongId != -1) {
+                    loadLastPlayedSong(lastPlayedSongId, lastPosition);
                 }
             }
         }
     }
+    private void loadLastPlayedSong(int songId, int position) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try {
+                Song song = database.songDao().getSongById(songId);
+                if (song != null && getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        updateSongInfo(song);
+                        String filePath = song.getFile_path();
+                        if (filePath != null && !filePath.isEmpty()) {
+                            String resourceName = filePath
+                                    .replace("res/raw/", "")
+                                    .replaceAll("\\.mp3$", "")
+                                    .toLowerCase()
+                                    .replaceAll("[^a-z0-9_]", "_");
 
+                            int resourceId = getResources().getIdentifier(
+                                    resourceName,
+                                    "raw",
+                                    requireContext().getPackageName()
+                            );
+
+                            if (resourceId != 0) {
+                                song.setFile_path("android.resource://" + requireContext().getPackageName() + "/" + resourceId);
+                                playSong(song);
+                                // Seek đến vị trí đã lưu sau khi phát
+                                handler.postDelayed(() -> {
+                                    if (musicService != null) {
+                                        musicService.seekTo(position);
+                                        // Đảm bảo nó ở trạng thái pause
+                                        musicService.pauseSong();
+                                        updatePlayPauseButton();
+                                        setupMediaPlayerUI();
+                                    }
+                                }, 300);
+                            }
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading last played song: ", e);
+            }
+        });
+    }
+    private void saveLastPlayedSong() {
+        if (musicService != null && musicService.getCurrentSong() != null) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(LAST_PLAYED_SONG_ID, musicService.getCurrentSong().getSong_id());
+            editor.putInt(LAST_PLAYED_POSITION, musicService.getCurrentPosition());
+            editor.apply();
+        }
+    }
     public boolean isPlaying() {
         return isBound && musicService != null && musicService.isPlaying();
     }
@@ -385,10 +460,12 @@ public class PlaybackDialogFragment extends Fragment {
     public void onPause() {
         super.onPause();
         stopSeekBarUpdate();
+        saveLastPlayedSong();
     }
 
     @Override
     public void onDestroy() {
+        saveLastPlayedSong();
         stopSeekBarUpdate();
         if (isBound) {
             requireContext().unbindService(serviceConnection);

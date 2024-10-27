@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.player_container, playbackFragment)
                     .commit();
 
-            // Start the music service
             Intent serviceIntent = new Intent(this, MusicPlaybackService.class);
             startService(serviceIntent);
         } else {
