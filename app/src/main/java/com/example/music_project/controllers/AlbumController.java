@@ -76,7 +76,7 @@ public class AlbumController {
     public void getSongsInAlbum(int albumId, OnSongsLoadedListener listener) {
         executorService.execute(()->{
             try {
-                List<Song> songs = database.albumSongDao().getSongsByAlbumId(albumId);
+                List<Song> songs = database.songDao().getSongsByAlbumId(albumId);
 
                 // If songs are found, return the result in the listener
                 if (songs != null && !songs.isEmpty()) {
@@ -146,6 +146,29 @@ public class AlbumController {
                 new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Album not found"));
             }
         });
+    }
+
+    public void deleteSongFromAlbum(int albumId, int songId, AlbumController.OnSongDeletedListener listener) {
+        executorService.execute(() -> {
+            // Get the PlaylistSong object that links the playlist and the song
+            AlbumSong albumSong = database.albumSongDao().getAlbumSong(albumId, songId);
+
+            if (albumSong != null) {
+                // If the association exists, delete it
+                database.albumSongDao().delete(albumId, songId);
+
+                // Notify success on the main thread
+                new Handler(Looper.getMainLooper()).post(() -> listener.onSongDeleted(null));
+            } else {
+                // If no association is found, notify failure
+                new Handler(Looper.getMainLooper()).post(() -> listener.onFailure("Không tìm thấy bài hát trong playlist"));
+            }
+        });
+    }
+
+    public interface OnSongDeletedListener {
+        void onSongDeleted(Song song);  // Called when the song is successfully deleted
+        void onFailure(String error);   // Called if there was an error
     }
 
     public interface OnAlbumDeletedListener {

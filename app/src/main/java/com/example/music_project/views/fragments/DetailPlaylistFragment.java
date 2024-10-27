@@ -145,7 +145,6 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
                 }
         );
 
-
         // Tìm kiếm
         SearchView searchView = view.findViewById(R.id.sv_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -386,7 +385,6 @@ public static DetailPlaylistFragment newInstance(int playlistId, String playlist
             }
         });
     }
-
 
     private void showDeleteConfirmationDialog() {
         new AlertDialog.Builder(requireContext())

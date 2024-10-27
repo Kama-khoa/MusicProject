@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.models.AlbumWithDetails;
 
@@ -74,6 +75,10 @@ public class AlbumWithDetailsAdapter extends RecyclerView.Adapter<AlbumWithDetai
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDate = dateFormat.format(albumWithDetails.getAlbum().getRelease_date());
             tvAlbumReleaseDate.setText(formattedDate);
+            Glide.with(itemView.getContext())
+                    .load(albumWithDetails.getAlbum().getCover_image_path())
+                    .error(R.drawable.default_album_art)
+                    .into(imgAlbumCover);
 
             itemView.setOnClickListener(v -> listener.onAlbumWithDetailsClick(albumWithDetails));
 

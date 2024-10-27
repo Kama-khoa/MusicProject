@@ -15,21 +15,18 @@ public class Album {
 
     @PrimaryKey(autoGenerate = true)
     public int album_id;
-
     public int artist_id;
     public int genre_id;
     public String title;
     public Date release_date;
-
-    // New field to store album cover image path or URI
     public String cover_image_path;
 
-    public Album(String title, int artist_id, int genre_id, Date release_date, String cover_image_path) {
+    public Album(String title, int artist_id, int genre_id, Date release_date) {
         this.title = title;
         this.artist_id = artist_id;
         this.genre_id = genre_id;
         this.release_date = release_date;
-        this.cover_image_path = cover_image_path;
+        this.cover_image_path = null;
     }
 
     // Getters and Setters

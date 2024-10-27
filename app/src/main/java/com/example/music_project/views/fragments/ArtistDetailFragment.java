@@ -3,6 +3,7 @@ package com.example.music_project.views.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.music_project.R;
 import com.example.music_project.controllers.ArtistController;
+import com.example.music_project.controllers.GenreController;
 import com.example.music_project.models.Album;
+import com.example.music_project.models.AlbumWithDetails;
 import com.example.music_project.models.Artist;
+import com.example.music_project.models.Genre;
 import com.example.music_project.models.Song;
 import com.example.music_project.views.adapters.AlbumAdapter;
+import com.example.music_project.views.adapters.AlbumWithDetailsAdapter;
 import com.example.music_project.views.adapters.SongAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -119,31 +125,49 @@ public class ArtistDetailFragment extends Fragment {
                 artistController.getArtistAlbums(artistId, new ArtistController.OnAlbumsLoadedListener() {
                     @Override
                     public void onAlbumsLoaded(List<Album> albums) {
-                        // Create an adapter that also displays the artist name
-                        AlbumAdapter albumAdapter = new AlbumAdapter(albums, new AlbumAdapter.OnAlbumClickListener() {
-                            @Override
-                            public void onAlbumClick(Album album) {
-                                loadAlbumDetailFragment(album.getAlbum_id(), album.getTitle(), artistId, album.getGenre_id());
-                            }
-                        }, new AlbumAdapter.OnAlbumLongClickListener() {
-                            @Override
-                            public void onAlbumLongClick(Album album) {
-                                showEditAlbumDialog(album);
-                            }
-                        });
-                        rvAlbums.setAdapter(albumAdapter);
+                        // Create a list to hold AlbumWithDetails
+                        List<AlbumWithDetails> albumDetailsList = new ArrayList<>();
+
+                        // Load each album's details
+                        for (Album album : albums) {
+
+                            AlbumWithDetails details = new AlbumWithDetails(album, artist.getArtist_name(), String.valueOf(album.getGenre_id()));
+                            albumDetailsList.add(details);
+                            // Update adapter after all details are loaded
+                            if (albumDetailsList.size() == albums.size())
+                                updateAdapter(albumDetailsList); // Ensure you have this method to update the adapter
+                        }
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
+                        new Handler(Looper.getMainLooper()).post(() ->
+                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
                     }
                 });
             }
+
             @Override
             public void onFailure(String error) {
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
+                new Handler(Looper.getMainLooper()).post(() ->
+                        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show());
             }
+        });
+    }
+
+    // Cập nhật adapter với danh sách AlbumWithDetails
+    private void updateAdapter(List<AlbumWithDetails> albumDetailsList) {
+        // Chạy trên luồng chính để cập nhật adapter
+        new Handler(Looper.getMainLooper()).post(() -> {
+            // Cập nhật adapter với albumDetailsList
+            AlbumWithDetailsAdapter albumWithDetailsAdapter = new AlbumWithDetailsAdapter(albumDetailsList,
+                    albumWithDetails -> loadAlbumDetailFragment(albumWithDetails.getAlbum().getAlbum_id(),
+                            albumWithDetails.getAlbum().getTitle(),
+                            albumWithDetails.getAlbum().getArtist_id(),
+                            albumWithDetails.getAlbum().getGenre_id()),
+                    albumWithDetails -> showEditAlbumDialog(albumWithDetails.getAlbum()));  // Handle long press event
+
+            rvAlbums.setAdapter(albumWithDetailsAdapter);
         });
     }
 
