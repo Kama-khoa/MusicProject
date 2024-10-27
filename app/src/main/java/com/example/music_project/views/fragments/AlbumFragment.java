@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +92,7 @@ public class AlbumFragment extends Fragment {
         loadArtistName(artistId, view);
         loadGenreName(genreId, view);
 
+        loadAlbumDetails(albumId);
         ImageButton btn_setting = view.findViewById(R.id.btn_setting);
         btn_setting.setOnClickListener(v -> showEditAlbumDialog(albumId));
 
@@ -149,25 +152,12 @@ public class AlbumFragment extends Fragment {
                 if (album != null) {
                     tvAlbumName.setText(album.getTitle());
                     String coverImagePath = album.getCover_image_path();
-                    Log.d("AlbumFragment", "Cover image path: " + coverImagePath);
                     if (coverImagePath != null && !coverImagePath.isEmpty()) {
-                        try {
-                            // Chuyển đổi đường dẫn thành Uri
-                            Uri imageUri = Uri.parse(coverImagePath);
-
-                            // Sử dụng Glide với Uri
-                            Glide.with(AlbumFragment.this)
-                                    .load(coverImagePath)
-                                    .placeholder(R.drawable.sample_album_cover)
-                                    .error(R.drawable.default_album_art)
-                                    .into(imgAlbumCover);
-
-                        } catch (Exception e) {
-                            // Xử lý lỗi khi parse Uri
-                            imgAlbumCover.setImageResource(R.drawable.default_album_art);
-                            Toast.makeText(getContext(), "Lỗi tải ảnh: " + e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        Glide.with(requireContext())
+                                .load(coverImagePath)
+                                .placeholder(R.drawable.sample_album_cover)
+                                .error(R.drawable.default_album_art)
+                                .into(imgAlbumCover);
                     } else {
                         imgAlbumCover.setImageResource(R.drawable.default_album_art);
                     }

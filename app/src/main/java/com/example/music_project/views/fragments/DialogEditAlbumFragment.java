@@ -143,7 +143,7 @@ public class DialogEditAlbumFragment extends DialogFragment {
                     etAlbumTitle.setText(album.getTitle());
                     currentCoverImagePath = album.getCover_image_path();
                     if (currentCoverImagePath != null && !currentCoverImagePath.isEmpty()) {
-                        Glide.with(DialogEditAlbumFragment.this)
+                        Glide.with(requireContext())
                                 .load(currentCoverImagePath)
                                 .into(imgAlbumCover);
                     }

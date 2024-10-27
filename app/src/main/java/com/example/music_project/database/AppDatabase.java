@@ -25,7 +25,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaylistDao playlistDao();
     public abstract PlaylistSongDao playlistSongDao();
     public abstract FavouriteDao favouriteDao();
-    public abstract HistoryDao historyDao();
     public abstract AlbumSongDao albumSongDao();
     public abstract PlayHistoryDao playHistoryDao();
 
