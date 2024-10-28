@@ -382,7 +382,7 @@ public class LibraryFragment extends Fragment {
                         playlistController.createPlaylist(userId, playlistName, new PlaylistController.OnPlaylistCreatedListener() {
                             @Override
                             public void onSuccess() {
-                                loadPlaylistsByUserID(userId);
+                                loadPlaylists();
                             }
 
                             @Override
