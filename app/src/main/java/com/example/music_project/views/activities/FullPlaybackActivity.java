@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Song;
@@ -33,6 +35,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
     private ImageButton shuffleButton;
     private ImageButton timerButton;
     private SeekBar playbackSeekBar;
+    private ImageView albumCoverImageView; // Fixed typo here
     private TextView trackInfoTextView;
     private TextView artistTextView;
     private TextView currentTimeTextView;
@@ -68,11 +71,6 @@ public class FullPlaybackActivity extends AppCompatActivity {
                 int songId = intent.getIntExtra("SONG_ID", -1);
                 if (songId != -1) {
                     loadSongInfo(songId);
-                    // Reset and restart seekbar updates
-                    handler.removeCallbacksAndMessages(null);
-                    if (isBound && musicService != null && musicService.isPlaying()) {
-                        startSeekBarUpdate();
-                    }
                 }
             }
         }
@@ -83,7 +81,6 @@ public class FullPlaybackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_playback);
 
-        // Add this line
         playbackManager = new PlaybackManager(this);
 
         initializeViews();
@@ -93,6 +90,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
         bindMusicService();
         registerBroadcastReceiver();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -105,6 +103,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
             );
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -120,12 +119,9 @@ public class FullPlaybackActivity extends AppCompatActivity {
                 }
             }
             updatePlaybackState();
-            // If music is playing, ensure seekbar updates are running
-            if (musicService.isPlaying()) {
-                startSeekBarUpdate();
-            }
         }
     }
+
     private void initializeViews() {
         backButton = findViewById(R.id.backButton);
         playPauseButton = findViewById(R.id.playPauseButton);
@@ -138,11 +134,11 @@ public class FullPlaybackActivity extends AppCompatActivity {
         artistTextView = findViewById(R.id.artistTextView);
         currentTimeTextView = findViewById(R.id.currentTimeTextView);
         totalTimeTextView = findViewById(R.id.totalTimeTextView);
+        albumCoverImageView = findViewById(R.id.albumArtImageView); // Fixed typo here
     }
 
     private void setupListeners() {
         backButton.setOnClickListener(v -> finish());
-
         playPauseButton.setOnClickListener(v -> togglePlayPause());
         nextButton.setOnClickListener(v -> playNextSong());
         previousButton.setOnClickListener(v -> playPreviousSong());
@@ -203,10 +199,8 @@ public class FullPlaybackActivity extends AppCompatActivity {
         if (isBound && musicService != null) {
             if (musicService.isPlaying()) {
                 musicService.pauseSong();
-                handler.removeCallbacksAndMessages(null); // Stop seekbar updates when paused
             } else {
                 musicService.resumeSong();
-                startSeekBarUpdate(); // Restart seekbar updates when resuming
             }
             updatePlayPauseButton();
         }
@@ -215,28 +209,12 @@ public class FullPlaybackActivity extends AppCompatActivity {
     private void playNextSong() {
         if (isBound && musicService != null) {
             musicService.playNextSong();
-            // Reset and restart seekbar updates for the new song
-            handler.removeCallbacksAndMessages(null);
-            handler.postDelayed(() -> {
-                updateSongInfo();
-                if (musicService.isPlaying()) {
-                    startSeekBarUpdate();
-                }
-            }, 100); // Small delay to ensure service has updated
         }
     }
 
     private void playPreviousSong() {
         if (isBound && musicService != null) {
             musicService.playPreviousSong();
-            // Reset and restart seekbar updates for the new song
-            handler.removeCallbacksAndMessages(null);
-            handler.postDelayed(() -> {
-                updateSongInfo();
-                if (musicService.isPlaying()) {
-                    startSeekBarUpdate();
-                }
-            }, 100); // Small delay to ensure service has updated
         }
     }
 
@@ -244,18 +222,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
         new Thread(() -> {
             Song song = database.songDao().getSongById(songId);
             if (song != null) {
-                runOnUiThread(() -> {
-                    updateSongInfo(song);
-                    // Ensure seekbar is properly initialized for the new song
-                    if (isBound && musicService != null) {
-                        playbackSeekBar.setMax(musicService.getDuration());
-                        playbackSeekBar.setProgress(musicService.getCurrentPosition());
-                        updateTimeLabels(musicService.getCurrentPosition(), musicService.getDuration());
-                        if (musicService.isPlaying()) {
-                            startSeekBarUpdate();
-                        }
-                    }
-                });
+                runOnUiThread(() -> updateSongInfo(song));
             }
         }).start();
     }
@@ -267,9 +234,37 @@ public class FullPlaybackActivity extends AppCompatActivity {
     }
 
     private void updateSongInfo(Song song) {
+        if (song == null) return; // Add null check for song
+
         trackInfoTextView.setText(song.getTitle());
         artistTextView.setText(song.getArtistName() != null && !song.getArtistName().isEmpty()
                 ? song.getArtistName() : "Unknown Artist");
+
+        // Add null check for albumCoverImageView
+        if (albumCoverImageView != null) {
+            String imagePath = song.getImg_path();
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                int resourceId = getResources().getIdentifier(
+                        imagePath,
+                        "raw",
+                        getPackageName()
+                );
+
+                if (resourceId != 0) {
+                    Glide.with(this)
+                            .load(resourceId)
+                            .placeholder(R.drawable.default_album_art)
+                            .error(R.drawable.default_album_art)
+                            .centerCrop()
+                            .into(albumCoverImageView);
+                } else {
+                    albumCoverImageView.setImageResource(R.drawable.default_album_art);
+                }
+            } else {
+                albumCoverImageView.setImageResource(R.drawable.default_album_art);
+            }
+        }
 
         if (isBound && musicService != null) {
             playbackSeekBar.setMax(musicService.getDuration());
@@ -278,7 +273,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
     }
 
     private void startSeekBarUpdate() {
-        handler.removeCallbacksAndMessages(null); // Clear any existing callbacks
+        handler.removeCallbacksAndMessages(null);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -286,14 +281,12 @@ public class FullPlaybackActivity extends AppCompatActivity {
                     int currentPosition = musicService.getCurrentPosition();
                     int duration = musicService.getDuration();
 
-                    if (currentPosition <= duration) {  // Add bounds checking
-                        playbackSeekBar.setMax(duration);
-                        playbackSeekBar.setProgress(currentPosition);
-                        updateTimeLabels(currentPosition, duration);
-                    }
+                    playbackSeekBar.setMax(duration);
+                    playbackSeekBar.setProgress(currentPosition);
 
-                    // Only post delayed if still playing and bound
-                    if (musicService.isPlaying() && isBound) {
+                    updateTimeLabels(currentPosition, duration);
+
+                    if (musicService.isPlaying()) {
                         handler.postDelayed(this, 100);
                     }
                 }

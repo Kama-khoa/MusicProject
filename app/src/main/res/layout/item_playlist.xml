@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/img_playlist"
-        android:layout_width="47dp"
-        android:layout_height="45dp"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_margin="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/ic_play"
         android:backgroundTint="#FFFFFF"
@@ -24,13 +25,17 @@
 
         <TextView
             android:id="@+id/tv_playlist_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
             android:paddingTop="10dp"
             android:text="Playlist Name"
             android:textColor="#FFFFFF"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
 
         <TextView
             android:id="@+id/tv_playlist_details"
@@ -38,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

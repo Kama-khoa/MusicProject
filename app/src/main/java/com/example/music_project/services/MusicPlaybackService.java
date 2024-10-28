@@ -186,7 +186,7 @@ public class MusicPlaybackService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
-//mới đầu vào sẽ dùng cái này load toàn bộ bh tạo thành playlist
+    //mới đầu vào sẽ dùng cái này load toàn bộ bh tạo thành playlist
     private void loadPlaylist() {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {

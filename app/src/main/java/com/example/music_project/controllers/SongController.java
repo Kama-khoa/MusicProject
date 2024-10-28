@@ -6,6 +6,7 @@ import com.example.music_project.database.GenreDao;
 import com.example.music_project.database.AlbumSongDao;
 import com.example.music_project.database.PlayHistoryDao;
 import com.example.music_project.database.SongDao;
+import com.example.music_project.database.SongImageDao;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumSong;
 import com.example.music_project.models.Artist;
@@ -22,6 +23,7 @@ import com.example.music_project.database.GenreDao;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Genre;
+import com.example.music_project.models.SongImage;
 
 public class SongController {
     private SongDao songDao;
@@ -30,6 +32,7 @@ public class SongController {
     private AlbumDao albumDao;
     private GenreDao genreDao;
     private PlayHistoryDao playHistoryDao;
+    private SongImageDao songImageDao; // Thêm SongImageDao
     private ExecutorService executorService;
 
     public SongController(SongDao songDao, ArtistDao artistDao, AlbumDao albumDao, GenreDao genreDao) {
@@ -78,7 +81,7 @@ public class SongController {
                 songDao.update(song);
                 callback.onSuccess(null);
             } catch (Exception e) {
-                callback.onError("Không thể cập nhật bài hát: " + e.getMessage());
+                callback.onError("Lỗi khi cập nhật bài hát: " + e.getMessage());
             }
         });
     }
@@ -255,6 +258,17 @@ public class SongController {
                 callback.onSuccess(null);
             } catch (Exception e) {
                 callback.onError("Không thể thêm lịch sử phát: " + e.getMessage());
+            }
+        });
+    }
+
+    public void getSongImage(int songId, Callback<SongImage> callback) {
+        executorService.execute(() -> {
+            try {
+                SongImage songImage = songImageDao.getSongImageById(songId); // Gọi phương thức để lấy ảnh bài hát
+                callback.onSuccess(songImage);
+            } catch (Exception e) {
+                callback.onError("Không thể lấy ảnh bài hát: " + e.getMessage());
             }
         });
     }

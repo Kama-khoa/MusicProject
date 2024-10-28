@@ -114,11 +114,10 @@ public class LibraryFragment extends Fragment {
 
         ImageView ivAdd = view.findViewById(R.id.iv_add);
 
-        // Xử lý khi nhấn nút thêm playlist
         ivAdd.setOnClickListener(v -> showAddMenu(v));
 
         iv_search_library.setOnClickListener(v -> {
-            // Chuyển sang SearchFragment
+
             SearchFragment searchFragment = new SearchFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, searchFragment)
@@ -126,10 +125,7 @@ public class LibraryFragment extends Fragment {
                     .commit();
         });
 
-        // Thiết lập sự kiện cho các nút
         setupListeners();
-
-        // Lấy User ID hiện tại và lưu vào SharedPreferences
         getCurrentUserId();
         loadPlaylists();
         loadAlbums();
@@ -138,16 +134,16 @@ public class LibraryFragment extends Fragment {
         return view;
     }
 
-    // Thiết lập sự kiện cho các nút
+
     private void setupListeners() {
         btnPlaylist.setOnClickListener(view -> {
-            loadPlaylists(); // Gọi phương thức để tải danh sách phát
-            rvLibraryItems.setAdapter(playlistAdapter); // Đảm bảo cập nhật adapter cho RecyclerView
+            loadPlaylists();
+            rvLibraryItems.setAdapter(playlistAdapter);
         });
 
         btnAlbum.setOnClickListener(view -> {
             loadAlbums();
-            rvLibraryItems.setAdapter(albumAdapter); // Đảm bảo cập nhật adapter cho RecyclerView
+            rvLibraryItems.setAdapter(albumAdapter);
         });
 
         btnArtist.setOnClickListener(v -> {
@@ -156,7 +152,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Hiển thị menu thêm playlist
     private void showAddMenu(View v) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
         popupMenu.getMenuInflater().inflate(R.menu.menu_add_playlist, popupMenu.getMenu());
@@ -203,14 +198,13 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Lấy ID người dùng hiện tại và lưu vào SharedPreferences
     private void getCurrentUserId() {
         userController.getCurrentUser(new UserController.OnUserFetchedListener() {
             @Override
             public void onSuccess(User user) {
                 long userId = user.getUser_id();
                 saveUserId(userId);
-                saveUserName(user.getUsername()); // Lưu tên người dùng
+                saveUserName(user.getUsername());
                 Log.d("LibraryFragment", "User ID: " + userId);
             }
 
@@ -221,7 +215,7 @@ public class LibraryFragment extends Fragment {
             }
         });
     }
-    // Thêm phương thức để lưu tên người dùng vào SharedPreferences
+
     private void saveUserName(String userName) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
         editor.putString("userName", userName);
@@ -229,7 +223,7 @@ public class LibraryFragment extends Fragment {
         Log.d("LibraryFragment", "Saved User Name: " + userName);
     }
 
-    // Lưu User ID vào SharedPreferences
+
     private void saveUserId(long userId) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
         editor.putLong("userId", userId);
@@ -237,7 +231,6 @@ public class LibraryFragment extends Fragment {
         Log.d("LibraryFragment", "Saved User ID: " + userId);
     }
 
-    // Phương thức tải danh sách các playlist
     private void loadPlaylists() {
         playlistController.getPlaylists(new PlaylistController.OnPlaylistsLoadedListener() {
             @Override
@@ -250,14 +243,11 @@ public class LibraryFragment extends Fragment {
                 playlistList.clear();
                 playlistList.addAll(playlists);
 
-                // Lấy userName từ SharedPreferences
                 SharedPreferences preferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
                 String userName = preferences.getString("userName", "Người dùng");
 
-                // Cập nhật adapter
                 if (playlistAdapter == null) {
                     playlistAdapter = new PlaylistAdapter(playlistList, playlist -> {
-                        // Gọi loadSongsInPlaylist với đầy đủ tham số
                         loadSongsInPlaylist(playlist.getPlaylist_id(), playlist.getTitle(), userName);
                     });
                     rvLibraryItems.setAdapter(playlistAdapter);
@@ -273,7 +263,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Tải danh sách nghệ sĩ
     private void loadArtists() {
         artistController.getArtists(new ArtistController.OnArtistsLoadedListener() {
             @Override
@@ -283,18 +272,16 @@ public class LibraryFragment extends Fragment {
                     return;
                 }
 
-                // Cập nhật danh sách nghệ sĩ
                 artistList.clear();
                 artistList.addAll(artists);
 
-                // Cập nhật adapter
                 if (artistAdapter == null) {
                     artistAdapter = new ArtistAdapter(artistList,
                             artist -> loadArtistDetail(artist.getArtist_id()) // Load chi tiết nghệ sĩ
                     );
                     rvLibraryItems.setAdapter(artistAdapter);
                 } else {
-                    artistAdapter.notifyDataSetChanged(); // Cập nhật dữ liệu
+                    artistAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -305,7 +292,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Tải danh sách album
     private void loadAlbums() {
         albumController.getAlbums(new AlbumController.OnAlbumsLoadedListener() {
             @Override
@@ -315,25 +301,21 @@ public class LibraryFragment extends Fragment {
                     return;
                 }
 
-                // Danh sách mới để chứa AlbumWithDetails
                 List<AlbumWithDetails> albumDetailsList = new ArrayList<>();
 
                 for (Album album : albums) {
                     int artistId = album.getArtist_id();
                     int genreId = album.getGenre_id();
 
-                    // Tạo đối tượng AlbumWithDetails và thêm vào danh sách
                     artistController.getArtistById(artistId, new ArtistController.OnArtistLoadedListener() {
                         @Override
                         public void onArtistLoaded(Artist artist) {
                             genreController.getGenreById(genreId, new GenreController.OnGenreLoadedListener() {
                                 @Override
                                 public void onGenreLoaded(Genre genre) {
-                                    // Tạo đối tượng AlbumWithDetails với tên tác giả và thể loại
                                     AlbumWithDetails details = new AlbumWithDetails(album, artist.getArtist_name(), genre.getGenre_name());
                                     albumDetailsList.add(details);
 
-                                    // Cập nhật adapter sau khi đã có tất cả dữ liệu
                                     if (albumDetailsList.size() == albums.size()) {
                                         updateAdapter(albumDetailsList);
                                     }
@@ -361,11 +343,8 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Cập nhật adapter với danh sách AlbumWithDetails
     private void updateAdapter(List<AlbumWithDetails> albumDetailsList) {
-        // Chạy trên luồng chính để cập nhật adapter
         new Handler(Looper.getMainLooper()).post(() -> {
-            // Cập nhật adapter với albumDetailsList
             AlbumWithDetailsAdapter albumWithDetailsAdapter = new AlbumWithDetailsAdapter(albumDetailsList,
                     albumWithDetails -> loadAlbumDetail(albumWithDetails.getAlbum().getAlbum_id(),
                             albumWithDetails.getAlbum().getTitle(),
@@ -377,7 +356,6 @@ public class LibraryFragment extends Fragment {
         });
     }
 
-    // Phương thức tải bài hát trong playlist và chuyển sang màn hình chi tiết
     private void loadSongsInPlaylist(int playlistId, String playlistName, String userName) {
         DetailPlaylistFragment detailFragment = DetailPlaylistFragment.newInstance(playlistId, playlistName, userName);
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -386,8 +364,6 @@ public class LibraryFragment extends Fragment {
                 .commit();
     }
 
-
-    // Hiển thị dialog thêm playlist
     private void showAddPlaylistDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -407,7 +383,6 @@ public class LibraryFragment extends Fragment {
                         playlistController.createPlaylist(userId, playlistName, new PlaylistController.OnPlaylistCreatedListener() {
                             @Override
                             public void onSuccess() {
-                               // Toast.makeText(getContext(), "Danh sách phát " + playlistName + " được tạo", Toast.LENGTH_SHORT).show();
                                 loadPlaylistsByUserID(userId);
                             }
 
@@ -424,8 +399,6 @@ public class LibraryFragment extends Fragment {
                 .create()
                 .show();
     }
-
-    // Tải danh sách phát theo User ID
     private void loadPlaylistsByUserID(int userId) {
         playlistController.getPlaylistsByUserID(userId, new PlaylistController.OnPlaylistsLoadedListener() {
             @Override
@@ -481,7 +454,6 @@ public class LibraryFragment extends Fragment {
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         edtReleaseDate.setText(currentDate);
 
-        // Set onClickListener for album cover selection
         imgAlbumCover.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, PICK_IMAGE_REQUEST);

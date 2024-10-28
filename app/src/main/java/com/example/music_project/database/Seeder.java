@@ -107,33 +107,33 @@ public class Seeder {
 
 
             // Dữ liệu mẫu cho bảng Song
-            Song song1 = new Song("À lôi", 1, 1, 210, format.parse("2023-01-01"), "res/raw/a_loi.mp3");
-            Song song2 = new Song("Ánh sao và bầu trời", 2, 2, 200, format.parse("2023-01-02"), "res/raw/anh_sao_va_bau_troi.mp3");
-            Song song3 = new Song("Anh thích em như vậy", 3, 3, 230, format.parse("2023-01-03"), "res/raw/anh_thich_em_nhu_vay.mp3");
-            Song song4 = new Song("Cắm tú cầu", 4, 4, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3");
-            Song song5 = new Song("Chân ái", 5, 5, 220, format.parse("2023-01-05"), "res/raw/chan_ai.mp3");
-            Song song6 = new Song("Chìm sâu", 6, 1, 215, format.parse("2023-01-06"), "res/raw/chim_sau.mp3");
-            Song song7 = new Song("Chịu cách mình nói thua", 7, 1,  210, format.parse("2023-01-07"), "res/raw/chiu_cach_minh_noi_thua.mp3");
-            Song song8 = new Song("Chợt nghe bước em về", 8, 1, 240, format.parse("2023-01-08"), "res/raw/chot_nghe_buoc_em_ve.mp3");
-            Song song9 = new Song("Đợi đến tháng 13", 9, 3, 245, format.parse("2023-01-09"), "res/raw/doi_den_thang_13.mp3");
-            Song song10 = new Song("Đóng cửa, tắt đèn", 10, 3, 210, format.parse("2023-01-10"), "res/raw/dong_cua_tat_den.mp3");
-            Song song11 = new Song("Em xinh", 11, 4, 220, format.parse("2023-01-11"), "res/raw/em_xinh.mp3");
-            Song song12 = new Song("Hà nội", 12, 5, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3");
-            Song song13 = new Song("Hãy trao cho anh", 13, 3, 210, format.parse("2023-01-13"), "res/raw/hay_trao_cho_anh.mp3");
-            Song song14 = new Song("Hoa nở bên đường", 14, 4, 215, format.parse("2023-01-14"), "res/raw/hoa_no_ben_duong.mp3");
-            Song song15 = new Song("Hư không", 15, 5, 260, format.parse("2023-01-15"), "res/raw/hu_khong.mp3");
-            Song song16 = new Song("Không thể say", 16, 1, 230, format.parse("2023-01-16"), "res/raw/khong_the_say.mp3");
-            Song song17 = new Song("Lời tạm biệt chưa nói", 17, 1, 240, format.parse("2023-01-17"), "res/raw/loi_tam_biet_chua_noi.mp3");
-            Song song18 = new Song("Nâng chén tiêu sầu", 18, 1, 250, format.parse("2023-01-18"), "res/raw/nang_chen_tieu_sau.mp3");
-            Song song19 = new Song("Nắng có mang em về", 19, 1, 255, format.parse("2023-01-19"), "res/raw/nang_co_mang_em_ve.mp3");
-            Song song20 = new Song("Như anh đã thấy em", 20, 2, 245, format.parse("2023-01-20"), "res/raw/nhu_anh_da_thay_em.mp3");
-            Song song21 = new Song("Những kẻ mộng mơ", 21, 2, 300, format.parse("2023-01-21"), "res/raw/nhung_ke_mong_mo.mp3");
-            Song song22 = new Song("Sau lời từ khước", 22, 2, 260, format.parse("2023-01-22"), "res/raw/sau_loi_tu_khuoc.mp3");
-            Song song23 = new Song("Suốt đêm", 23, 3, 225, format.parse("2023-01-23"), "res/raw/suot_dem.mp3");
-            Song song24 = new Song("Thương ly biệt", 24, 4, 230, format.parse("2023-01-24"), "res/raw/thuong_ly_biet.mp3");
-            Song song25 = new Song("Thuyền không bến đợi", 25, 5, 240, format.parse("2023-01-25"), "res/raw/thuyen_khong_ben_doi.mp3");
-            Song song26 = new Song("Từng quen", 26, 2, 240, format.parse("2023-01-26"), "res/raw/tung_quen.mp3");
-            Song song27 = new Song("Waiting for you", 27, 2, 240, format.parse("2023-01-27"), "res/raw/waiting_for_you.mp3");
+            Song song1 = new Song("À lôi", 1, 1, 210, format.parse("2023-01-01"), "res/raw/a_loi.mp3", "res/raw/img_a_loi.png");
+            Song song2 = new Song("Ánh sao và bầu trời", 2, 2, 200, format.parse("2023-01-02"), "res/raw/anh_sao_va_bau_troi.mp3", "res/raw/img_anh_sao_va_bau_troi.png");
+            Song song3 = new Song("Anh thích em như vậy", 3, 3, 230, format.parse("2023-01-03"), "res/raw/anh_thich_em_nhu_vay.mp3", "res/raw/img_suot_dem.png");
+            Song song4 = new Song("Cắm tú cầu", 4, 4, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3", "res/raw/img_cam_tu_cau.png");
+            Song song5 = new Song("Chân ái", 5, 5, 220, format.parse("2023-01-05"), "res/raw/chan_ai.mp3", "res/raw/img_chan_ai.png");
+            Song song6 = new Song("Chìm sâu", 6, 1, 215, format.parse("2023-01-06"), "res/raw/chim_sau.mp3", "res/raw/img_chim_sau.png");
+            Song song7 = new Song("Chịu cách mình nói thua", 7, 1,  210, format.parse("2023-01-07"), "res/raw/chiu_cach_minh_noi_thua.mp3", "res/raw/img_chiu_cach_minh_noi_thua.png");
+            Song song8 = new Song("Chợt nghe bước em về", 8, 1, 240, format.parse("2023-01-08"), "res/raw/chot_nghe_buoc_em_ve.mp3", "res/raw/img_chot_nghe_buoc_em_ve.png");
+            Song song9 = new Song("Đợi đến tháng 13", 9, 3, 245, format.parse("2023-01-09"), "res/raw/doi_den_thang_13.mp3", "res/raw/img_doi_den_thang_13.png");
+            Song song10 = new Song("Đóng cửa, tắt đèn", 10, 3, 210, format.parse("2023-01-10"), "res/raw/dong_cua_tat_den.mp3", "res/raw/img_dong_cua_tat_den.png");
+            Song song11 = new Song("Em xinh", 11, 4, 220, format.parse("2023-01-11"), "res/raw/em_xinh.mp3", "res/raw/img_em_xinh.png");
+            Song song12 = new Song("Hà nội", 12, 5, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3", "res/raw/img_ha_noi.png");
+            Song song13 = new Song("Hãy trao cho anh", 13, 3, 210, format.parse("2023-01-13"), "res/raw/hay_trao_cho_anh.mp3", "res/raw/img_hay_trao_cho_anh.png");
+            Song song14 = new Song("Hoa nở bên đường", 14, 4, 215, format.parse("2023-01-14"), "res/raw/hoa_no_ben_duong.mp3", "res/raw/img_hoa_no_ben_duong.png");
+            Song song15 = new Song("Hư không", 15, 5, 260, format.parse("2023-01-15"), "res/raw/hu_khong.mp3", "res/raw/img_hu_khong.png");
+            Song song16 = new Song("Không thể say", 16, 1, 230, format.parse("2023-01-16"), "res/raw/khong_the_say.mp3", "res/raw/img_khong_the_say.png");
+            Song song17 = new Song("Lời tạm biệt chưa nói", 17, 1, 240, format.parse("2023-01-17"), "res/raw/loi_tam_biet_chua_noi.mp3", "res/raw/img_loi_tam_biet_chua_noi.png");
+            Song song18 = new Song("Nâng chén tiêu sầu", 18, 1, 250, format.parse("2023-01-18"), "res/raw/nang_chen_tieu_sau.mp3", "res/raw/img_nang_chen_tieu_sau.png");
+            Song song19 = new Song("Nắng có mang em về", 19, 1, 255, format.parse("2023-01-19"), "res/raw/nang_co_mang_em_ve.mp3", "res/raw/img_nang_co_mang_em_ve.png");
+            Song song20 = new Song("Như anh đã thấy em", 20, 2, 245, format.parse("2023-01-20"), "res/raw/nhu_anh_da_thay_em.mp3", "res/raw/img_nhu_anh_da_thay_em.png");
+            Song song21 = new Song("Những kẻ mộng mơ", 21, 2, 300, format.parse("2023-01-21"), "res/raw/nhung_ke_mong_mo.mp3", "res/raw/img_nhung_ke_mong_mo.png");
+            Song song22 = new Song("Sau lời từ khước", 22, 2, 260, format.parse("2023-01-22"), "res/raw/sau_loi_tu_khuoc.mp3", "res/raw/img_sau_loi_tu_khuoc.png");
+            Song song23 = new Song("Suốt đêm", 23, 3, 225, format.parse("2023-01-23"), "res/raw/suot_dem.mp3", "img_suot_dem.png");
+            Song song24 = new Song("Thương ly biệt", 24, 4, 230, format.parse("2023-01-24"), "res/raw/thuong_ly_biet.mp3", "res/raw/img_thuong_ly_biet.png");
+            Song song25 = new Song("Thuyền không bến đợi", 25, 5, 240, format.parse("2023-01-25"), "res/raw/thuyen_khong_ben_doi.mp3", "res/raw/img_thuyen_khong_ben_doi.png");
+            Song song26 = new Song("Từng quen", 26, 2, 240, format.parse("2023-01-26"), "res/raw/tung_quen.mp3", "res/raw/img_tung_quen.png");
+            Song song27 = new Song("Waiting for you", 27, 2, 240, format.parse("2023-01-27"), "res/raw/waiting_for_you.mp3", "res/raw/img_waiting_for_you.png");
             db.songDao().insert(song1);
             db.songDao().insert(song2);
             db.songDao().insert(song3);
@@ -163,11 +163,11 @@ public class Seeder {
             db.songDao().insert(song27);
 
             // Dữ liệu mẫu cho bảng Playlist
-            Playlist playlist1 = new Playlist(1, "Playlist 1", format.parse("2023-01-01"));
-            Playlist playlist2 = new Playlist(2, "Playlist 2", format.parse("2023-02-01"));
-            Playlist playlist3 = new Playlist(1, "Playlist 3", format.parse("2023-03-01"));
-            Playlist playlist4 = new Playlist(2, "Playlist 4", format.parse("2023-04-01"));
-            Playlist playlist5 = new Playlist(1, "Playlist 5", format.parse("2023-05-01"));
+            Playlist playlist1 = new Playlist(1, "Playlist 1", format.parse("2023-01-01"), "res/raw/img_a_loi.png.png");
+            Playlist playlist2 = new Playlist(2, "Playlist 2", format.parse("2023-02-01"), "res/raw/img_playlist_1.png");
+            Playlist playlist3 = new Playlist(1, "Playlist 3", format.parse("2023-03-01"), "res/raw/img_playlist_2.png");
+            Playlist playlist4 = new Playlist(2, "Playlist 4", format.parse("2023-04-01"), "res/raw/img_playlist_3.png");
+            Playlist playlist5 = new Playlist(1, "Playlist 5", format.parse("2023-05-01"), "res/raw/img_nhu_anh_da_thay_em.png");
 
             db.playlistDao().insert(playlist1);
             db.playlistDao().insert(playlist2);
@@ -229,6 +229,61 @@ public class Seeder {
             db.albumSongDao().insert(albumSong3);
             db.albumSongDao().insert(albumSong4);
             db.albumSongDao().insert(albumSong5);
+
+
+            SongImage songImage1 = new SongImage(1,"res/raw/img_a_loi.png");
+            SongImage songImage2 = new SongImage(2,"res/raw/img_anh_sao_va_bau_troi.png");
+            SongImage songImage3 = new SongImage(1,"res/raw/img_cam_tu_cau.png");
+            SongImage songImage4 = new SongImage(1,"res/raw/img_a_loi");
+            SongImage songImage5 = new SongImage(1,"res/raw/img_chan_ai.png");
+            SongImage songImage6 = new SongImage(1,"res/raw/img_chim_sau.png");
+            SongImage songImage7 = new SongImage(1,"res/raw/img_chiu_cach_minh_noi_thua.png");
+            SongImage songImage8 = new SongImage(1,"res/raw/img_doi_den_thang_13.png");
+            SongImage songImage9 = new SongImage(1,"res/raw/img_dong_cua_tat_den.png");
+            SongImage songImage10 = new SongImage(1,"res/raw/img_ha_noi.png");
+            SongImage songImage11 = new SongImage(1,"res/raw/img_hay_trao_cho_anh.png");
+            SongImage songImage12 = new SongImage(1,"res/raw/img_hoa_no_ben_duong.png");
+            SongImage songImage13 = new SongImage(1,"res/raw/img_hu_khong.png");
+            SongImage songImage14 = new SongImage(1,"res/raw/img_khong_the_say.png");
+            SongImage songImage15 = new SongImage(1,"res/raw/img_loi_tam_biet_chua_noi.png");
+            SongImage songImage16 = new SongImage(1,"res/raw/img_nang_chen_tieu_sau.png");
+            SongImage songImage17 = new SongImage(1,"res/raw/img_nang_co_mang_em_ve.png");
+            SongImage songImage18 = new SongImage(1,"res/raw/img_nhu_anh_da_thay_em.png");
+            SongImage songImage19 = new SongImage(1,"res/raw/img_nhung_ke_mong_mo.png");
+            SongImage songImage20 = new SongImage(1,"res/raw/img_sau_loi_tu_khuoc.png");
+            SongImage songImage21 = new SongImage(1,"res/raw/img_suot_dem.png");
+            SongImage songImage22 = new SongImage(1,"res/raw/img_thuong_ly_biet.png");
+            SongImage songImage23 = new SongImage(1,"res/raw/img_thuyen_khong_ben_doi.png");
+            SongImage songImage24 = new SongImage(1,"res/raw/img_tung_quen.png");
+            SongImage songImage25 = new SongImage(1,"res/raw/img_waiting_for_you.png");
+
+            db.songImageDao().insert(songImage1);
+            db.songImageDao().insert(songImage2);
+            db.songImageDao().insert(songImage3);
+            db.songImageDao().insert(songImage4);
+            db.songImageDao().insert(songImage5);
+            db.songImageDao().insert(songImage6);
+            db.songImageDao().insert(songImage7);
+            db.songImageDao().insert(songImage8);
+            db.songImageDao().insert(songImage9);
+            db.songImageDao().insert(songImage10);
+            db.songImageDao().insert(songImage11);
+            db.songImageDao().insert(songImage12);
+            db.songImageDao().insert(songImage13);
+            db.songImageDao().insert(songImage14);
+            db.songImageDao().insert(songImage15);
+            db.songImageDao().insert(songImage16);
+            db.songImageDao().insert(songImage17);
+            db.songImageDao().insert(songImage18);
+            db.songImageDao().insert(songImage19);
+            db.songImageDao().insert(songImage20);
+            db.songImageDao().insert(songImage21);
+            db.songImageDao().insert(songImage22);
+            db.songImageDao().insert(songImage23);
+            db.songImageDao().insert(songImage24);
+            db.songImageDao().insert(songImage25);
+
+
 
         } catch (ParseException e) {
             e.printStackTrace(); // Xử lý lỗi nếu có
