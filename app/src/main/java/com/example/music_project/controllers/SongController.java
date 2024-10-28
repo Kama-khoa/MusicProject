@@ -5,7 +5,6 @@ import com.example.music_project.database.ArtistDao;
 import com.example.music_project.database.GenreDao;
 import com.example.music_project.database.AlbumSongDao;
 import com.example.music_project.database.SongDao;
-import com.example.music_project.database.SongImageDao;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.AlbumSong;
 import com.example.music_project.models.Artist;
@@ -21,7 +20,6 @@ import com.example.music_project.database.GenreDao;
 import com.example.music_project.models.Artist;
 import com.example.music_project.models.Album;
 import com.example.music_project.models.Genre;
-import com.example.music_project.models.SongImage;
 
 public class SongController {
     private SongDao songDao;
@@ -29,8 +27,6 @@ public class SongController {
     private ArtistDao artistDao;
     private AlbumDao albumDao;
     private GenreDao genreDao;
-
-    private SongImageDao songImageDao; // Thêm SongImageDao
     private ExecutorService executorService;
 
     public SongController(SongDao songDao, ArtistDao artistDao, AlbumDao albumDao, GenreDao genreDao) {
@@ -38,7 +34,6 @@ public class SongController {
         this.artistDao = artistDao;
         this.albumDao = albumDao;
         this.genreDao = genreDao;
-
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -75,14 +70,14 @@ public class SongController {
     }
 
     public void updateSong(Song song, Callback<Void> callback) {
-        new Thread(() -> {
+        executorService.execute(() -> {
             try {
                 songDao.update(song);
                 callback.onSuccess(null);
             } catch (Exception e) {
-                callback.onError("Lỗi khi cập nhật bài hát: " + e.getMessage());
+                callback.onError("Không thể cập nhật bài hát: " + e.getMessage());
             }
-        }).start();
+        });
     }
 
     public void deleteSong(Song song, Callback<Void> callback) {
@@ -245,17 +240,6 @@ public class SongController {
             } catch (Exception e) {
                 // Notify failure
                 callback.onError(e.getMessage());
-            }
-        });
-    }
-
-    public void getSongImage(int songId, Callback<SongImage> callback) {
-        executorService.execute(() -> {
-            try {
-                SongImage songImage = songImageDao.getSongImageById(songId); // Gọi phương thức để lấy ảnh bài hát
-                callback.onSuccess(songImage);
-            } catch (Exception e) {
-                callback.onError("Không thể lấy ảnh bài hát: " + e.getMessage());
             }
         });
     }

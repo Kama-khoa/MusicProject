@@ -12,9 +12,9 @@
         android:id="@+id/iv_song_cover"
         android:layout_width="54dp"
         android:layout_height="54dp"
-        android:layout_marginStart="8dp"
         android:scaleType="centerCrop"
         android:src="@drawable/default_song_cover"
+        android:tint="#FDFDFD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,14 +32,6 @@
         app:layout_constraintStart_toEndOf="@id/iv_song_cover"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Song Title" />
-    <ImageView
-        android:id="@+id/img_song_edit_or_del"
-        android:layout_width="22dp"
-        android:layout_height="26dp"
-        android:layout_gravity="right"
-        android:src="@drawable/ic_more_vert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_artist"
@@ -51,7 +43,7 @@
         android:textColor="@android:color/white"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/iv_song_cover"
         app:layout_constraintTop_toBottomOf="@id/tv_song_title"
         tools:text="Artist Name" />

@@ -27,21 +27,19 @@ public class Song {
     public int duration;
     public Date release_date;
     public String file_path;
-    public String img_path;
 
     @Ignore
     private String artistName;
 
     public Song() {}
 
-    public Song(String title, int artist_id, int genre_id, int duration, Date release_date, String file_path, String img_path) {
+    public Song(String title, int artist_id, int genre_id, int duration, Date release_date, String file_path) {
         this.title = title;
         this.artist_id = artist_id;
         this.genre_id = genre_id;
         this.duration = duration;
         this.release_date = release_date;
         this.file_path = file_path;
-        this.img_path = img_path;
         this.is_sample = true;
     }
 
@@ -104,14 +102,6 @@ public class Song {
 
     public boolean getIs_sample() {
         return is_sample;
-    }
-
-    public String getImg_path() {
-        return img_path;
-    }
-
-    public void setImg_path(String img_path) {
-        this.img_path = img_path;
     }
 
     public void setIs_sample(boolean is_sample) {

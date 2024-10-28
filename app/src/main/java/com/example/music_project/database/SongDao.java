@@ -83,6 +83,9 @@ public interface SongDao {
     List<Song> getAvailableAlbumSongs(int albumId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void addSongToPlaylist(PlaylistSong playlistSong);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addSongToAlbum(AlbumSong albumSong);
 
     // Additional queries for artist name
@@ -94,19 +97,4 @@ public interface SongDao {
             "JOIN Artist a ON s.artist_id = a.artist_id " +
             "ORDER BY s.title")
     List<Song> getAllSongsWithArtistsSorted();
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addSongToPlaylist(PlaylistSong playlistSong);
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertSongWithCustomId(Song song);
-
-
-    // Phương thức lấy số lượng bài hát trong bảng
-    @Query("SELECT COUNT(*) FROM Song")
-    int getCount();
-
-
 }

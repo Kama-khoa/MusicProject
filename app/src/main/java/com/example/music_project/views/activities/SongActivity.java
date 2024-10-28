@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,13 +21,12 @@ import com.example.music_project.models.Genre;
 import com.example.music_project.views.adapters.SongAdapter;
 import com.example.music_project.utils.FileUtils;
 import com.example.music_project.views.fragments.SongDialogFragment;
-import com.example.music_project.views.fragments.SongDialogUpdateFragment;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongActivity extends AppCompatActivity implements SongDialogFragment.SongDialogListener, SongDialogUpdateFragment.SongDialogUpdateListener {
+public class SongActivity extends AppCompatActivity implements SongDialogFragment.SongDialogListener {
     private static final int PICK_AUDIO_REQUEST = 1;
 
     private SongController songController;
@@ -59,20 +56,6 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         btnAdd.setOnClickListener(v -> showAddSongDialog());
     }
 
-    @Override
-    public void onSongSavedtoUpdate(Song song) {
-        Log.d("SongActivityUPDATE", "Updating song: " + song.getTitle());
-        Log.d("SongActivityUPDATE", "Song ID: " + song.getSong_id()); // Kiểm tra ID
-        updateSong(song);
-    }
-
-    @Override
-    public void onSongSaved(Song song) {
-        if (song.getSong_id() == 0) {
-            addSong(song);
-        }
-    }
-
     private void initViews() {
         btnAdd = findViewById(R.id.btn_add);
         rvSongs = findViewById(R.id.rv_songs);
@@ -82,33 +65,7 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         songAdapter = new SongAdapter(songs, this::onSongSelected);
         rvSongs.setLayoutManager(new LinearLayoutManager(this));
         rvSongs.setAdapter(songAdapter);
-
-
-        songAdapter.setOnSongLongClickListener(new SongAdapter.OnSongLongClickListener() {
-            @Override
-            public void onSongLongClick(Song song) {
-                showPopupMenu(song);
-            }
-        });
     }
-
-    private void showPopupMenu(Song song) {
-        PopupMenu popup = new PopupMenu(this, findViewById(R.id.img_song_edit_or_del));
-        popup.getMenuInflater().inflate(R.menu.menu_song_delete_or_update, popup.getMenu());
-
-        popup.setOnMenuItemClickListener(item -> {
-            int itemID = item.getItemId();
-            if (itemID == R.id.edit_song) {
-                showUpdateSongDialog(song);
-            } else if (itemID == R.id.delete_song) {
-                deleteSong(song);
-                return true;
-            }
-            return false;
-        });
-        popup.show(); // Thêm dòng này
-    }
-
 
     private void loadSongs() {
         songController.getAllSongs(new SongController.Callback<List<Song>>() {
@@ -144,9 +101,6 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         });
     }
 
-
-
-
     private void showAddSongDialog() {
         // Gọi hàm để lấy danh sách nghệ sĩ
         getArtists(new Callback<List<Artist>>() {
@@ -179,6 +133,7 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
                                 SongDialogFragment dialog = new SongDialogFragment();
                                 dialog.setListener(SongActivity.this);
                                 dialog.setArtists(artists);
+                                dialog.setAlbums(albums);
                                 dialog.setGenres(genres);
                                 dialog.show(getSupportFragmentManager(), "SongDialog");
                             }
@@ -210,6 +165,14 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
         dialog.show(getSupportFragmentManager(), "SongDialog");
     }
 
+    @Override
+    public void onSongSaved(Song song) {
+        if (song.getSong_id() == 0) {
+            addSong(song);
+        } else {
+            updateSong(song);
+        }
+    }
 
     private void addSong(Song song) {
         songController.addSong(song, new SongController.Callback<Void>() {
@@ -346,106 +309,5 @@ public class SongActivity extends AppCompatActivity implements SongDialogFragmen
     public interface Callback<T> {
         void onSuccess(T result);
         void onError(String error);
-    }
-
-    private void deleteSong(Song song) {
-        new AlertDialog.Builder(this)
-                .setTitle("Xác nhận xóa")
-                .setMessage("Bạn có chắc chắn muốn xóa bài hát này?")
-                .setPositiveButton("Có", (dialog, which) -> {
-                    songController.deleteSong(song, new SongController.Callback<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            runOnUiThread(() -> {
-                                songs.remove(song);
-                                songAdapter.notifyDataSetChanged();
-                                Toast.makeText(getBaseContext(), "Đã xóa bài hát", Toast.LENGTH_SHORT).show();
-                            });
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                        }
-                    });
-                })
-                .setNegativeButton("Không", null)
-                .show();
-    }
-
-
-    private void showUpdateSongDialog(Song song) {
-        // Gọi hàm để lấy danh sách nghệ sĩ
-        getArtists(new Callback<List<Artist>>() {
-            @Override
-            public void onSuccess(List<Artist> artistsList) {
-                artists.clear();
-                artists.addAll(artistsList);
-
-                // Gọi hàm để lấy danh sách album
-                getAlbums(new Callback<List<Album>>() {
-                    @Override
-                    public void onSuccess(List<Album> albumsList) {
-                        albums.clear();
-                        albums.addAll(albumsList);
-
-                        // Gọi hàm để lấy danh sách thể loại
-                        getGenres(new Callback<List<Genre>>() {
-                            @Override
-                            public void onSuccess(List<Genre> genresList) {
-                                genres.clear();
-                                genres.addAll(genresList);
-
-                                // Kiểm tra nếu danh sách không rỗng
-                                if (artists.isEmpty() || albums.isEmpty() || genres.isEmpty()) {
-                                    Toast.makeText(SongActivity.this, "Không có dữ liệu nghệ sĩ, album hoặc thể loại", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-
-                                // Tạo và thiết lập dialog
-                                SongDialogUpdateFragment dialog = new SongDialogUpdateFragment();
-                                dialog.setListener(SongActivity.this);
-
-                                // Truyền danh sách và thông tin bài hát vào dialog
-                                dialog.setArtists(artists);
-                                dialog.setGenres(genres);
-
-                                Bundle bundle = new Bundle();
-                                bundle.putString("songId", String.valueOf(song.getSong_id()));
-                                bundle.putString("songName", song.getTitle());
-                                bundle.putString("artist", String.valueOf(song.getArtist_id()));
-                                bundle.putString("genre", String.valueOf(song.getGenre_id()));
-                                bundle.putString("duration", String.valueOf(song.getDuration()));
-                                bundle.putString("filepath", song.getFile_path());
-                                bundle.putString("imagepath", song.getImg_path());
-
-                                 Log.d("UpdateSongDialog", "Link ảnh " + song.getImg_path());
-                                Log.d("UpdateSongDialog", "Link nhạc " + song.getFile_path());
-
-                                dialog.setArguments(bundle);
-
-                                // Hiển thị dialog
-                                dialog.show(getSupportFragmentManager(), "SongUpdateDialog");
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-                    }
-                });
-            }
-
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() -> Toast.makeText(SongActivity.this, error, Toast.LENGTH_SHORT).show());
-            }
-        });
     }
 }

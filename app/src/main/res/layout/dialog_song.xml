@@ -14,7 +14,7 @@
         android:inputType="text"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_edittext_background"
-        android:padding="12dp" />
+    android:padding="12dp" />
 
     <!-- Artist Spinner -->
     <Spinner
@@ -25,7 +25,12 @@
         android:background="@drawable/rounded_spinner_background" /> <!-- Thay đổi nền -->
 
     <!-- Album Spinner -->
-
+    <Spinner
+        android:id="@+id/sp_album"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_spinner_background" /> <!-- Thay đổi nền -->
 
     <!-- Genre Spinner -->
     <Spinner
@@ -53,19 +58,9 @@
         android:text="Tải lên file âm thanh"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#1DB954"
-        android:textColor="#040404" />
+    android:textColor="#040404" />
 
     <!-- Action Buttons Layout -->
-
-    <ImageView
-        android:id="@+id/iv_cover"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="5dp"
-        android:contentDescription="Playlist Cover Image"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_image_playlist" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,7 +75,7 @@
             android:text="Lưu"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#1D56B9"
-            android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF" />
 
         <!-- Cancel Button -->
         <Button
@@ -91,7 +86,7 @@
             android:text="Hủy"
             android:layout_marginStart="8dp"
             android:backgroundTint="#FF4444"
-            android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Delete Button -->
@@ -103,6 +98,6 @@
         android:layout_marginTop="16dp"
         android:visibility="gone"
         android:backgroundTint="#FF4444"
-        android:textColor="#FFFFFF" />
+    android:textColor="#FFFFFF" />
 
 </LinearLayout>

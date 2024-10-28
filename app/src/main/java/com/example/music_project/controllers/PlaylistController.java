@@ -29,7 +29,7 @@ public class PlaylistController {
 
     public void createPlaylist(int userId, String name, final OnPlaylistCreatedListener listener) {
         executorService.execute(() -> {
-            Playlist playlist = new Playlist(userId, name, new Date(), null);
+            Playlist playlist = new Playlist(userId, name, new Date());
             long playlistId = database.playlistDao().insert(playlist);
             if (playlistId > 0) {
                 new Handler(Looper.getMainLooper()).post(() -> {

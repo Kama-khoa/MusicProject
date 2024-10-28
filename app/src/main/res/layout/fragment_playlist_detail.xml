@@ -10,16 +10,13 @@
         android:layout_height="33dp"
         android:orientation="horizontal">
 
-    <SearchView
-        android:id="@+id/sv_search"
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-
-        android:queryHint="Tìm kiếm bài hát"
-        >
-
-    </SearchView>
+        <SearchView
+            android:id="@+id/sv_search"
+            android:layout_width="365dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#1B1B1B"
+            android:queryHint="Tìm kiếm bài hát" />
 
         <ImageView
             android:id="@+id/img_playlist_edit_or_del"
@@ -34,11 +31,12 @@
     <ImageView
         android:id="@+id/img_playlist_cover"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="200dp"
         android:layout_marginTop="5dp"
         android:contentDescription="Playlist Cover Image"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_image_playlist" />
+        android:src="@drawable/ic_perm_identity"
+        android:tint="#FFFFFF" />
 
     <TextView
         android:id="@+id/tv_playlist_name"
