@@ -25,6 +25,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Song;
@@ -209,7 +210,29 @@ public class PlaybackDialogFragment extends DialogFragment {
         songTitleTextView.setText(song.getTitle());
         String artistName = song.getArtistName();
         artistNameTextView.setText(artistName != null && !artistName.isEmpty() ? artistName : "Unknown Artist");
-        albumArtImageView.setImageResource(R.drawable.default_album_art);
+        String imagePath = song.getImg_path();
+
+        if (imagePath != null) {
+            // Xử lý việc tải ảnh từ imagePath ở đây
+            if (imagePath.startsWith("res/")) {
+                int resourceId = albumArtImageView.getResources().getIdentifier(
+                        imagePath.replace("res/raw/", "").replace(".png", ""),
+                        "raw",
+                        albumArtImageView.getContext().getPackageName());
+
+                Glide.with( albumArtImageView.getContext())
+                        .load(resourceId)
+                        .into(albumArtImageView);
+            } else {
+                Glide.with( albumArtImageView.getContext())
+                        .load(imagePath)
+                        .into(albumArtImageView);
+            }
+        } else {
+            albumArtImageView.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
+        }
+
+//        albumArtImageView.setImageResource(R.drawable.default_album_art);
     }
 
     private void updatePlaybackState() {
@@ -326,14 +349,6 @@ public class PlaybackDialogFragment extends DialogFragment {
         }
         LocalBroadcastManager.getInstance(requireContext())
                 .unregisterReceiver(songUpdateReceiver);
-    }
-    private void saveLastPlayedSong(int songId, int position) {
-        Log.d(TAG, "Saving last played song ID: " + songId + ", Position: " + position);
-        SharedPreferences prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(LAST_SONG_ID, songId);
-        editor.putInt(LAST_POSITION, position);
-        editor.apply();
     }
 
     private void loadLastPlayedSong() {

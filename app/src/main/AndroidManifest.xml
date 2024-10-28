@@ -56,7 +56,11 @@
             android:name=".views.activities.FullPlaybackActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
-        <service android:name=".services.MusicPlaybackService" />
+        <service
+            android:name=".services.MusicPlaybackService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback"/>
         <!-- Receivers -->
         <receiver android:name=".receivers.MusicControlReceiver"
             android:exported="false">

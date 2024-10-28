@@ -1,18 +1,27 @@
 package com.example.music_project.services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.util.Log;
 import android.widget.Toast;
+import android.app.PendingIntent;
 
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.music_project.R;
 import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Song;
+import com.example.music_project.views.activities.MainActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +31,9 @@ import java.util.concurrent.Executors;
 
 public class MusicPlaybackService extends Service {
     private static final String TAG = "MusicPlaybackService";
+    private static final String CHANNEL_ID = "music_playback_channel";
+    private static final int NOTIFICATION_ID = 1;
+
     private final IBinder binder = new MusicBinder();
     private MediaPlayer mediaPlayer;
     private boolean isPrepared = false;
@@ -31,6 +43,14 @@ public class MusicPlaybackService extends Service {
     private AppDatabase database;
     private boolean isShuffleEnabled = false;
     private boolean isRepeatEnabled = false;
+
+    private MediaSessionCompat mediaSession;
+    private NotificationManager notificationManager;
+    public static final String ACTION_PLAY = "com.example.music_project.ACTION_PLAY";
+    public static final String ACTION_PAUSE = "com.example.music_project.ACTION_PAUSE";
+    public static final String ACTION_PREVIOUS = "com.example.music_project.ACTION_PREVIOUS";
+    public static final String ACTION_NEXT = "com.example.music_project.ACTION_NEXT";
+    public static final String ACTION_STOP = "com.example.music_project.ACTION_STOP";
     // Thêm biến để track lần load đầu tiên
     private boolean isInitialLoad = false;
 
@@ -49,13 +69,124 @@ public class MusicPlaybackService extends Service {
         super.onCreate();
         database = AppDatabase.getInstance(this);
         loadPlaylist();
+
+        // Khởi tạo MediaSession
+        mediaSession = new MediaSessionCompat(this, "MusicPlaybackService");
+
+        // Tạo notification channel cho Android 8.0 trở lên
+        createNotificationChannel();
+
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Music Playback",
+                    NotificationManager.IMPORTANCE_LOW // Để không phát ra âm thanh thông báo
+            );
+            channel.setDescription("Controls for music playback");
+            channel.setShowBadge(false);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+    private PendingIntent createActionIntent(String action) {
+        Intent intent = new Intent(this, MusicPlaybackService.class);
+        intent.setAction(action);
+        return PendingIntent.getService(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+    }
+
+    private void updateNotification() {
+        if (currentSong == null) return;
+
+        // Intent để mở ứng dụng khi nhấn vào notification
+        Intent openAppIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                this,
+                0,
+                openAppIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Tạo notification builder
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_music_note) // Thêm icon nhạc vào project
+                .setContentTitle(currentSong.getTitle())
+                .setContentText(currentSong.getArtistName())
+                .setContentIntent(contentIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(false);
+
+        // Thêm các nút điều khiển
+        builder.addAction(R.drawable.ic_previous, "Previous", createActionIntent(ACTION_PREVIOUS));
+
+        if (isPlaying()) {
+            builder.addAction(R.drawable.ic_pause, "Pause", createActionIntent(ACTION_PAUSE));
+        } else {
+            builder.addAction(R.drawable.ic_play, "Play", createActionIntent(ACTION_PLAY));
+        }
+
+        builder.addAction(R.drawable.ic_next, "Next", createActionIntent(ACTION_NEXT));
+        builder.addAction(R.drawable.ic_close, "Stop", createActionIntent(ACTION_STOP));
+
+        // Thêm style cho Media Controls
+        androidx.media.app.NotificationCompat.MediaStyle mediaStyle = new androidx.media.app.NotificationCompat.MediaStyle()
+                .setMediaSession(mediaSession.getSessionToken())
+                .setShowActionsInCompactView(0, 1, 2); // Hiển thị 3 nút trong chế độ thu gọn
+
+        builder.setStyle(mediaStyle);
+
+        // Hiển thị notification
+        Notification notification = builder.build();
+        startForeground(NOTIFICATION_ID, notification);
+    }
+    private void broadcastPlaybackState() {
+        Intent intent = new Intent("PLAYBACK_STATE_CHANGED");
+        intent.putExtra("IS_PLAYING", isPlaying());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case ACTION_PLAY:
+                    resumeSong();
+                    break;
+                case ACTION_PAUSE:
+                    pauseSong();
+                    break;
+                case ACTION_PREVIOUS:
+                    playPreviousSong();
+                    updateNotification(); // Thêm cập nhật notification
+                    break;
+                case ACTION_NEXT:
+                    playNextSong();
+                    updateNotification(); // Thêm cập nhật notification
+                    break;
+                case ACTION_STOP:
+                    stopForeground(true);
+                    stopSelf();
+                    break;
+            }
+        }
+        return START_NOT_STICKY;
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
+    //mới đầu vào sẽ dùng cái này load toàn bộ bh tạo thành playlist
     private void loadPlaylist() {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
@@ -160,15 +291,14 @@ public class MusicPlaybackService extends Service {
             mediaPlayer.setOnPreparedListener(mp -> {
                 isPrepared = true;
                 if (!isInitialLoad) {
-                    // Nếu không phải lần load đầu, play như bình thường
                     mp.start();
+                    updateNotification(); // Cập nhật notification khi bắt đầu phát
                 } else {
-                    // Nếu là lần load đầu, không play và reset flag
                     isInitialLoad = false;
                 }
                 broadcastSongChange();
+                broadcastPlaybackState(); // Thêm broadcast trạng thái
 
-                // Send broadcast to update PlaybackDialogFragment
                 Intent intent = new Intent("UPDATE_SONG_INFO");
                 intent.putExtra("SONG_ID", song.getSong_id());
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
@@ -198,15 +328,16 @@ public class MusicPlaybackService extends Service {
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
             isPrepared = false;
         }
+        updateNotification();
     }
+
     private void handleSongCompletion() {
         if (isRepeatEnabled) {
-            // Repeat current song
             playSong(currentSong);
         } else {
-            // Play next song
             playNextSong();
         }
+        updateNotification(); // Thêm cập nhật notification khi bài hát kết thúc
     }
 
     private void broadcastSongChange() {
@@ -226,37 +357,36 @@ public class MusicPlaybackService extends Service {
         }
     }
 
+
     public void playNextSong() {
         if (playlist != null && !playlist.isEmpty()) {
             if (isShuffleEnabled) {
-                // Play random song except current
                 int nextIndex;
                 do {
                     nextIndex = (int) (Math.random() * playlist.size());
                 } while (nextIndex == currentSongIndex && playlist.size() > 1);
                 currentSongIndex = nextIndex;
             } else {
-                // Play next song in order
                 currentSongIndex = (currentSongIndex + 1) % playlist.size();
             }
             playSong(playlist.get(currentSongIndex));
+            updateNotification(); // Thêm cập nhật notification
         }
     }
 
     public void playPreviousSong() {
         if (playlist != null && !playlist.isEmpty()) {
             if (isShuffleEnabled) {
-                // Play random song except current
                 int prevIndex;
                 do {
                     prevIndex = (int) (Math.random() * playlist.size());
                 } while (prevIndex == currentSongIndex && playlist.size() > 1);
                 currentSongIndex = prevIndex;
             } else {
-                // Play previous song in order
                 currentSongIndex = (currentSongIndex - 1 + playlist.size()) % playlist.size();
             }
             playSong(playlist.get(currentSongIndex));
+            updateNotification(); // Thêm cập nhật notification
         }
     }
 
@@ -268,12 +398,16 @@ public class MusicPlaybackService extends Service {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }
+        updateNotification();
+        broadcastPlaybackState();
     }
 
     public void resumeSong() {
         if (mediaPlayer != null && !mediaPlayer.isPlaying() && isPrepared) {
             mediaPlayer.start();
         }
+        updateNotification();
+        broadcastPlaybackState();
     }
 
     public int getCurrentPosition() {
@@ -293,15 +427,6 @@ public class MusicPlaybackService extends Service {
     public void seekTo(int position) {
         if (mediaPlayer != null && isPrepared) {
             mediaPlayer.seekTo(position);
-        }
-    }
-
-    public void stopSong() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-            isPrepared = false;
         }
     }
 
@@ -337,52 +462,7 @@ public class MusicPlaybackService extends Service {
             mediaPlayer = null;
             isPrepared = false;
         }
+        stopForeground(true);
     }
 
-    public void playFromResourceId(int resourceId, Song song) {
-        try {
-            if (mediaPlayer == null) {
-                mediaPlayer = new MediaPlayer();
-            } else {
-                mediaPlayer.reset();
-            }
-
-            mediaPlayer.setDataSource(getApplicationContext(),
-                    Uri.parse("android.resource://" + getPackageName() + "/" + resourceId));
-
-            currentSong = song;
-            updateCurrentSongIndex();
-
-            mediaPlayer.setOnPreparedListener(mp -> {
-                isPrepared = true;
-                mp.start();
-                broadcastSongChange();
-            });
-
-            mediaPlayer.setOnCompletionListener(mp -> {
-                isPrepared = false;
-                handleSongCompletion();
-            });
-
-            mediaPlayer.setOnErrorListener((mp, what, extra) -> {
-                Log.e(TAG, "Error playing from resource: " + what + ", " + extra);
-                isPrepared = false;
-                return false;
-            });
-
-            mediaPlayer.prepareAsync();
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error playing from resource: ", e);
-            isPrepared = false;
-        }
-    }
-    public void restorePlaybackState(int position, boolean shouldPlay) {
-        if (mediaPlayer != null && isPrepared) {
-            mediaPlayer.seekTo(position);
-            if (shouldPlay && !mediaPlayer.isPlaying()) {
-                mediaPlayer.start();
-            }
-        }
-    }
 }

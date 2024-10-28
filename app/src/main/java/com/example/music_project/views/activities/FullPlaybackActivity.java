@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.bumptech.glide.Glide;
 import com.example.music_project.R;
 import com.example.music_project.database.AppDatabase;
 import com.example.music_project.models.Song;
@@ -33,6 +35,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
     private ImageButton shuffleButton;
     private ImageButton timerButton;
     private SeekBar playbackSeekBar;
+    private ImageView albumCoverImageView; // Fixed typo here
     private TextView trackInfoTextView;
     private TextView artistTextView;
     private TextView currentTimeTextView;
@@ -78,7 +81,6 @@ public class FullPlaybackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_playback);
 
-        // Add this line
         playbackManager = new PlaybackManager(this);
 
         initializeViews();
@@ -88,6 +90,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
         bindMusicService();
         registerBroadcastReceiver();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -100,13 +103,13 @@ public class FullPlaybackActivity extends AppCompatActivity {
             );
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (isBound && musicService != null) {
             PlaybackManager.PlaybackState state = playbackManager.loadPlaybackState();
             if (state.isValid()) {
-                // Chỉ cập nhật vị trí phát nếu đang phát cùng một bài hát
                 if (musicService.getCurrentSong() != null &&
                         musicService.getCurrentSong().getSong_id() == state.getSongId()) {
                     musicService.seekTo(state.getPosition());
@@ -118,6 +121,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
             updatePlaybackState();
         }
     }
+
     private void initializeViews() {
         backButton = findViewById(R.id.backButton);
         playPauseButton = findViewById(R.id.playPauseButton);
@@ -130,11 +134,11 @@ public class FullPlaybackActivity extends AppCompatActivity {
         artistTextView = findViewById(R.id.artistTextView);
         currentTimeTextView = findViewById(R.id.currentTimeTextView);
         totalTimeTextView = findViewById(R.id.totalTimeTextView);
+        albumCoverImageView = findViewById(R.id.albumArtImageView); // Fixed typo here
     }
 
     private void setupListeners() {
         backButton.setOnClickListener(v -> finish());
-
         playPauseButton.setOnClickListener(v -> togglePlayPause());
         nextButton.setOnClickListener(v -> playNextSong());
         previousButton.setOnClickListener(v -> playPreviousSong());
@@ -230,9 +234,37 @@ public class FullPlaybackActivity extends AppCompatActivity {
     }
 
     private void updateSongInfo(Song song) {
+        if (song == null) return; // Add null check for song
+
         trackInfoTextView.setText(song.getTitle());
         artistTextView.setText(song.getArtistName() != null && !song.getArtistName().isEmpty()
                 ? song.getArtistName() : "Unknown Artist");
+
+        // Add null check for albumCoverImageView
+        if (albumCoverImageView != null) {
+            String imagePath = song.getImg_path();
+
+            if (imagePath != null && !imagePath.isEmpty()) {
+                int resourceId = getResources().getIdentifier(
+                        imagePath,
+                        "raw",
+                        getPackageName()
+                );
+
+                if (resourceId != 0) {
+                    Glide.with(this)
+                            .load(resourceId)
+                            .placeholder(R.drawable.default_album_art)
+                            .error(R.drawable.default_album_art)
+                            .centerCrop()
+                            .into(albumCoverImageView);
+                } else {
+                    albumCoverImageView.setImageResource(R.drawable.default_album_art);
+                }
+            } else {
+                albumCoverImageView.setImageResource(R.drawable.default_album_art);
+            }
+        }
 
         if (isBound && musicService != null) {
             playbackSeekBar.setMax(musicService.getDuration());

@@ -118,7 +118,7 @@ public class LibraryFragment extends Fragment {
 
         iv_search_library.setOnClickListener(v -> {
 
-            SearchFragment searchFragment = new SearchFragment();
+            SearchLibraryFragment searchFragment = new SearchLibraryFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, searchFragment)
                     .addToBackStack(null)
