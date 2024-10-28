@@ -29,12 +29,12 @@ public class Playlist {
     public String details;
     public String imageResource;
 
-    public Playlist(int user_id, String title, Date date_created) {
+    public Playlist(int user_id, String title, Date date_created, String imageResource) {
         this.user_id = user_id;
         this.title = title;
         this.date_created = date_created;
         this.details = null;
-        this.imageResource = null;
+        this.imageResource = imageResource;
     }
 
     public int getPlaylist_id() {
