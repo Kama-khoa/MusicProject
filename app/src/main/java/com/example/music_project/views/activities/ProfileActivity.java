@@ -115,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onSuccess() {
                 runOnUiThread(() -> {
                     Toast.makeText(ProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                    loadUserProfile(); // Reload the profile to reflect changes
+                    loadUserProfile();
                 });
             }
 

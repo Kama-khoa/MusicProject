@@ -7,11 +7,9 @@ import java.util.Date;
 
 public class Seeder {
     public static void seedDatabase(AppDatabase db) {
-        // Định dạng ngày
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            // Dữ liệu mẫu cho bảng User
             User user1 = new User("johndoe", "john@example.com", "password123","USER");
             User user2 = new User("janedoe", "jane@example.com", "password456","USER");
             User user3 = new User("alexsmith", "alex@example.com", "password789","USER");
@@ -78,7 +76,6 @@ public class Seeder {
             db.artistDao().insert(artist26);
 
 
-            // Dữ liệu mẫu cho bảng Genre
             Genre genre1 = new Genre("Pop");
             Genre genre2 = new Genre("Rock");
             Genre genre3 = new Genre("Hip Hop");
@@ -91,7 +88,6 @@ public class Seeder {
             db.genreDao().insert(genre4);
             db.genreDao().insert(genre5);
 
-            // Dữ liệu mẫu cho bảng Album
             Album album1 = new Album("Album 1", 1, 1,  format.parse("2023-01-01"));
             Album album2 = new Album("Album 2", 2, 1,  format.parse("2023-02-01"));
             Album album3 = new Album("Album 3", 3, 1,  format.parse("2023-03-01"));
@@ -105,12 +101,10 @@ public class Seeder {
             db.albumDao().insert(album5);
 
 
-
-            // Dữ liệu mẫu cho bảng Song
             Song song1 = new Song("À lôi", 1, 1, 210, format.parse("2023-01-01"), "res/raw/a_loi.mp3", "res/raw/img_a_loi.png");
             Song song2 = new Song("Ánh sao và bầu trời", 2, 2, 200, format.parse("2023-01-02"), "res/raw/anh_sao_va_bau_troi.mp3", "res/raw/img_anh_sao_va_bau_troi.png");
             Song song3 = new Song("Anh thích em như vậy", 3, 3, 230, format.parse("2023-01-03"), "res/raw/anh_thich_em_nhu_vay.mp3", "res/raw/img_suot_dem.png");
-            Song song4 = new Song("Cắm tú cầu", 4, 4, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3", "res/raw/img_cam_tu_cau.png");
+            Song song4 = new Song("Cẩm tú cầu", 4, 4, 210, format.parse("2023-01-04"), "res/raw/cam_tu_cau.mp3", "res/raw/img_cam_tu_cau.png");
             Song song5 = new Song("Chân ái", 5, 5, 220, format.parse("2023-01-05"), "res/raw/chan_ai.mp3", "res/raw/img_chan_ai.png");
             Song song6 = new Song("Chìm sâu", 6, 1, 215, format.parse("2023-01-06"), "res/raw/chim_sau.mp3", "res/raw/img_chim_sau.png");
             Song song7 = new Song("Chịu cách mình nói thua", 7, 1,  210, format.parse("2023-01-07"), "res/raw/chiu_cach_minh_noi_thua.mp3", "res/raw/img_chiu_cach_minh_noi_thua.png");
@@ -118,7 +112,7 @@ public class Seeder {
             Song song9 = new Song("Đợi đến tháng 13", 9, 3, 245, format.parse("2023-01-09"), "res/raw/doi_den_thang_13.mp3", "res/raw/img_doi_den_thang_13.png");
             Song song10 = new Song("Đóng cửa, tắt đèn", 10, 3, 210, format.parse("2023-01-10"), "res/raw/dong_cua_tat_den.mp3", "res/raw/img_dong_cua_tat_den.png");
             Song song11 = new Song("Em xinh", 11, 4, 220, format.parse("2023-01-11"), "res/raw/em_xinh.mp3", "res/raw/img_em_xinh.png");
-            Song song12 = new Song("Hà nội", 12, 5, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3", "res/raw/img_ha_noi.png");
+            Song song12 = new Song("Hà Nội", 12, 5, 300, format.parse("2023-01-12"), "res/raw/ha_noi.mp3", "res/raw/img_ha_noi.png");
             Song song13 = new Song("Hãy trao cho anh", 13, 3, 210, format.parse("2023-01-13"), "res/raw/hay_trao_cho_anh.mp3", "res/raw/img_hay_trao_cho_anh.png");
             Song song14 = new Song("Hoa nở bên đường", 14, 4, 215, format.parse("2023-01-14"), "res/raw/hoa_no_ben_duong.mp3", "res/raw/img_hoa_no_ben_duong.png");
             Song song15 = new Song("Hư không", 15, 5, 260, format.parse("2023-01-15"), "res/raw/hu_khong.mp3", "res/raw/img_hu_khong.png");
@@ -162,7 +156,6 @@ public class Seeder {
             db.songDao().insert(song26);
             db.songDao().insert(song27);
 
-            // Dữ liệu mẫu cho bảng Playlist
             Playlist playlist1 = new Playlist(1, "Playlist 1", format.parse("2023-01-01"), "res/raw/img_a_loi.png.png");
             Playlist playlist2 = new Playlist(2, "Playlist 2", format.parse("2023-02-01"), "res/raw/img_playlist_1.png");
             Playlist playlist3 = new Playlist(1, "Playlist 3", format.parse("2023-03-01"), "res/raw/img_playlist_2.png");
@@ -175,7 +168,6 @@ public class Seeder {
             db.playlistDao().insert(playlist4);
             db.playlistDao().insert(playlist5);
 
-            // Dữ liệu mẫu cho bảng Playlist_Song
             PlaylistSong ps1 = new PlaylistSong(1, 1);
             PlaylistSong ps2 = new PlaylistSong(1, 2);
             PlaylistSong ps3 = new PlaylistSong(2, 3);
@@ -188,7 +180,6 @@ public class Seeder {
             db.playlistSongDao().insert(ps4);
             db.playlistSongDao().insert(ps5);
 
-            // Dữ liệu mẫu cho bảng Favourites
             Favourite fav1 = new Favourite(1, 1, format.parse("2023-01-01"));
             Favourite fav2 = new Favourite(1, 2, format.parse("2023-02-01"));
             Favourite fav3 = new Favourite(2, 3, format.parse("2023-03-01"));
@@ -202,13 +193,13 @@ public class Seeder {
             db.favouriteDao().insert(fav5);
 
 
-            // Dữ liệu mẫu cho bảng PlayHistory
-            PlayHistory playHistory1 = new PlayHistory(1, 1);  // UserID 1, SongID 1
-            PlayHistory playHistory2 = new PlayHistory(1, 12);  // UserID 1, SongID 2
+
+            PlayHistory playHistory1 = new PlayHistory(1, 1);
+            PlayHistory playHistory2 = new PlayHistory(1, 12);
             PlayHistory playHistory6 = new PlayHistory(1, 20);
-            PlayHistory playHistory3 = new PlayHistory(2, 3);  // UserID 2, SongID 3
-            PlayHistory playHistory4 = new PlayHistory(3, 4);  // UserID 3, SongID 4
-            PlayHistory playHistory5 = new PlayHistory(4, 5);  // UserID 4, SongID 5
+            PlayHistory playHistory3 = new PlayHistory(2, 3);
+            PlayHistory playHistory4 = new PlayHistory(3, 4);
+            PlayHistory playHistory5 = new PlayHistory(4, 5);
 
             db.playHistoryDao().insert(playHistory1);
             db.playHistoryDao().insert(playHistory6);
@@ -217,12 +208,12 @@ public class Seeder {
             db.playHistoryDao().insert(playHistory4);
             db.playHistoryDao().insert(playHistory5);
 
-            // Dữ liệu mẫu cho bảng AlbumSong
-            AlbumSong albumSong1 = new AlbumSong(1, 1);  // AlbumID 1, SongID 1
-            AlbumSong albumSong2 = new AlbumSong(1, 2);  // AlbumID 1, SongID 2
-            AlbumSong albumSong3 = new AlbumSong(2, 3);  // AlbumID 2, SongID 3
-            AlbumSong albumSong4 = new AlbumSong(3, 4);  // AlbumID 3, SongID 4
-            AlbumSong albumSong5 = new AlbumSong(4, 5);  // AlbumID 4, SongID 5
+
+            AlbumSong albumSong1 = new AlbumSong(1, 1);
+            AlbumSong albumSong2 = new AlbumSong(1, 2);
+            AlbumSong albumSong3 = new AlbumSong(2, 3);
+            AlbumSong albumSong4 = new AlbumSong(3, 4);
+            AlbumSong albumSong5 = new AlbumSong(4, 5);
 
             db.albumSongDao().insert(albumSong1);
             db.albumSongDao().insert(albumSong2);
@@ -286,7 +277,7 @@ public class Seeder {
 
 
         } catch (ParseException e) {
-            e.printStackTrace(); // Xử lý lỗi nếu có
+            e.printStackTrace();
         }
     }
 }

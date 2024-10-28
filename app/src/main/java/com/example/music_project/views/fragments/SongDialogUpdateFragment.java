@@ -37,7 +37,7 @@ import java.util.List;
 
 public class SongDialogUpdateFragment extends DialogFragment {
     private static final int PICK_AUDIO_REQUEST = 1;
-    private static final int PICK_IMAGE_REQUEST = 2;// Mã yêu cầu cho tệp âm thanh
+    private static final int PICK_IMAGE_REQUEST = 2;
 
     private EditText etTitle;
     private Spinner spArtist, spGenre;
@@ -53,7 +53,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
     private List<Artist> artists;
     private List<Genre> genres;
 
-    private int songId; // Đổi sang kiểu int
+    private int songId;
     private String songName;
     private int artistId;
     private int genreId;
@@ -98,7 +98,6 @@ public class SongDialogUpdateFragment extends DialogFragment {
                 file_path = getArguments().getString("filepath", "");
                 image_path = getArguments().getString("imagepath", "");
 
-                // Kiểm tra các giá trị có hợp lệ không
                 if (songId == -1 || artistId == -1 || genreId == -1 || duration == -1 ||
                         songName.isEmpty() || file_path.isEmpty() || image_path.isEmpty()) {
 
@@ -130,7 +129,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
         btnSave = view.findViewById(R.id.btn_ud_save);
         btnCancel = view.findViewById(R.id.btn_ud_cancel);
         btnDelete = view.findViewById(R.id.btn_ud_delete);
-      //  btnUpload = view.findViewById(R.id.btn_ud_upload);
+
         img_path = view.findViewById(R.id.iv_ud_cover);
 
         Log.e("SongDialogFragment", "Tên bài hát" + songName);
@@ -157,7 +156,6 @@ public class SongDialogUpdateFragment extends DialogFragment {
         btnSave.setOnClickListener(v -> saveSongUpdate());
         btnCancel.setOnClickListener(v -> dismiss());
         btnDelete.setOnClickListener(v -> deleteSong());
-//        btnUpload.setOnClickListener(v -> requestAudioFile());
 
         audioFileLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -218,7 +216,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
         String imagePath = image_path;
 
         if (imagePath != null && !imagePath.isEmpty()) {
-            // Kiểm tra nếu đường dẫn là kiểu "res/raw/..."
+
             if (imagePath.startsWith("res/raw/")) {
                 int resourceId = getResources().getIdentifier(
                         imagePath.replace("res/raw/", "").replace(".png", ""),
@@ -230,24 +228,22 @@ public class SongDialogUpdateFragment extends DialogFragment {
                             .load(resourceId)
                             .into(img_path);
                 } else {
-                    img_path.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định nếu không tìm thấy
+                    img_path.setImageResource(R.drawable.ic_image_playlist);
                 }
             }
-            // Kiểm tra nếu đường dẫn là kiểu "content://..."
             else if (imagePath.startsWith("content://")) {
                 Uri imageUri = Uri.parse(imagePath);
                 Glide.with(this)
                         .load(imageUri)
                         .into(img_path);
             }
-            // Nếu đường dẫn là loại khác (có thể là đường dẫn file hoặc URL)
             else {
                 Glide.with(this)
                         .load(imagePath)
                         .into(img_path);
             }
         } else {
-            img_path.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
+            img_path.setImageResource(R.drawable.ic_image_playlist);
         }
     }
 
@@ -273,9 +269,9 @@ public class SongDialogUpdateFragment extends DialogFragment {
     }
     private void pickImage() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("image/*"); // Chỉ định loại tệp
+        intent.setType("image/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        pickImageLauncher.launch(intent); // Sử dụng pickImageLauncher để mở trình chọn hình ảnh
+        pickImageLauncher.launch(intent);
     }
 
 
@@ -310,7 +306,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
     private void requestAudioFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("audio/*");
-        audioFileLauncher.launch(intent); // Sử dụng audioFileLauncher để yêu cầu tệp âm thanh
+        audioFileLauncher.launch(intent);
     }
 
     public void setListener(SongDialogUpdateListener listener) {
@@ -319,7 +315,7 @@ public class SongDialogUpdateFragment extends DialogFragment {
 
     public void setAudioFilePath(String filePath) {
         this.audioFilePath = filePath;
-        // Update UI to show that an audio file has been selected
+
         if (btnUpload != null) {
             btnUpload.setText("Audio đã chọn");
         }
@@ -330,10 +326,6 @@ public class SongDialogUpdateFragment extends DialogFragment {
         Artist selectedArtist = (Artist) spArtist.getSelectedItem();
 
         Genre selectedGenre = (Genre) spGenre.getSelectedItem();
-
-
-
-        // Kiểm tra thông tin nhập vào không được để trống
         if (title.isEmpty() || selectedArtist == null || selectedGenre == null) {
             Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
             return;
@@ -350,8 +342,8 @@ public class SongDialogUpdateFragment extends DialogFragment {
         song.setArtist_id(selectedArtist.getArtist_id());
         song.setGenre_id(selectedGenre.getGenre_id());
         song.setDuration((int) SongDuration);
-        song.setFile_path(audioFilePath != null ? audioFilePath : file_path); // Cập nhật file_path nếu có
-        //song.setImage_path(coverImagePath != null ? coverImagePath : image_path); // Cập nhật image_path nếu có
+        song.setFile_path(audioFilePath != null ? audioFilePath : file_path);
+        //song.setImage_path(coverImagePath != null ? coverImagePath : image_path);
 
         Log.d("SongDialogUpdate", "Title: " + title);
         Log.d("SongDialogUpdate", "Artist ID: " + (selectedArtist != null ? selectedArtist.getArtist_id() : "null"));
@@ -361,132 +353,13 @@ public class SongDialogUpdateFragment extends DialogFragment {
         Log.d("SongDialogUpdate", "Image File Path: " + (coverImagePath != null ? coverImagePath : "null"));
 
         if (listener != null) {
-            listener.onSongSavedtoUpdate(song); // Gọi listener để lưu thông tin
+            listener.onSongSavedtoUpdate(song);
         } else {
-            Log.e("SongDialogUpdate", "Listener is null!"); // Kiểm tra xem listener có null không
+            Log.e("SongDialogUpdate", "Listener is null!");
         }
 
         dismiss();
     }
-//    public void editSong(Song song) {
-//        if (song != null) {
-//            Log.d("SongDialogFragment", "Bắt đầu cập nhật bài hát: " + song.getTitle());
-//            Log.d("SongDialogFragment", "Số lượng nghệ sĩ: " + artists.size());
-//            Log.d("SongDialogFragment", "Số lượng album: " + albums.size());
-//            Log.d("SongDialogFragment", "Số lượng thể loại: " + genres.size());
-//
-//            // Nếu danh sách rỗng, không thực hiện cập nhật
-//            if (artists.isEmpty() || albums.isEmpty() || genres.isEmpty()) {
-//                Log.e("SongDialogFragment", "Không có dữ liệu nghệ sĩ, album hoặc thể loại");
-//                return; // Hoặc hiển thị thông báo lỗi
-//            }
-//            // Hiển thị thông tin của bài hát lên layout
-//            Log.e("SongDialogFragment", "Vào thành công với bài hát: " + song.getTitle());
-//            if (etTitle != null) {
-//                etTitle.setText(song.getTitle());
-//                Log.d("SongDialogFragment", "Tiêu đề bài hát được gán thành công: " + song.getTitle());
-//            } else {
-//                Log.e("SongDialogFragment", "Không tìm thấy EditText etTitle");
-//            }
-//
-//            // Cập nhật spinner cho nghệ sĩ
-//            if (this.artists != null) {
-//                boolean artistFound = false; // Để theo dõi xem nghệ sĩ có được tìm thấy không
-//                for (int i = 0; i < artists.size(); i++) {
-//                    Log.d("SongDialogFragment", "Kiểm tra nghệ sĩ: " + artists.get(i).getArtist_id());
-//                    if (artists.get(i).getArtist_id() == song.getArtist_id()) {
-//                        spArtist.setSelection(i);
-//                        artistFound = true;
-//                        Log.d("SongDialogFragment", "Đã chọn nghệ sĩ tại vị trí: " + i);
-//                        break;
-//                    }
-//                }
-//                if (!artistFound) {
-//                    Log.e("SongDialogFragment", "Nghệ sĩ không được tìm thấy cho bài hát: " + song.getTitle());
-//                }
-//            } else {
-//                Log.e("SongDialogFragment", "Danh sách nghệ sĩ rỗng hoặc null");
-//            }
-//
-//            // Cập nhật spinner cho album
-//            if (this.albums != null ) {
-//                boolean albumFound = false; // Để theo dõi xem album có được tìm thấy không
-//                for (int i = 0; i < albums.size(); i++) {
-//                    Log.d("SongDialogFragment", "Kiểm tra album: " + albums.get(i).getAlbum_id());
-//                    if (albums.get(i).getAlbum_id() == song.getAlbum_id()) {
-//                        spAlbum.setSelection(i);
-//                        albumFound = true;
-//                        Log.d("SongDialogFragment", "Đã chọn album tại vị trí: " + i);
-//                        break;
-//                    }
-//                }
-//                if (!albumFound) {
-//                    Log.e("SongDialogFragment", "Album không được tìm thấy cho bài hát: " + song.getTitle());
-//                }
-//            } else {
-//                Log.e("SongDialogFragment", "Danh sách album rỗng hoặc null");
-//            }
-//
-//            // Cập nhật spinner cho thể loại
-//            if (this.genres != null ) {
-//                boolean genreFound = false; // Để theo dõi xem thể loại có được tìm thấy không
-//                for (int i = 0; i < genres.size(); i++) {
-//                    Log.d("SongDialogFragment", "Kiểm tra thể loại: " + genres.get(i).getGenre_id());
-//                    if (genres.get(i).getGenre_id() == song.getGenre_id()) {
-//                        spGenre.setSelection(i);
-//                        genreFound = true;
-//                        Log.d("SongDialogFragment", "Đã chọn thể loại tại vị trí: " + i);
-//                        break;
-//                    }
-//                }
-//                if (!genreFound) {
-//                    Log.e("SongDialogFragment", "Thể loại không được tìm thấy cho bài hát: " + song.getTitle());
-//                }
-//            } else {
-//                Log.e("SongDialogFragment", "Danh sách thể loại rỗng hoặc null");
-//            }
-//
-//            // Cập nhật đường dẫn tệp âm thanh và hình ảnh bìa
-//            audioFilePath = song.getFile_path();
-//            coverImagePath = song.getImage_path();
-//
-//            // Hiển thị thời lượng bài hát
-//            tvDuration.setText("Thời lượng: " + String.format("%d:%02d", song.getDuration() / 60, song.getDuration() % 60));
-//            Log.d("SongDialogFragment", "Thời lượng bài hát: " + song.getDuration());
-//
-//            // Cập nhật UI cho tệp âm thanh đã chọn
-//            if (audioFilePath != null) {
-//                btnUpload.setText("Audio đã chọn");
-//                Log.d("SongDialogFragment", "Đường dẫn tệp âm thanh: " + audioFilePath);
-//            } else {
-//                Log.e("SongDialogFragment", "Đường dẫn tệp âm thanh null");
-//            }
-//
-//            // Cập nhật hình ảnh bìa nếu có
-//            if (coverImagePath != null) {
-//                img_path.setImageURI(Uri.parse(coverImagePath));
-//                Log.d("SongDialogFragment", "Đường dẫn hình ảnh bìa: " + coverImagePath);
-//            } else {
-//                Log.e("SongDialogFragment", "Đường dẫn hình ảnh bìa null");
-//            }
-//        } else {
-//            Log.e("SongDialogFragment", "Đối tượng bài hát null");
-//        }
-//    }
-//
-//    private String getRealPathFromURI(Context context, Uri uri) {
-//        String path = null;
-//        String[] projection = {MediaStore.Images.Media.DATA};
-//        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-//        if (cursor != null) {
-//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//            path = cursor.getString(column_index);
-//            cursor.close();
-//        }
-//        return path;
-//    }
-
 
 
 

@@ -51,10 +51,9 @@ public class MusicPlaybackService extends Service {
     public static final String ACTION_PREVIOUS = "com.example.music_project.ACTION_PREVIOUS";
     public static final String ACTION_NEXT = "com.example.music_project.ACTION_NEXT";
     public static final String ACTION_STOP = "com.example.music_project.ACTION_STOP";
-    // Thêm biến để track lần load đầu tiên
+
     private boolean isInitialLoad = false;
 
-    // Thêm setter cho isInitialLoad
     public void setInitialLoad(boolean initialLoad) {
         isInitialLoad = initialLoad;
     }
@@ -70,10 +69,9 @@ public class MusicPlaybackService extends Service {
         database = AppDatabase.getInstance(this);
         loadPlaylist();
 
-        // Khởi tạo MediaSession
         mediaSession = new MediaSessionCompat(this, "MusicPlaybackService");
 
-        // Tạo notification channel cho Android 8.0 trở lên
+
         createNotificationChannel();
 
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -83,7 +81,7 @@ public class MusicPlaybackService extends Service {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     "Music Playback",
-                    NotificationManager.IMPORTANCE_LOW // Để không phát ra âm thanh thông báo
+                    NotificationManager.IMPORTANCE_LOW
             );
             channel.setDescription("Controls for music playback");
             channel.setShowBadge(false);
@@ -105,7 +103,6 @@ public class MusicPlaybackService extends Service {
     private void updateNotification() {
         if (currentSong == null) return;
 
-        // Intent để mở ứng dụng khi nhấn vào notification
         Intent openAppIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this,
@@ -114,9 +111,9 @@ public class MusicPlaybackService extends Service {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Tạo notification builder
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_music_note) // Thêm icon nhạc vào project
+                .setSmallIcon(R.drawable.ic_music_note)
                 .setContentTitle(currentSong.getTitle())
                 .setContentText(currentSong.getArtistName())
                 .setContentIntent(contentIntent)
@@ -125,7 +122,7 @@ public class MusicPlaybackService extends Service {
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false);
 
-        // Thêm các nút điều khiển
+
         builder.addAction(R.drawable.ic_previous, "Previous", createActionIntent(ACTION_PREVIOUS));
 
         if (isPlaying()) {
@@ -137,14 +134,12 @@ public class MusicPlaybackService extends Service {
         builder.addAction(R.drawable.ic_next, "Next", createActionIntent(ACTION_NEXT));
         builder.addAction(R.drawable.ic_close, "Stop", createActionIntent(ACTION_STOP));
 
-        // Thêm style cho Media Controls
         androidx.media.app.NotificationCompat.MediaStyle mediaStyle = new androidx.media.app.NotificationCompat.MediaStyle()
                 .setMediaSession(mediaSession.getSessionToken())
-                .setShowActionsInCompactView(0, 1, 2); // Hiển thị 3 nút trong chế độ thu gọn
+                .setShowActionsInCompactView(0, 1, 2);
 
         builder.setStyle(mediaStyle);
 
-        // Hiển thị notification
         Notification notification = builder.build();
         startForeground(NOTIFICATION_ID, notification);
     }
@@ -166,11 +161,11 @@ public class MusicPlaybackService extends Service {
                     break;
                 case ACTION_PREVIOUS:
                     playPreviousSong();
-                    updateNotification(); // Thêm cập nhật notification
+                    updateNotification();
                     break;
                 case ACTION_NEXT:
                     playNextSong();
-                    updateNotification(); // Thêm cập nhật notification
+                    updateNotification();
                     break;
                 case ACTION_STOP:
                     stopForeground(true);
@@ -186,7 +181,6 @@ public class MusicPlaybackService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
-    //mới đầu vào sẽ dùng cái này load toàn bộ bh tạo thành playlist
     private void loadPlaylist() {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
@@ -213,13 +207,10 @@ public class MusicPlaybackService extends Service {
             mediaPlayer = new MediaPlayer();
             String filePath = song.getFile_path();
 
-            // Log detailed file information
             Log.d(TAG, "Attempting to play file:");
             Log.d(TAG, "File path: " + filePath);
 
-            // Handle different types of file paths
             if (filePath.startsWith("res/raw/")) {
-                // Handle resource files
                 String resourceName = filePath
                         .replace("res/raw/", "")
                         .replaceAll("\\.mp3$", "")
@@ -234,7 +225,6 @@ public class MusicPlaybackService extends Service {
 
                 if (resourceId != 0) {
                     try {
-                        // Update file path with content URI for the resource
                         String contentUri = "android.resource://" + getPackageName() + "/" + resourceId;
                         song.setFile_path(contentUri);
                         mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(contentUri));
@@ -248,14 +238,12 @@ public class MusicPlaybackService extends Service {
                     return;
                 }
             } else {
-                // Handle file system and content URI paths
                 File file = new File(filePath);
                 Log.d(TAG, "File exists: " + file.exists());
                 Log.d(TAG, "File can read: " + file.canRead());
                 Log.d(TAG, "File length: " + file.length());
 
                 if (!file.exists()) {
-                    // Handle content:// URIs
                     if (filePath.startsWith("content://")) {
                         try {
                             mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(filePath));
@@ -264,7 +252,6 @@ public class MusicPlaybackService extends Service {
                             throw e;
                         }
                     }
-                    // Handle file:// URIs
                     else if (filePath.startsWith("file://")) {
                         try {
                             mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(filePath));
@@ -278,7 +265,6 @@ public class MusicPlaybackService extends Service {
                         return;
                     }
                 } else {
-                    // File exists, use FileInputStream
                     try (FileInputStream fis = new FileInputStream(file)) {
                         mediaPlayer.setDataSource(fis.getFD());
                     } catch (Exception e) {
@@ -292,12 +278,12 @@ public class MusicPlaybackService extends Service {
                 isPrepared = true;
                 if (!isInitialLoad) {
                     mp.start();
-                    updateNotification(); // Cập nhật notification khi bắt đầu phát
+                    updateNotification();
                 } else {
                     isInitialLoad = false;
                 }
                 broadcastSongChange();
-                broadcastPlaybackState(); // Thêm broadcast trạng thái
+                broadcastPlaybackState();
 
                 Intent intent = new Intent("UPDATE_SONG_INFO");
                 intent.putExtra("SONG_ID", song.getSong_id());
@@ -337,7 +323,7 @@ public class MusicPlaybackService extends Service {
         } else {
             playNextSong();
         }
-        updateNotification(); // Thêm cập nhật notification khi bài hát kết thúc
+        updateNotification();
     }
 
     private void broadcastSongChange() {
@@ -370,7 +356,7 @@ public class MusicPlaybackService extends Service {
                 currentSongIndex = (currentSongIndex + 1) % playlist.size();
             }
             playSong(playlist.get(currentSongIndex));
-            updateNotification(); // Thêm cập nhật notification
+            updateNotification();
         }
     }
 
@@ -386,7 +372,7 @@ public class MusicPlaybackService extends Service {
                 currentSongIndex = (currentSongIndex - 1 + playlist.size()) % playlist.size();
             }
             playSong(playlist.get(currentSongIndex));
-            updateNotification(); // Thêm cập nhật notification
+            updateNotification();
         }
     }
 

@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // Set default fragment
         if (getSupportFragmentManager().findFragmentById(R.id.fragment_container) == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -108,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Stop the music service if the activity is being destroyed
         Intent serviceIntent = new Intent(this, MusicPlaybackService.class);
         stopService(serviceIntent);
     }

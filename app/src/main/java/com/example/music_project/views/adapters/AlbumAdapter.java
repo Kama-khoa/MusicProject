@@ -58,9 +58,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
     }
 
     public void updateAlbums(List<Album> newAlbums) {
-        this.albums.clear(); // Xóa danh sách hiện tại
-        this.albums.addAll(newAlbums); // Thêm danh sách mới
-        notifyDataSetChanged(); // Cập nhật RecyclerView
+        this.albums.clear();
+        this.albums.addAll(newAlbums);
+        notifyDataSetChanged();
     }
 
     public void removeAlbum(int position) {
@@ -100,7 +100,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
                     .error(R.drawable.default_album_art)
                     .into(imgAlbumCover);
 
-            // Xử lý sự kiện nhấn vào một album
             itemView.setOnClickListener(v -> listener.onAlbumClick(album));
 
             itemView.setOnLongClickListener(v -> {

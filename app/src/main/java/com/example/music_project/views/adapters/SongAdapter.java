@@ -35,12 +35,10 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
 
     private AppDatabase appDatabase;
 
-    // Giao diện cho sự kiện nhấn vào bài hát
     public interface OnSongClickListener {
         void onSongClick(Song song);
     }
 
-    // Giao diện cho sự kiện nhấn giữ vào bài hát
     public interface OnSongLongClickListener {
         void onSongLongClick(Song song);
     }
@@ -63,11 +61,10 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         Song song = songs.get(position);
         holder.bind(song);
 
-        // Kiểm tra xem bài hát có đang được chọn hay không và cập nhật màu nền
         if (selectedSongIds.contains(song.getSong_id())) {
-            holder.itemView.setBackgroundColor(Color.LTGRAY); // Đã chọn
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
         } else {
-            holder.itemView.setBackgroundColor(Color.WHITE); // Không được chọn
+            holder.itemView.setBackgroundColor(Color.WHITE); 
         }
     }
 
@@ -75,7 +72,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
         this.longClickListener = listener;
     }
 
-    // Trả về danh sách các bài hát đã chọn
     public List<Song> getSelectedSongs() {
         List<Song> selectedSongs = new ArrayList<>();
         for (Song song : songs) {
@@ -131,7 +127,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
             String imagePath = song.getImg_path();
 
             if (imagePath != null) {
-                // Xử lý việc tải ảnh từ imagePath ở đây
+
                 if (imagePath.startsWith("res/")) {
                     int resourceId = ivCover.getResources().getIdentifier(
                             imagePath.replace("res/raw/", "").replace(".png", ""),
@@ -147,7 +143,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongViewHolder
                             .into(ivCover);
                 }
             } else {
-                ivCover.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
+                ivCover.setImageResource(R.drawable.ic_image_playlist);
             }
 
         }

@@ -35,7 +35,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
     private ImageButton shuffleButton;
     private ImageButton timerButton;
     private SeekBar playbackSeekBar;
-    private ImageView albumCoverImageView; // Fixed typo here
+    private ImageView albumCoverImageView;
     private TextView trackInfoTextView;
     private TextView artistTextView;
     private TextView currentTimeTextView;
@@ -134,7 +134,7 @@ public class FullPlaybackActivity extends AppCompatActivity {
         artistTextView = findViewById(R.id.artistTextView);
         currentTimeTextView = findViewById(R.id.currentTimeTextView);
         totalTimeTextView = findViewById(R.id.totalTimeTextView);
-        albumCoverImageView = findViewById(R.id.albumArtImageView); // Fixed typo here
+        albumCoverImageView = findViewById(R.id.albumArtImageView);
     }
 
     private void setupListeners() {
@@ -234,13 +234,12 @@ public class FullPlaybackActivity extends AppCompatActivity {
     }
 
     private void updateSongInfo(Song song) {
-        if (song == null) return; // Add null check for song
+        if (song == null) return;
 
         trackInfoTextView.setText(song.getTitle());
         artistTextView.setText(song.getArtistName() != null && !song.getArtistName().isEmpty()
                 ? song.getArtistName() : "Unknown Artist");
 
-        // Add null check for albumCoverImageView
         if (albumCoverImageView != null) {
             String imagePath = song.getImg_path();
 

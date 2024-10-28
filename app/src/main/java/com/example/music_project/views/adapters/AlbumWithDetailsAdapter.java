@@ -71,7 +71,7 @@ public class AlbumWithDetailsAdapter extends RecyclerView.Adapter<AlbumWithDetai
 
         public void bind(AlbumWithDetails albumWithDetails, OnAlbumWithDetailsClickListener listener, OnAlbumWithDetailsLongClickListener longClickListener) {
             tvAlbumTitle.setText(albumWithDetails.getAlbum().getTitle());
-            tvAlbumArtist.setText(albumWithDetails.getArtistName()); // Giả sử AlbumWithDetails chứa artistName
+            tvAlbumArtist.setText(albumWithDetails.getArtistName());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String formattedDate = dateFormat.format(albumWithDetails.getAlbum().getRelease_date());
             tvAlbumReleaseDate.setText(formattedDate);

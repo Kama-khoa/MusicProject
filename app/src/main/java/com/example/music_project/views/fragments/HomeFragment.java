@@ -88,7 +88,6 @@ public class HomeFragment extends Fragment {
 
         updateUserInterface();
 
-        // Adapter cho danh sách nhạc gần đây
         recentSongAdapter = new SongAdapter(recentSongs, song -> {
             FragmentManager fragmentManager = getParentFragmentManager();
             PlaybackDialogFragment playbackFragment =
@@ -113,7 +112,6 @@ public class HomeFragment extends Fragment {
         rvPopularSongs.setAdapter(popularSongAdapter);
 
         getCurrentUserId();
-        // Load dữ liệu bài hát gần đây và phổ biến
         loadSongs();
 
         return view;
@@ -135,7 +133,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(String error) {
                     mainHandler.post(() -> {
-                        if (isAdded()) { // Kiểm tra nếu Fragment đã được thêm vào Activity
+                        if (isAdded()) {
                             Toast.makeText(requireContext(), "Failed to load user data: " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -269,7 +267,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Load popular songs (this remains unchanged as it's not user-specific)
         playHistoryDAO.getPopularSongsFromHistory().observe(getViewLifecycleOwner(), songs -> {
             if (songs != null) {
                 popularSongs.clear();
@@ -285,10 +282,9 @@ public class HomeFragment extends Fragment {
 
     private long getUserIdFromPreferences() {
         SharedPreferences prefs = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        return prefs.getLong("userId", -1); // Trả về -1 nếu không tìm thấy userId
+        return prefs.getLong("userId", -1);
     }
 
-    // Lấy ID người dùng hiện tại và lưu vào SharedPreferences
     private void getCurrentUserId() {
         userController.getCurrentUser(new UserController.OnUserFetchedListener() {
             @Override
@@ -306,7 +302,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    // Thêm phương thức để lưu tên người dùng vào SharedPreferences
     private void saveUserName(String userName) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
         editor.putString("userName", userName);
@@ -314,7 +309,6 @@ public class HomeFragment extends Fragment {
         Log.d("HomeFragment", "Saved User Name: " + userName);
     }
 
-    // Lưu User ID vào SharedPreferences
     private void saveUserId(long userId) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE).edit();
         editor.putLong("userId", userId);

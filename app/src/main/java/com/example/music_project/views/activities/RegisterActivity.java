@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess() {
                 runOnUiThread(() -> {
                     Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                    finish(); // Return to LoginActivity
+                    finish();
                 });
             }
 

@@ -39,7 +39,7 @@ public class PlaybackDialogFragment extends DialogFragment {
     private static final String PREFS_NAME = "MusicAppPrefs";
     private static final String LAST_SONG_ID = "LastSongId";
     private static final String LAST_POSITION = "LastPosition";
-    // UI Components
+
     private ImageView albumArtImageView;
     private TextView songTitleTextView;
     private TextView artistNameTextView;
@@ -50,11 +50,9 @@ public class PlaybackDialogFragment extends DialogFragment {
     private ConstraintLayout rootLayout;
     private PlaybackManager playbackManager;
 
-    // Service related
     private MusicPlaybackService musicService;
     private boolean isBound = false;
 
-    // Other variables
     private Handler handler;
     private boolean isUpdatingSeekBar = false;
     private AppDatabase database;
@@ -65,8 +63,8 @@ public class PlaybackDialogFragment extends DialogFragment {
             MusicPlaybackService.MusicBinder binder = (MusicPlaybackService.MusicBinder) service;
             musicService = binder.getService();
             isBound = true;
-            loadLastPlayedSong(); // Khôi phục bài hát ngay khi kết nối thành công
-            updatePlaybackState(); // Cập nhật nút phát/tạm dừng
+            loadLastPlayedSong();
+            updatePlaybackState();
         }
 
         @Override
@@ -83,7 +81,6 @@ public class PlaybackDialogFragment extends DialogFragment {
                 int songId = intent.getIntExtra("SONG_ID", -1);
                 if (songId != -1) {
                     loadSongInfo(songId);
-                    // Cập nhật UI khi nhận được bài hát mới
                     handler.postDelayed(() -> {
                         updatePlaybackState();
                         startSeekBarUpdate();
@@ -113,7 +110,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         setupListeners();
         bindMusicService();
         registerBroadcastReceiver();
-        // Removed loadLastPlayedSong() call here
+
     }
     private void initializeViews(View view) {
         albumArtImageView = view.findViewById(R.id.albumArtImageView);
@@ -125,7 +122,7 @@ public class PlaybackDialogFragment extends DialogFragment {
         seekBar = view.findViewById(R.id.seekBar);
         rootLayout = view.findViewById(R.id.rootLayout);
 
-        // Thêm onClick listener cho rootLayout
+
         rootLayout.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), FullPlaybackActivity.class);
             requireContext().startActivity(intent);
@@ -149,14 +146,12 @@ public class PlaybackDialogFragment extends DialogFragment {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 isUpdatingSeekBar = true;
-                // Tạm dừng cập nhật seekBar khi đang tua
                 handler.removeCallbacksAndMessages(null);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 isUpdatingSeekBar = false;
-                // Khôi phục cập nhật seekBar sau khi tua xong
                 if (isBound && musicService != null && musicService.isPlaying()) {
                     startSeekBarUpdate();
                 }
@@ -196,11 +191,11 @@ public class PlaybackDialogFragment extends DialogFragment {
                     requireActivity().runOnUiThread(() -> {
                         musicService.playSong(song);
                         updateSongInfo(song);
-                        // Cập nhật UI sau khi phát bài mới
+
                         handler.postDelayed(() -> {
                             updatePlaybackState();
                             startSeekBarUpdate();
-                        }, 200); // Đợi một chút để MediaPlayer khởi tạo xong
+                        }, 200);
                     });
                 }
             }).start();
@@ -213,7 +208,6 @@ public class PlaybackDialogFragment extends DialogFragment {
         String imagePath = song.getImg_path();
 
         if (imagePath != null) {
-            // Xử lý việc tải ảnh từ imagePath ở đây
             if (imagePath.startsWith("res/")) {
                 int resourceId = albumArtImageView.getResources().getIdentifier(
                         imagePath.replace("res/raw/", "").replace(".png", ""),
@@ -229,10 +223,10 @@ public class PlaybackDialogFragment extends DialogFragment {
                         .into(albumArtImageView);
             }
         } else {
-            albumArtImageView.setImageResource(R.drawable.ic_image_playlist); // Ảnh mặc định
+            albumArtImageView.setImageResource(R.drawable.ic_image_playlist);
         }
 
-//        albumArtImageView.setImageResource(R.drawable.default_album_art);
+
     }
 
     private void updatePlaybackState() {
@@ -240,7 +234,6 @@ public class PlaybackDialogFragment extends DialogFragment {
             updatePlayPauseButton();
             if (musicService.getCurrentSong() != null) {
                 updateSongInfo(musicService.getCurrentSong());
-                // Khởi động cập nhật seekBar nếu đang phát
                 if (musicService.isPlaying()) {
                     startSeekBarUpdate();
                 }
@@ -268,14 +261,12 @@ public class PlaybackDialogFragment extends DialogFragment {
 
     private void playNextSong() {
         if (isBound && musicService != null) {
-            // Assuming the service has a method to play the next song
             musicService.playNextSong();
         }
     }
 
     private void playPreviousSong() {
         if (isBound && musicService != null) {
-            // Assuming the service has a method to play the previous song
             musicService.playPreviousSong();
         }
     }
@@ -298,7 +289,7 @@ public class PlaybackDialogFragment extends DialogFragment {
                         }
 
                         if (musicService.isPlaying()) {
-                            handler.postDelayed(this, 100); // Cập nhật mỗi 100ms thay vì 1000ms
+                            handler.postDelayed(this, 100);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -327,7 +318,6 @@ public class PlaybackDialogFragment extends DialogFragment {
         if (isBound && musicService != null) {
             PlaybackManager.PlaybackState state = playbackManager.loadPlaybackState();
             if (state.isValid()) {
-                // Chỉ cập nhật vị trí phát nếu đang phát cùng một bài hát
                 if (musicService.getCurrentSong() != null &&
                         musicService.getCurrentSong().getSong_id() == state.getSongId()) {
                     musicService.seekTo(state.getPosition());
@@ -358,7 +348,6 @@ public class PlaybackDialogFragment extends DialogFragment {
                 Song song = database.songDao().getSongById(state.getSongId());
                 if (song != null) {
                     requireActivity().runOnUiThread(() -> {
-                        // Đặt một flag để musicService biết đây là lần load đầu tiên
                         musicService.setInitialLoad(true);
                         musicService.playSong(song);
                         musicService.seekTo(state.getPosition());

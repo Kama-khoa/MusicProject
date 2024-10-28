@@ -56,9 +56,9 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     }
 
     public void updateArtists(List<Artist> newArtists) {
-        this.artists.clear(); // Xóa danh sách hiện tại
-        this.artists.addAll(newArtists); // Thêm danh sách mới
-        notifyDataSetChanged(); // Cập nhật RecyclerView
+        this.artists.clear();
+        this.artists.addAll(newArtists);
+        notifyDataSetChanged();
     }
 
     public void removeArtist(int position) {
@@ -89,18 +89,16 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         public void bind(Artist artist, OnArtistClickListener listener) {
             Log.d("ArtistAdapter", "Artist Name: " + artist.getArtist_name());
             tvArtistName.setText(artist.getArtist_name());
-            // Lấy chỉ câu đầu tiên từ bio
             String bio = artist.getBio();
-            String[] sentences = bio.split("\\. "); // Tách các câu bằng dấu chấm và khoảng trắng
-            String firstSentence = sentences.length > 0 ? sentences[0] : ""; // Lấy câu đầu tiên
+            String[] sentences = bio.split("\\. ");
+            String firstSentence = sentences.length > 0 ? sentences[0] : "";
 
-            tvArtistBio.setText(firstSentence); // Hiển thị câu đầu tiên
+            tvArtistBio.setText(firstSentence);
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String formattedDob = dateFormat.format(artist.getDate_of_birth()); // Chắc chắn rằng artist có phương thức getDateOfBirth()
+            String formattedDob = dateFormat.format(artist.getDate_of_birth());
             tvArtistDob.setText(formattedDob);
 
-            // Xử lý sự kiện nhấn vào một nghệ sĩ
             itemView.setOnClickListener(v -> listener.onArtistClick(artist));
         }
     }

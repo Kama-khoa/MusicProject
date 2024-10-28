@@ -22,7 +22,7 @@ import java.util.List;
 
 public class PlaylistFragment extends Fragment {
 
-    private RecyclerView rvPlaylists; // Thay ListView thành RecyclerView
+    private RecyclerView rvPlaylists;
     private PlaylistAdapter adapter;
     private List<Playlist> playlistList;
 
@@ -30,20 +30,14 @@ public class PlaylistFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_playlist, container, false);
 
-        rvPlaylists = view.findViewById(R.id.rv_playlists); // Cập nhật ID cho RecyclerView
+        rvPlaylists = view.findViewById(R.id.rv_playlists);
 
-        // Khởi tạo dữ liệu playlist
+
         playlistList = new ArrayList<>();
-//        playlistList.add(new Playlist(1, "Bài hát ưa thích"));
-//        playlistList.add(new Playlist(2, "Hot Hits Vietnam"));
-//        playlistList.add(new Playlist(3, "Thiên Hạ Nghe Gì"));
 
-        // Khởi tạo adapter và set cho RecyclerView
         adapter = new PlaylistAdapter(playlistList, new PlaylistAdapter.OnPlaylistClickListener() {
             @Override
             public void onPlaylistClick(Playlist playlist) {
-                // Xử lý sự kiện nhấp vào playlist ở đây
-                // Ví dụ: mở một Activity mới hoặc hiển thị chi tiết của playlist
             }
         });
 
